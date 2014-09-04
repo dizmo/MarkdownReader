@@ -1,0 +1,16 @@
+#front {
+}
+
+#back {
+  .done-btn-wrapper {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    text-align: center;
+    width: 100%;
+
+    .done-btn {
+      margin-bottom: 10px;
+    }
+  }
+}
