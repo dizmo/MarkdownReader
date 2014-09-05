@@ -1,7 +1,32 @@
 #front {
+  height: 484px;
+  width: 484px;
+
+  .md-logo {
+    background: no-repeat center;
+    background-size: 80%;
+    height: 100%;
+    width: 100%;
+  }
 }
 
 #back {
+  height: 484px;
+  width: 484px;
+
+  label {
+    display: none;
+  }
+  input {
+    width: 474px;
+    margin-bottom: 10px;
+  }
+  textarea, .CodeMirror {
+    font-size:11px;
+    height: 404px;
+    width: 484px;
+  }
+
   .done-btn-wrapper {
     position: absolute;
     bottom: 0px;

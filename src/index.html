@@ -3,18 +3,38 @@
     <head>
         <title>Markdown Reader</title>
         <meta charset="UTF-8" />
-        <script type="text/javascript" src="lib/joose/joose.min.js"></script>
-        <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="style/style.css">
+        <script src="lib/joose/joose.min.js"></script>
+        <script src="lib/jquery/jquery.min.js"></script>
+        <script src="lib/pagedown/Markdown.Converter.min.js"></script>
+        <script src="lib/pagedown/Markdown.Sanitizer.min.js"></script>
+        <link rel="stylesheet" href="lib/codemirror/codemirror.min.css">
+        <script src="lib/codemirror/codemirror.min.js"></script>
+        <link rel="stylesheet" href="style/style.css">
     </head>
     <body>
         <div id="front">
+            <div class="md-logo" style="background-image: url(style/images/tourguide-light.svg);"></div>
         </div>
         <div id="back">
+            <form>
+                <label for="url">Content URL</label>
+                <input id="url" type="url" name="url" data-type="dizmo-input" data-required="true"
+                       placeholder="Content URL to fetch from (e.g. http://wiki.dizmo.com/tourguide/intro.md)" />
+            </form>
+            <label for="code">Content</label>
+            <textarea id="code" name="code">..</textarea>
             <div class="done-btn-wrapper">
                 <button class="done-btn" data-type="dizmo-button" data-onback="true">Done</button>
             </div>
         </div>
-        <script type="text/javascript" src="application.js"></script>
+        <script>
+            var EDITOR = CodeMirror.fromTextArea(jQuery('#code')[0], {
+                lineNumbers: true,
+                matchBrackets: true,
+                mode: 'gfm',
+                styleActiveLine: true
+            });
+        </script>
+        <script src="application.js"></script>
     </body>
 </html>
