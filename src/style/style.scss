@@ -1,5 +1,6 @@
 #front {
-  height: 484px;
+  height: 464px;
+  overflow-y: scroll;
   width: 484px;
 
   .md-logo {
@@ -7,6 +8,10 @@
     background-size: 80%;
     height: 100%;
     width: 100%;
+  }
+
+  header {
+    text-decoration: underline;
   }
 }
 

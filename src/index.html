@@ -19,10 +19,10 @@
             <form>
                 <label for="url">Content URL</label>
                 <input id="url" type="url" name="url" data-type="dizmo-input" data-required="true"
-                       placeholder="Content URL to fetch from (e.g. http://wiki.dizmo.com/tourguide/intro.md)" />
+                       placeholder="URL to Markdown fetch from (e.g. http://pub.dizmo.com/tourguide/intro.md)"/>
             </form>
             <label for="code">Content</label>
-            <textarea id="code" name="code">..</textarea>
+            <textarea id="code" name="code" placeholder="Custom CSS .."></textarea>
             <div class="done-btn-wrapper">
                 <button class="done-btn" data-type="dizmo-button" data-onback="true">Done</button>
             </div>
@@ -30,10 +30,23 @@
         <script>
             var EDITOR = CodeMirror.fromTextArea(jQuery('#code')[0], {
                 lineNumbers: true,
+                lineWrapping: true,
                 matchBrackets: true,
-                mode: 'gfm',
+                mode: 'css',
                 styleActiveLine: true
             });
+
+            EDITOR.setValue ([
+                'h1, h2, h3 {\n',
+                '  margin: 0;\n',
+                '  padding: 0;\n',
+                '}\n',
+                'p {\n',
+                '  margin: 0;\n',
+                '  padding: 0 1em;\n',
+                '  text-align: justify;\n',
+                '}\n'
+            ].join (''));
         </script>
         <script src="application.js"></script>
     </body>
