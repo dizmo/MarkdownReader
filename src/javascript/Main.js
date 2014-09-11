@@ -4,13 +4,9 @@ Class("MarkdownReader.Main", {
     has: {
         md2html: {
             is: 'ro', init: function () {
-                var converter = Markdown.getSanitizingConverter({
-                    nonAsciiLetters: true
-                });
-
                 return {
                     convert: function (mdValue) {
-                        return converter.makeHtml(mdValue);
+                        return marked(mdValue);
                     }
                 };
             }
