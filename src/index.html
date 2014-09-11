@@ -18,10 +18,12 @@
             <form>
                 <label for="md-url">Content URL</label>
                 <input id="md-url" type="url" name="url" data-type="dizmo-input" data-required="true"
-                       placeholder="Markdown to fetch from (e.g. http://help.dizmo.com/tourguide/en/index.md)"/>
+                       placeholder="Markdown to fetch from (e.g. http://help.dizmo.com/tourguide/en/index.md)"
+                       value="http://tmp.notex.ch/lorem-ipsum/en/index.md"/>
                 <label for="css-url">Styling URL</label>
                 <input id="css-url" type="url" name="url" data-type="dizmo-input" data-required="true"
-                       placeholder="CSS to fetch from (e.g. http://help.dizmo.com/tourguide/en/index.md.css)"/>
+                       placeholder="CSS to fetch from (e.g. http://help.dizmo.com/tourguide/en/index.md.css)"
+                       value="http://tmp.notex.ch/lorem-ipsum/en/index.md.css"/>
             </form>
             <label for="code">Content</label>
             <textarea id="code" name="code" placeholder="Custom CSS .."></textarea>
@@ -39,17 +41,16 @@
             });
 
             EDITOR.setValue ([
-                'h1, h2, h3, h4, h5 {\n',
-                '  margin: 0;\n',
-                '  padding: 0;\n',
+                '/**\n',
+                ' * Extra CSS: front, content, headers, paragraphs, tables etc.\n',
+                ' */\n',
+                '\n',
+                '#front {\n',
+                '  /* front side styles */\n',
                 '}\n',
-                'p {\n',
-                '  margin: 0;\n',
-                '  padding: 0 1em;\n',
-                '  text-align: justify;\n',
-                '}\n',
-                'table {\n',
-                '  margin: 0 auto;\n',
+                '\n',
+                '#content {\n',
+                '  /* content styles (on front side) */\n',
                 '}\n'
             ].join (''));
         </script>
