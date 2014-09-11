@@ -11,16 +11,6 @@ Class("MarkdownReader.Main", {
                 };
             }
         },
-        mdValue: {
-            is: 'rw', init: function () {
-                return undefined;
-            }
-        },
-        cssValue: {
-            is: 'rw', init: function () {
-                return undefined;
-            }
-        },
         dizmo: {
             is: 'ro', init: function () {
                 return DIZMO = new MarkdownReader.Dizmo();
@@ -58,17 +48,37 @@ Class("MarkdownReader.Main", {
 
         onShowFront: function () {
             var self = this;
-            var url = jQuery('#url').val();
-            if (url && url.length > 0) {
-                jQuery.ajax({type: 'GET', url: url, success: function (value) {
-                    self.cssValue = EDITOR.getValue ();
-                    jQuery('style#css').remove(); jQuery('head').append (
-                        '<style id="css">' + self.cssValue + '</style>');
 
-                    self.mdValue = value;
-                    jQuery('#front').empty().append (
-                        self.md2html.convert(self.mdValue));
-                }});
+            jQuery('style#css').remove();
+            jQuery('style#extra').remove();
+            jQuery('#front').empty().append (
+                '<div class="md-logo" style="background-image: {0}"></div>'
+                    .replace ('{0}', 'url(style/images/tourguide-light.svg);'));
+
+            var cssUrl = jQuery('#css-url').val();
+            if (cssUrl && cssUrl.length > 0) {
+                jQuery.ajax({
+                    type: 'GET', url: cssUrl, success: function (value) {
+                        jQuery('head').append (
+                            '<style id="css">' + value + '</style>');
+                    }
+                }).always (function () {
+                    jQuery('head').append (
+                        '<style id="extra">' + EDITOR.getValue () + '</style>');
+                });
+            } else {
+                jQuery('head').append (
+                    '<style id="extra">' + EDITOR.getValue () + '</style>');
+            }
+
+            var mdUrl = jQuery('#md-url').val();
+            if (mdUrl && mdUrl.length > 0) {
+                jQuery.ajax({
+                    type: 'GET', url: mdUrl, success: function (value) {
+                        jQuery('#front').empty().append (
+                            self.md2html.convert(value));
+                    }
+                });
             }
         },
 
