@@ -4,9 +4,15 @@ Class("MarkdownReader.Main", {
     has: {
         md2html: {
             is: 'ro', init: function () {
-                return MD2HTML = Markdown.getSanitizingConverter({
+                var converter = Markdown.getSanitizingConverter({
                     nonAsciiLetters: true
                 });
+
+                return {
+                    convert: function (mdValue) {
+                        return converter.makeHtml(mdValue);
+                    }
+                };
             }
         },
         mdValue: {
@@ -65,7 +71,7 @@ Class("MarkdownReader.Main", {
 
                     self.mdValue = value;
                     jQuery('#front').empty().append (
-                        self.md2html.makeHtml(self.mdValue));
+                        self.md2html.convert(self.mdValue));
                 }});
             }
         },
