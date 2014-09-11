@@ -59,7 +59,7 @@ Class("MarkdownReader.Main", {
         onShowFront: function () {
             var self = this;
             var url = jQuery('#url').val();
-            if (url && url.length > 0 && url.match(/\.md$/)) {
+            if (url && url.length > 0) {
                 jQuery.ajax({type: 'GET', url: url, success: function (value) {
                     self.cssValue = EDITOR.getValue ();
                     jQuery('style#css').remove(); jQuery('head').append (
