@@ -21,9 +21,13 @@ Class("MarkdownReader.Dizmo", {
             },
 
             save: function (path, value) {
-                dizmo.privateStorage().setProperty(
-                    path, JSON.stringify(value)
-                );
+                if (value !== undefined && value !== null) {
+                    dizmo.privateStorage().setProperty(
+                        path, JSON.stringify(value)
+                    );
+                } else {
+                    dizmo.privateStorage().deleteProperty(path);
+                }
             },
 
             setTitle: function(value) {

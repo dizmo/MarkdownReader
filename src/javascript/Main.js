@@ -44,9 +44,11 @@ Class("MarkdownReader.Main", {
 
     after: {
         initialize: function () {
-            if (this.urlMd !== undefined) {
-                this.onShowFront();
-            }
+            if (this.urlMd !== undefined) jQuery('#url-md').val(this.urlMd);
+            if (this.urlCss !== undefined) jQuery('#url-css').val(this.urlCss);
+            if (this.extraCss !== undefined) EDITOR.setValue(this.extraCss);
+
+            this.onShowFront();
             this.initEvents();
         },
 
@@ -89,12 +91,13 @@ Class("MarkdownReader.Main", {
                     .replace('{0}', 'url(style/images/tourguide-light.svg);'));
 
             var extraCss = EDITOR.getValue();
-            self.setExtraCss(extraCss);
-            var urlCss = jQuery('#url-css').val();
-            self.setUrlCss(urlCss);
-            var urlMd = jQuery('#url-md').val();
-            self.setUrlMd(urlMd);
+            if (extraCss && extraCss.length > 0) {
+                self.setExtraCss(extraCss);
+            } else {
+                self.setExtraCss(null);
+            }
 
+            var urlCss = jQuery('#url-css').val();
             if (urlCss && urlCss.length > 0) {
                 jQuery.ajax({
                     type: 'GET', url: urlCss, success: function (value) {
@@ -105,11 +108,14 @@ Class("MarkdownReader.Main", {
                     jQuery('head').append(
                             '<style id="extra">' + extraCss + '</style>');
                 });
+                self.setUrlCss(urlCss);
             } else {
                 jQuery('head').append(
                         '<style id="extra">' + extraCss + '</style>');
+                self.setUrlCss(null);
             }
 
+            var urlMd = jQuery('#url-md').val();
             if (urlMd && urlMd.length > 0) {
                 jQuery.ajax({
                     type: 'GET', url: urlMd, success: function (value) {
@@ -118,14 +124,14 @@ Class("MarkdownReader.Main", {
                                 '{0}', self.md2html.convert(value)));
                     }
                 });
+                self.setUrlMd(urlMd);
+            } else {
+                self.setUrlMd(null);
             }
         },
 
         onShowBack: function () {
             this.dizmo.my.setTitle('Markdown Reader');
-            if (this.urlMd !== undefined) jQuery('#url-md').val(this.urlMd);
-            if (this.urlCss !== undefined) jQuery('#url-css').val(this.urlCss);
-            if (this.extraCss !== undefined) EDITOR.setValue(this.extraCss);
         }
     }
 });
