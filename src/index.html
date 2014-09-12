@@ -16,21 +16,21 @@
         </div>
         <div id="back">
             <form>
-                <label for="md-url">Content URL</label>
-                <input id="md-url" type="url" name="url" data-type="dizmo-input" data-required="true"
+                <label for="url-md">Content URL</label>
+                <input id="url-md" type="url" name="url" data-type="dizmo-input" data-required="true"
                        placeholder="Markdown to fetch from (e.g. http://help.dizmo.com/tourguide/en/index.md)"/>
-                <label for="css-url">Styling URL</label>
-                <input id="css-url" type="url" name="url" data-type="dizmo-input" data-required="true"
+                <label for="url-css">Styling URL</label>
+                <input id="url-css" type="url" name="url" data-type="dizmo-input" data-required="true"
                        placeholder="CSS to fetch from (e.g. http://help.dizmo.com/tourguide/en/index.md.css)"/>
             </form>
-            <label for="code">Content</label>
-            <textarea id="code" name="code" placeholder="Custom CSS .."></textarea>
+            <label for="editor">Content</label>
+            <textarea id="editor" name="editor" placeholder="Custom CSS .."></textarea>
             <div class="done-btn-wrapper">
                 <button class="done-btn" data-type="dizmo-button" data-onback="true">Done</button>
             </div>
         </div>
         <script>
-            var EDITOR = CodeMirror.fromTextArea(jQuery('#code')[0], {
+            var EDITOR = CodeMirror.fromTextArea(jQuery('#editor')[0], {
                 lineNumbers: true,
                 lineWrapping: true,
                 matchBrackets: true,

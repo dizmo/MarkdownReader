@@ -7,7 +7,7 @@ Class("MarkdownReader.Main", {
                 var renderer = new marked.Renderer();
                 renderer.heading = function (text, level, raw) {
                     if (level === 1) {
-                        dizmo.setAttribute('title', text);
+                        MarkdownReader.Dizmo.setTitle(text);
                     }
 
                     return marked.defaults.renderer.heading(text, level, raw);
@@ -20,6 +20,21 @@ Class("MarkdownReader.Main", {
                 };
             }
         },
+        urlMd: {
+            is: 'rw', init: function () {
+                return MarkdownReader.Dizmo.load('urlMd');
+            }
+        },
+        urlCss: {
+            is: 'rw', init: function () {
+                return MarkdownReader.Dizmo.load('urlCss');
+            }
+        },
+        extraCss: {
+            is: 'rw', init: function () {
+                return MarkdownReader.Dizmo.load('extraCss');
+            }
+        },
         dizmo: {
             is: 'ro', init: function () {
                 return DIZMO = new MarkdownReader.Dizmo();
@@ -29,13 +44,25 @@ Class("MarkdownReader.Main", {
 
     after: {
         initialize: function () {
+            if (this.urlMd !== undefined) {
+                this.onShowFront();
+            }
             this.initEvents();
+        },
+
+        setUrlMd: function (value) {
+            this.dizmo.my.save('urlMd', value);
+        },
+        setUrlCss: function (value) {
+            this.dizmo.my.save('urlCss', value);
+        },
+        setExtraCss: function (value) {
+            this.dizmo.my.save('extraCss', value);
         }
     },
 
     methods: {
         initEvents: function () {
-            jQuery('#url').keyup(this.onKeyup.bind(this));
             jQuery('.done-btn').on('click', this.onClick.bind(this));
             jQuery(events).on('dizmo.turned', this.onTurn.bind(this));
         },
@@ -44,14 +71,11 @@ Class("MarkdownReader.Main", {
             this.dizmo.my.showFront();
         },
 
-        onKeyup: function () {
-        },
-
         onTurn: function (dizmo, side) {
             if (side === 'front') {
-                this.onShowFront.call(this);
+                this.onShowFront();
             } else {
-                this.onShowBack.call(this);
+                this.onShowBack();
             }
         },
 
@@ -64,27 +88,31 @@ Class("MarkdownReader.Main", {
                 '<div class="md-logo" style="background-image: {0}"></div>'
                     .replace('{0}', 'url(style/images/tourguide-light.svg);'));
 
+            var extraCss = EDITOR.getValue();
+            self.setExtraCss(extraCss);
+            var urlCss = jQuery('#url-css').val();
+            self.setUrlCss(urlCss);
+            var urlMd = jQuery('#url-md').val();
+            self.setUrlMd(urlMd);
 
-            var cssUrl = jQuery('#css-url').val();
-            if (cssUrl && cssUrl.length > 0) {
+            if (urlCss && urlCss.length > 0) {
                 jQuery.ajax({
-                    type: 'GET', url: cssUrl, success: function (value) {
+                    type: 'GET', url: urlCss, success: function (value) {
                         jQuery('head').append(
-                            '<style id="css">' + value + '</style>');
+                                '<style id="css">' + value + '</style>');
                     }
                 }).always(function () {
                     jQuery('head').append(
-                        '<style id="extra">' + EDITOR.getValue() + '</style>');
+                            '<style id="extra">' + extraCss + '</style>');
                 });
             } else {
                 jQuery('head').append(
-                    '<style id="extra">' + EDITOR.getValue() + '</style>');
+                        '<style id="extra">' + extraCss + '</style>');
             }
 
-            var mdUrl = jQuery('#md-url').val();
-            if (mdUrl && mdUrl.length > 0) {
+            if (urlMd && urlMd.length > 0) {
                 jQuery.ajax({
-                    type: 'GET', url: mdUrl, success: function (value) {
+                    type: 'GET', url: urlMd, success: function (value) {
                         jQuery('#front').empty().append(
                             '<div id="content">{0}</div>'.replace(
                                 '{0}', self.md2html.convert(value)));
@@ -95,6 +123,9 @@ Class("MarkdownReader.Main", {
 
         onShowBack: function () {
             this.dizmo.my.setTitle('Markdown Reader');
+            if (this.urlMd !== undefined) jQuery('#url-md').val(this.urlMd);
+            if (this.urlCss !== undefined) jQuery('#url-css').val(this.urlCss);
+            if (this.extraCss !== undefined) EDITOR.setValue(this.extraCss);
         }
     }
 });
