@@ -1,0 +1,46 @@
+#front {
+  height: 464px;
+  overflow-y: scroll;
+  width: 484px;
+
+  .md-logo {
+    background: no-repeat center;
+    background-size: 80%;
+    height: 100%;
+    width: 100%;
+  }
+
+  header {
+    text-decoration: underline;
+  }
+}
+
+#back {
+  height: 484px;
+  width: 484px;
+
+  label {
+    display: none;
+  }
+  input {
+    width: 474px;
+    margin-bottom: 10px;
+  }
+  textarea, .CodeMirror {
+    font-size:11px;
+    height: 364px;
+    width: 484px;
+  }
+
+  .done-btn-wrapper {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    text-align: center;
+    width: 100%;
+
+    .done-btn {
+      margin-bottom: 10px;
+    }
+  }
+}
