@@ -1,6 +1,6 @@
 #front {
   height: 464px;
-  overflow-y: scroll;
+  overflow-y: auto;
   width: 484px;
 
   .md-logo {
@@ -8,6 +8,35 @@
     background-size: 80%;
     height: 100%;
     width: 100%;
+  }
+
+  #content {
+    #pager {
+      position: absolute;
+      top: 472px;
+
+      height: 24px;
+      line-height: 24px;
+      width: 484px;
+
+      #pager-lhs {
+        float: left;
+        margin-left: 24px;
+        width: 196px;
+        text-align: right;
+      }
+      #pager-rhs {
+        float: right;
+        margin-right: 24px;
+        width: 196px;
+        text-align: left;
+      }
+      #pager-lhs, #pager-rhs {
+        font-size: 16px;
+        color: dimgray;
+        text-decoration: none;
+      }
+    }
   }
 
   header {
