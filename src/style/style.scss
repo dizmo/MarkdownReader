@@ -1,40 +1,81 @@
 #front {
   height: 464px;
-  overflow-y: auto;
-  width: 484px;
+  overflow-y: none;
+  width: 100%;
 
-  .md-logo {
+  #md-logo {
     background: no-repeat center;
     background-size: 80%;
     height: 100%;
-    width: 100%;
+    width: 484px;
+  }
+
+  #md-toc {
+    height: 464px;
+    left: 492px;
+    overflow-y: scroll;
+    position: absolute;
+    width: 250px;
+    top: 8px;
+
+    #md-toc-splitter {
+      background-color: dimgray;
+      width: 8px;
+    }
+
+    .md-toc-item {
+      border-bottom: dimgray solid 1px;
+      height: 32px;
+      line-height: 32px;
+    }
+    .md-toc-h1 {
+      padding-left: 16px;
+      width: 216px;
+    }
+    .md-toc-h2 {
+      padding-left: 32px;
+      width: 200px;
+    }
+    .md-toc-h3 {
+      padding-left: 48px;
+      width: 184px;
+    }
+    .md-toc-h4 {
+      padding-left: 64px;
+      width: 168px;
+    }
+    .md-toc-h5 {
+      padding-left: 80px;
+      width: 152px;
+    }
   }
 
   #content {
+    overflow-y: scroll;
+    width: 484px;
     #pager {
       position: absolute;
       top: 472px;
 
+      left: 0;
       height: 28px;
       line-height: 28px;
-      width: 484px;
+      width: 100%;
 
       #pager-lhs {
         float: left;
-        margin-left: 24px;
-        text-align: right;
+        text-align: center;
       }
       #pager-rhs {
         float: right;
-        margin-right: 24px;
-        text-align: left;
+        text-align: center;
       }
       #pager-lhs, #pager-rhs {
         color: dimgray;
         font-size: 16px;
         height: 100%;
         text-decoration: none;
-        width: 196px;
+        width: 50%;
       }
     }
   }

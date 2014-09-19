@@ -77,8 +77,14 @@ Class("MarkdownReader.Main", {
 
         onTurn: function (dizmo, side) {
             if (side === 'front') {
+                if (this.tocState === 'expanded') {
+                    this.dizmo.my.setSize(750, 500);
+                } else {
+                    this.dizmo.my.setSize(500, 500);
+                }
                 this.onShowFront();
             } else {
+                this.dizmo.my.setSize(500, 500);
                 this.onShowBack();
             }
         },
@@ -88,9 +94,10 @@ Class("MarkdownReader.Main", {
 
             jQuery('style#css').remove();
             jQuery('style#extra').remove();
-            jQuery('#front').empty().append(
-                '<div class="md-logo" style="background-image: {0}"></div>'
-                    .replace('{0}', 'url(style/images/tourguide-light.svg);'));
+            jQuery('#front').empty()
+                .append('<div id="md-logo" style="background-image: {0}"></div>'
+                    .replace('{0}', 'url(style/images/tourguide-light.svg);'))
+                .append('<div id="md-toc"><div id="md-toc-splitter"/></div>');
 
             var extraCss = EDITOR.getValue();
             if (extraCss && extraCss.length > 0) {
@@ -121,9 +128,11 @@ Class("MarkdownReader.Main", {
             if (urlMd && urlMd.length > 0) {
                 jQuery.ajax({
                     type: 'GET', url: urlMd, success: function (value) {
-                        jQuery('#front').empty().append(
-                            '<div id="content">{0}</div>'.replace(
-                                '{0}', self.md2html.convert(value)));
+                        jQuery('#front').empty()
+                            .append('<div id="content">{0}</div>'.replace(
+                                '{0}', self.md2html.convert(value)))
+                            .append('<div id="md-toc">{0}</div>'.replace(
+                                '{0}', '<div id="md-toc-splitter"/>'));
 
                         if (jQuery('#pager').length > 0) {
                             jQuery('#pager-lhs').click(
@@ -134,6 +143,18 @@ Class("MarkdownReader.Main", {
                                 return 0;
                             });
                         }
+
+                        jQuery('#md-toc-splitter').click(function () {
+                            if (self.tocState === 'expanded') {
+                                self.dizmo.my.setSize(500, 500);
+                                self.tocState = 'collapsed';
+                            } else {
+                                self.dizmo.my.setSize(750, 500);
+                                self.tocState = 'expanded';
+                            }
+                        });
+
+                        self.showToc();
                     }
                 });
                 self.setUrlMd(urlMd);
@@ -144,6 +165,38 @@ Class("MarkdownReader.Main", {
 
         onShowBack: function () {
             this.dizmo.my.setTitle('Markdown Reader');
+        },
+
+        showToc: function () {
+            var toc = jQuery('#md-toc > *');
+            var array = jQuery('#content > *').not ('#pager');
+            for (var i=0; i<array.length; i++) {
+                var item = array[i];
+                switch (item.tagName.toLowerCase()) {
+                    case 'h1':
+                        toc.append('<p class="md-toc-item md-toc-h1">{0}</p>'.replace(
+                            '{0}', item.textContent));
+                        break;
+                    case 'h2':
+                        toc.append('<p class="md-toc-item md-toc-h2">{0}</p>'.replace(
+                            '{0}', item.textContent));
+                        break;
+                    case 'h3':
+                        toc.append('<p class="md-toc-item md-toc-h3">{0}</p>'.replace(
+                            '{0}', item.textContent));
+                        break;
+                    case 'h4':
+                        toc.append('<p class="md-toc-item md-toc-h4">{0}</p>'.replace(
+                            '{0}', item.textContent));
+                        break;
+                    case 'h5':
+                        toc.append('<p class="md-toc-item md-toc-h5">{0}</p>'.replace(
+                            '{0}', item.textContent));
+                        break;
+                    default:
+                        break;
+                }
+            }
         },
 
         onPagerLhsClick: function () {
