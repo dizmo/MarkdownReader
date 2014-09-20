@@ -10,7 +10,7 @@ Class("MarkdownReader.Main", {
                         MarkdownReader.Dizmo.setTitle(text);
                     }
 
-                    return marked.defaults.renderer.heading.call ({
+                    return marked.defaults.renderer.heading.call({
                         options: marked.defaults
                     }, text, level, raw);
                 };
@@ -144,9 +144,9 @@ Class("MarkdownReader.Main", {
 
                         if (jQuery('#pager').length > 0) {
                             jQuery('#pager-lhs').click(
-                                self.onPagerLhsClick.bind (self));
+                                self.onLhsPagerClick.bind(self));
                             jQuery('#pager-rhs').click(
-                                self.onPagerRhsClick.bind (self));
+                                self.onRhsPagerClick.bind(self));
                             self.showPage(function () {
                                 return 0;
                             });
@@ -176,34 +176,35 @@ Class("MarkdownReader.Main", {
 
         initToc: function () {
             var toc = jQuery('#md-toc > *');
-            var array = jQuery('#content > *').not ('#pager');
-            for (var i=0; i<array.length; i++) {
+            var array = jQuery('#content > *').not('#pager');
+            for (var i = 0; i < array.length; i++) {
                 var item = array[i];
                 switch (item.tagName.toLowerCase()) {
                     case 'h1':
                         toc.append(
-                            '<div class="md-toc-item md-toc-h1"><p>{0}</p></div>'
-                                .replace('{0}', item.textContent));
+                            '<div class="md-toc-item md-toc-h1"><p ref="#{0}">{1}</p></div>'
+                                .replace('{0}', item.id).replace('{1}', item.textContent));
+
                         break;
                     case 'h2':
                         toc.append(
-                            '<div class="md-toc-item md-toc-h2"><p>{0}</p></div>'
-                                .replace('{0}', item.textContent));
+                            '<div class="md-toc-item md-toc-h2"><p ref="#{0}">{1}</p></div>'
+                                .replace('{0}', item.id).replace('{1}', item.textContent));
                         break;
                     case 'h3':
                         toc.append(
-                            '<div class="md-toc-item md-toc-h3"><p>{0}</p></div>'
-                                .replace('{0}', item.textContent));
+                            '<div class="md-toc-item md-toc-h3"><p ref="#{0}">{1}</p></div>'
+                                .replace('{0}', item.id).replace('{1}', item.textContent));
                         break;
                     case 'h4':
                         toc.append(
-                            '<div class="md-toc-item md-toc-h4"><p>{0}</p></div>'
-                                .replace('{0}', item.textContent));
+                            '<div class="md-toc-item md-toc-h4"><p ref="#{0}">{1}</p></div>'
+                                .replace('{0}', item.id).replace('{1}', item.textContent));
                         break;
                     case 'h5':
                         toc.append(
-                            '<div class="md-toc-item md-toc-h5"><p>{0}</p></div>'
-                                .replace('{0}', item.textContent));
+                            '<div class="md-toc-item md-toc-h5"><p ref="#{0}">{1}</p></div>'
+                                .replace('{0}', item.id).replace('{1}', item.textContent));
                         break;
                     default:
                         break;
@@ -215,21 +216,23 @@ Class("MarkdownReader.Main", {
             } else {
                 this.hideToc();
             }
+
+            jQuery('.md-toc-item').click(this.onTocItemClick);
         },
 
-        showToc: function() {
-            jQuery('.md-toc-item').css ('border-bottom', 'lightgray solid 1px');
+        showToc: function () {
+            jQuery('.md-toc-item').css('border-bottom', 'lightgray solid 1px');
             this.dizmo.my.setSize(750, 500);
             this.setTocFlag(true);
         },
 
-        hideToc: function() {
-            jQuery('.md-toc-item').css ('border-bottom', 'none');
+        hideToc: function () {
+            jQuery('.md-toc-item').css('border-bottom', 'none');
             this.dizmo.my.setSize(500, 500);
             this.setTocFlag(false);
         },
 
-        onPagerLhsClick: function () {
+        onLhsPagerClick: function () {
             this.showPage(function (page) {
                 return (page - 1 >= 0) ? page - 1 : 0;
             });
@@ -237,7 +240,7 @@ Class("MarkdownReader.Main", {
             return false;
         },
 
-        onPagerRhsClick: function () {
+        onRhsPagerClick: function () {
             this.showPage(function (page, pages) {
                 return (page + 1 < pages) ? page + 1 : page;
             });
@@ -245,20 +248,28 @@ Class("MarkdownReader.Main", {
             return false;
         },
 
+        onTocItemClick: function () {
+            var ref = $(this).find('p').attr('ref'); (function () {
+                console.debug ('[TOC-ITEM:CLICK] ref', ref);
+            })();
+
+            return false;
+        },
+
         showPage: function (counter) {
             var groups = this.group(
-                jQuery('#content > *').not ('#pager'), function (item) {
+                jQuery('#content > *').not('#pager'), function (item) {
                     return item.tagName.toLowerCase() == 'h2'.toLowerCase();
                 }
             );
 
             if (counter !== undefined) {
-                this.page = counter.call(this, this.page||0, groups.length);
+                this.page = counter.call(this, this.page || 0, groups.length);
             } else {
                 this.page = 0;
             }
 
-            for (var index=0; index<groups.length; index++) {
+            for (var index = 0; index < groups.length; index++) {
                 if (index == this.page) {
                     jQuery(groups[index]).show();
                 } else {
@@ -269,9 +280,9 @@ Class("MarkdownReader.Main", {
 
         group: function (array, by) {
             var groups = [], index = null;
-            for (var i=0; i<array.length; i++) {
+            for (var i = 0; i < array.length; i++) {
                 var item = array[i];
-                if (by (item, index, i)) {
+                if (by(item, index, i)) {
                     index = (index !== null) ? index + 1 : 0;
                 }
                 if (index !== null) {
@@ -279,7 +290,7 @@ Class("MarkdownReader.Main", {
                         groups[index] = [];
                     }
 
-                    groups[index].push (item);
+                    groups[index].push(item);
                 }
             }
 
