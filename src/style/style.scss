@@ -11,6 +11,8 @@
   }
 
   #md-toc {
+    color: #92a611;
+    font-size: 18px;
     height: 464px;
     left: 492px;
     overflow-y: scroll;
@@ -19,34 +21,32 @@
     top: 8px;
 
     #md-toc-splitter {
-      background-color: dimgray;
       width: 8px;
     }
 
     .md-toc-item {
-      border-bottom: dimgray solid 1px;
-      height: 32px;
-      line-height: 32px;
+      border-bottom: lightgray solid 1px;
+      line-height: 28px;
     }
     .md-toc-h1 {
-      padding-left: 16px;
-      width: 216px;
+      padding-left: 4px;
+      width: 236px;
     }
     .md-toc-h2 {
-      padding-left: 32px;
-      width: 200px;
+      padding-left: 20px;
+      width: 220px;
     }
     .md-toc-h3 {
-      padding-left: 48px;
-      width: 184px;
+      padding-left: 36px;
+      width: 204px;
     }
     .md-toc-h4 {
-      padding-left: 64px;
-      width: 168px;
+      padding-left: 52px;
+      width: 188px;
     }
     .md-toc-h5 {
-      padding-left: 80px;
-      width: 152px;
+      padding-left: 60px;
+      width: 172px;
     }
   }
 
@@ -71,9 +71,10 @@
         text-align: center;
       }
       #pager-lhs, #pager-rhs {
-        color: dimgray;
-        font-size: 16px;
+        color: #92a611;;
+        font-size: 28px;
         height: 100%;
+        line-height: 22px;
         text-decoration: none;
         width: 50%;
       }
