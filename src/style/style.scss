@@ -21,32 +21,35 @@
     top: 8px;
 
     #md-toc-splitter {
-      width: 8px;
+      padding-left: 8px;
+      width: 0;
     }
-
     .md-toc-item {
       border-bottom: lightgray solid 1px;
       line-height: 28px;
     }
+    .md-toc-item p {
+      padding-left: 0;
+    }
     .md-toc-h1 {
-      padding-left: 4px;
-      width: 236px;
+      padding-left: 0;
+      width: 224px;
     }
     .md-toc-h2 {
-      padding-left: 20px;
-      width: 220px;
+      padding-left: 16px;
+      width: 208px;
     }
     .md-toc-h3 {
-      padding-left: 36px;
-      width: 204px;
+      padding-left: 32px;
+      width: 192px;
     }
     .md-toc-h4 {
-      padding-left: 52px;
-      width: 188px;
+      padding-left: 48px;
+      width: 176px;
     }
     .md-toc-h5 {
-      padding-left: 60px;
-      width: 172px;
+      padding-left: 56px;
+      width: 160px;
     }
   }
 

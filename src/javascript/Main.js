@@ -147,6 +147,17 @@ Class("MarkdownReader.Main", {
                                 self.onLhsPagerClick.bind(self));
                             jQuery('#pager-rhs').click(
                                 self.onRhsPagerClick.bind(self));
+                            jQuery(document).keydown(function(ev){
+                                var keyCode = ev.keyCode||ev.which;
+                                if (keyCode == 37) { // left arrow
+                                   self.onLhsPagerClick ();
+                                   return false;
+                                }
+                                if (keyCode == 39) { // right arrow
+                                   self.onRhsPagerClick ();
+                                   return false;
+                                }
+                            });
                             self.showPage(function () {
                                 return 0;
                             });
@@ -178,33 +189,33 @@ Class("MarkdownReader.Main", {
             var toc = jQuery('#md-toc > *');
             var array = jQuery('#content > *').not('#pager');
             for (var i = 0; i < array.length; i++) {
-                var item = array[i];
-                switch (item.tagName.toLowerCase()) {
-                    case 'h1':
+                var el = array[i];
+                switch (el.tagName) {
+                    case 'H1':
                         toc.append(
                             '<div class="md-toc-item md-toc-h1"><p ref="#{0}">{1}</p></div>'
-                                .replace('{0}', item.id).replace('{1}', item.textContent));
+                                .replace('{0}', el.id).replace('{1}', el.textContent));
 
                         break;
-                    case 'h2':
+                    case 'H2':
                         toc.append(
                             '<div class="md-toc-item md-toc-h2"><p ref="#{0}">{1}</p></div>'
-                                .replace('{0}', item.id).replace('{1}', item.textContent));
+                                .replace('{0}', el.id).replace('{1}', el.textContent));
                         break;
-                    case 'h3':
+                    case 'H3':
                         toc.append(
                             '<div class="md-toc-item md-toc-h3"><p ref="#{0}">{1}</p></div>'
-                                .replace('{0}', item.id).replace('{1}', item.textContent));
+                                .replace('{0}', el.id).replace('{1}', el.textContent));
                         break;
-                    case 'h4':
+                    case 'H4':
                         toc.append(
                             '<div class="md-toc-item md-toc-h4"><p ref="#{0}">{1}</p></div>'
-                                .replace('{0}', item.id).replace('{1}', item.textContent));
+                                .replace('{0}', el.id).replace('{1}', el.textContent));
                         break;
-                    case 'h5':
+                    case 'H5':
                         toc.append(
                             '<div class="md-toc-item md-toc-h5"><p ref="#{0}">{1}</p></div>'
-                                .replace('{0}', item.id).replace('{1}', item.textContent));
+                                .replace('{0}', el.id).replace('{1}', el.textContent));
                         break;
                     default:
                         break;
@@ -217,7 +228,7 @@ Class("MarkdownReader.Main", {
                 this.hideToc();
             }
 
-            jQuery('.md-toc-item').click(this.onTocItemClick);
+            jQuery('.md-toc-item').click(this.onTocItemClick.bind(this));
         },
 
         showToc: function () {
@@ -237,6 +248,10 @@ Class("MarkdownReader.Main", {
                 return (page - 1 >= 0) ? page - 1 : 0;
             });
 
+            jQuery('#content').animate({
+                scrollTop: 0
+            }, 0);
+
             return false;
         },
 
@@ -245,13 +260,51 @@ Class("MarkdownReader.Main", {
                 return (page + 1 < pages) ? page + 1 : page;
             });
 
+            jQuery('#content').animate({
+                scrollTop: 0
+            }, 0);
+
             return false;
         },
 
-        onTocItemClick: function () {
-            var ref = $(this).find('p').attr('ref'); (function () {
-                console.debug ('[TOC-ITEM:CLICK] ref', ref);
-            })();
+        onTocItemClick: function (event) {
+            var ref = jQuery(event.target).attr('ref');
+            if (ref) {
+                var $el = jQuery(ref), $header;
+                if ($el.length > 0) {
+                    switch ($el[0].tagName) {
+                        case 'H1':
+                            $header = $el.nextAll('h2:first');
+                            break;
+                        case 'H2':
+                            $header = $el;
+                            break;
+                        default:
+                            $header = $el.prevAll('h2:first');
+                    }
+
+                    var $content = jQuery('#content'),
+                        page = $content.find('> h2').index($header);
+                    if (page >= 0) {
+                        this.showPage(function () {
+                            return page;
+                        }, false);
+
+                        switch ($el[0].tagName) {
+                            case 'H1':
+                            case 'H2':
+                                $content.animate({
+                                    scrollTop: 0
+                                }, 375);
+                                break;
+                            default:
+                                $content.animate({
+                                    scrollTop: $el.offset().top
+                                }, 375);
+                        }
+                    }
+                }
+            }
 
             return false;
         },
@@ -259,7 +312,7 @@ Class("MarkdownReader.Main", {
         showPage: function (counter) {
             var groups = this.group(
                 jQuery('#content > *').not('#pager'), function (item) {
-                    return item.tagName.toLowerCase() == 'h2'.toLowerCase();
+                    return item.tagName == 'H2';
                 }
             );
 
