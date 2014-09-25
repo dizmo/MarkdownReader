@@ -195,7 +195,6 @@ Class("MarkdownReader.Main", {
                         toc.append(
                             '<div class="md-toc-item md-toc-h1"><p ref="#{0}">{1}</p></div>'
                                 .replace('{0}', el.id).replace('{1}', el.textContent));
-
                         break;
                     case 'H2':
                         toc.append(
@@ -268,41 +267,30 @@ Class("MarkdownReader.Main", {
         },
 
         onTocItemClick: function (event) {
-            var ref = jQuery(event.target).attr('ref');
+            var $content = jQuery('#content'),
+                ref = jQuery(event.target).attr('ref');
             if (ref) {
                 var $el = jQuery(ref), $header;
                 if ($el.length > 0) {
                     switch ($el[0].tagName) {
                         case 'H1':
-                            $header = $el.nextAll('h2:first');
-                            break;
                         case 'H2':
+                            $header = $el.nextAll('h3:first');
+                            break;
+                        case 'H3':
                             $header = $el;
                             break;
                         default:
-                            $header = $el.prevAll('h2:first');
+                            $header = $el.prevAll('h3:first');
                     }
 
-                    var $content = jQuery('#content'),
-                        page = $content.find('> h2').index($header);
-                    if (page >= 0) {
-                        this.showPage(function () {
-                            return page;
-                        }, false);
+                    if (jQuery('#pager').length > 0) this.showPage(function () {
+                        return $content.find('> h3').index($header);
+                    }, false);
 
-                        switch ($el[0].tagName) {
-                            case 'H1':
-                            case 'H2':
-                                $content.animate({
-                                    scrollTop: 0
-                                }, 375);
-                                break;
-                            default:
-                                $content.animate({
-                                    scrollTop: $el.offset().top
-                                }, 375);
-                        }
-                    }
+                    $content.animate({
+                        scrollTop: $el.offset().top
+                    }, 375);
                 }
             }
 
@@ -310,24 +298,48 @@ Class("MarkdownReader.Main", {
         },
 
         showPage: function (counter) {
-            var groups = this.group(
-                jQuery('#content > *').not('#pager'), function (item) {
-                    return item.tagName == 'H2';
-                }
-            );
+            var $items = jQuery('#content > *'),
+                $pages = jQuery('#content').find('> h3');
+
+            var $h2s = this.group($items.not('#pager'), function (item) {
+                return item.tagName == 'H2';
+            });
+
+            for (var z = 0; z < $h2s.length; z++) {
+                $h2s[z].$h3s = this.group($h2s[z], function (item) {
+                    return item.tagName == 'H3';
+                });
+            }
 
             if (counter !== undefined) {
-                this.page = counter.call(this, this.page || 0, groups.length);
+                this.page = counter.call(this, this.page||0, $pages.length);
             } else {
                 this.page = 0;
             }
 
-            for (var index = 0; index < groups.length; index++) {
-                if (index == this.page) {
-                    jQuery(groups[index]).show();
-                } else {
-                    jQuery(groups[index]).hide();
+            var i = 0, j = 0, flag = {};
+            for (var page = 0; page < $pages.length; page++) {
+                if ($h2s[i].$h3s[j] === undefined) {
+                    i += 1; j = 0;
                 }
+
+                var head = function (h2s) {
+                    return jQuery(h2s).first('h2').nextUntil('h3').andSelf();
+                };
+
+                if (page == this.page) {
+                    head ($h2s[i]).show(); flag[i] = true;
+                    jQuery($h2s[i].$h3s[j]).show();
+
+                    MarkdownReader.Dizmo.setTitle('{0}: {1}'
+                        .replace('{0}',$items.first('h1').text())
+                        .replace('{1}',jQuery($h2s[i]).first('h2').text()));
+                } else {
+                    if (!flag[i]) head ($h2s[i]).hide();
+                    jQuery($h2s[i].$h3s[j]).hide();
+                }
+
+                j += 1;
             }
         },
 
@@ -347,7 +359,7 @@ Class("MarkdownReader.Main", {
                 }
             }
 
-            return groups;
+            return jQuery (groups);
         }
     }
 });
