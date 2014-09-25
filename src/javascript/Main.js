@@ -147,15 +147,15 @@ Class("MarkdownReader.Main", {
                                 self.onLhsPagerClick.bind(self));
                             jQuery('#pager-rhs').click(
                                 self.onRhsPagerClick.bind(self));
-                            jQuery(document).keydown(function(ev){
-                                var keyCode = ev.keyCode||ev.which;
+                            jQuery(document).keydown(function (ev) {
+                                var keyCode = ev.keyCode || ev.which;
                                 if (keyCode == 37) { // left arrow
-                                   self.onLhsPagerClick ();
-                                   return false;
+                                    self.onLhsPagerClick();
+                                    return false;
                                 }
                                 if (keyCode == 39) { // right arrow
-                                   self.onRhsPagerClick ();
-                                   return false;
+                                    self.onRhsPagerClick();
+                                    return false;
                                 }
                             });
                             self.showPage(function () {
@@ -312,7 +312,7 @@ Class("MarkdownReader.Main", {
             }
 
             if (counter !== undefined) {
-                this.page = counter.call(this, this.page||0, $pages.length);
+                this.page = counter.call(this, this.page || 0, $pages.length);
             } else {
                 this.page = 0;
             }
@@ -328,14 +328,14 @@ Class("MarkdownReader.Main", {
                 };
 
                 if (page == this.page) {
-                    head ($h2s[i]).show(); flag[i] = true;
-                    jQuery($h2s[i].$h3s[j]).show();
-
                     MarkdownReader.Dizmo.setTitle('{0}: {1}'
-                        .replace('{0}',$items.first('h1').text())
-                        .replace('{1}',jQuery($h2s[i]).first('h2').text()));
+                        .replace('{0}', $items.first('h1').text())
+                        .replace('{1}', jQuery($h2s[i]).first('h2').text()));
+
+                    head($h2s[i]).show(); flag[i] = true;
+                    jQuery($h2s[i].$h3s[j]).show();
                 } else {
-                    if (!flag[i]) head ($h2s[i]).hide();
+                    if (!flag[i]) head($h2s[i]).hide();
                     jQuery($h2s[i].$h3s[j]).hide();
                 }
 
@@ -359,7 +359,7 @@ Class("MarkdownReader.Main", {
                 }
             }
 
-            return jQuery (groups);
+            return jQuery(groups);
         }
     }
 });
