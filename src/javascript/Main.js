@@ -163,13 +163,13 @@ Class("MarkdownReader.Main", {
                             });
                         }
 
-                        jQuery('#md-toc-splitter').click(function () {
+                        /*jQuery('#md-toc-splitter').click(function () {
                             if (self.tocFlag !== true) {
                                 self.showToc();
                             } else {
                                 self.hideToc();
                             }
-                        });
+                        });*/
 
                         self.initToc();
                     }
