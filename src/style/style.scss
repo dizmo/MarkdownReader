@@ -1,6 +1,5 @@
 #front {
   height: 464px;
-  overflow-y: none;
   width: 100%;
 
   #md-logo {
@@ -12,7 +11,6 @@
 
   #md-toc {
     color: #92a611;
-    font-size: 18px;
     height: 464px;
     left: 492px;
     overflow-y: scroll;
@@ -26,7 +24,8 @@
     }
     .md-toc-item {
       border-bottom: lightgray solid 1px;
-      line-height: 30px;
+      font-size: 34px;
+      line-height:34px;
     }
     .md-toc-item p {
       padding-left: 0;
@@ -54,8 +53,8 @@
   }
 
   #content {
-    overflow-y: scroll;
     width: 484px;
+
     #pager {
       position: absolute;
       top: 472px;
