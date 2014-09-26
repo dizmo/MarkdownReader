@@ -328,9 +328,17 @@ Class("MarkdownReader.Main", {
                 };
 
                 if (page == this.page) {
-                    MarkdownReader.Dizmo.setTitle('{0}: {1}'
-                        .replace('{0}', $items.first('h1').text())
-                        .replace('{1}', jQuery($h2s[i]).first('h2').text()));
+                    var h1_text = $items.first('h1').text(),
+                        h2_text = jQuery($h2s[i]).first('h2').text();
+
+                    if (h2_text.length > 0 && h2_text != ' ') {
+                        MarkdownReader.Dizmo.setTitle('{0}: {1}'
+                            .replace('{0}', h1_text)
+                            .replace('{1}', h2_text));
+                    } else {
+                        MarkdownReader.Dizmo.setTitle('{0}'
+                            .replace('{0}', h1_text));
+                    }
 
                     head($h2s[i]).show(); flag[i] = true;
                     jQuery($h2s[i].$h3s[j]).show();
