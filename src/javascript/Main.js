@@ -105,7 +105,7 @@ Class("MarkdownReader.Main", {
             jQuery('#front').empty()
                 .append('<div id="md-logo" style="background-image: {0}"></div>'
                     .replace('{0}', 'url(style/images/tourguide-light.svg);'))
-                .append('<div id="md-toc"><div id="md-tocs"/></div>');
+                .append('<div id="md-toc"><div id="md-toc-items"/></div>');
 
             var extraCss = EDITOR.getValue();
             if (extraCss && extraCss.length > 0) {
@@ -140,8 +140,8 @@ Class("MarkdownReader.Main", {
                             .append('<div id="content">{0}</div>'
                                 .replace('{0}', self.md2html.convert(value)))
                             .append('<div id="md-toc">{0}{1}</div>'
-                                .replace('{0}', '<label><input type="text"></label>')
-                                .replace('{1}', '<div id="md-tocs"/>'));
+                                .replace('{0}', '<label><input id="md-toc-search" type="text"></label>')
+                                .replace('{1}', '<div id="md-toc-items"/>'));
 
                         if (jQuery('#pager').length > 0) {
                             jQuery('#pager-lhs').click(
@@ -182,7 +182,7 @@ Class("MarkdownReader.Main", {
         },
 
         initToc: function () {
-            var tocs = jQuery('#md-tocs');
+            var tocs = jQuery('#md-toc-items');
             var array = jQuery('#content > *').not('#pager');
             for (var i = 0; i < array.length; i++) {
                 var el = array[i];
@@ -222,6 +222,32 @@ Class("MarkdownReader.Main", {
             } else {
                 this.hideToc();
             }
+
+            jQuery('#md-toc-search').keyup(function (ev) {
+                var keyCode = ev.keyCode || ev.which;
+                if (keyCode == 27) { // escape
+                    jQuery('.md-toc-item').each(function (index, item) {
+                        jQuery(item).show();
+                    });
+
+                    jQuery('#md-toc-search').val('');
+                } else {
+                    var rx = new RegExp(jQuery('#md-toc-search').val(), 'i');
+                    jQuery('.md-toc-item').each(function (index, item) {
+                        var $item = jQuery(item);
+                        if (rx.source.length > 0) {
+                            var text = $item.find('p').text();
+                            if (text.match(rx)) {
+                                $item.show();
+                            } else {
+                                $item.hide();
+                            }
+                        } else {
+                            $item.show();
+                        }
+                    });
+                }
+            });
 
             jQuery('.md-toc-item').click(this.onTocItemClick.bind(this));
         },
@@ -316,7 +342,8 @@ Class("MarkdownReader.Main", {
             var i = 0, j = 0, flag = {};
             for (var page = 0; page < $pages.length; page++) {
                 if ($h2s[i].$h3s[j] === undefined) {
-                    i += 1; j = 0;
+                    i += 1;
+                    j = 0;
                 }
 
                 var head = function (h2s) {
@@ -336,7 +363,8 @@ Class("MarkdownReader.Main", {
                             .replace('{0}', h1_text));
                     }
 
-                    head($h2s[i]).show(); flag[i] = true;
+                    head($h2s[i]).show();
+                    flag[i] = true;
                     jQuery($h2s[i].$h3s[j]).show();
                 } else {
                     if (!flag[i]) head($h2s[i]).hide();
