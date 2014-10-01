@@ -105,7 +105,7 @@ Class("MarkdownReader.Main", {
             jQuery('#front').empty()
                 .append('<div id="md-logo" style="background-image: {0}"></div>'
                     .replace('{0}', 'url(style/images/tourguide-light.svg);'))
-                .append('<div id="md-toc"><div id="md-toc-splitter"/></div>');
+                .append('<div id="md-toc"><div id="md-tocs"/></div>');
 
             var extraCss = EDITOR.getValue();
             if (extraCss && extraCss.length > 0) {
@@ -137,10 +137,11 @@ Class("MarkdownReader.Main", {
                 jQuery.ajax({
                     type: 'GET', url: urlMd, success: function (value) {
                         jQuery('#front').empty()
-                            .append('<div id="content">{0}</div>'.replace(
-                                '{0}', self.md2html.convert(value)))
-                            .append('<div id="md-toc">{0}</div>'.replace(
-                                '{0}', '<div id="md-toc-splitter"/>'));
+                            .append('<div id="content">{0}</div>'
+                                .replace('{0}', self.md2html.convert(value)))
+                            .append('<div id="md-toc">{0}{1}</div>'
+                                .replace('{0}', '<label><input type="text"></label>')
+                                .replace('{1}', '<div id="md-tocs"/>'));
 
                         if (jQuery('#pager').length > 0) {
                             jQuery('#pager-lhs').click(
@@ -148,28 +149,23 @@ Class("MarkdownReader.Main", {
                             jQuery('#pager-rhs').click(
                                 self.onRhsPagerClick.bind(self));
                             jQuery(document).keydown(function (ev) {
-                                var keyCode = ev.keyCode || ev.which;
-                                if (keyCode == 37) { // left arrow
-                                    self.onLhsPagerClick();
-                                    return false;
-                                }
-                                if (keyCode == 39) { // right arrow
-                                    self.onRhsPagerClick();
-                                    return false;
+                                var display = jQuery('#front').css('display');
+                                if (display === 'block') {
+                                    var keyCode = ev.keyCode || ev.which;
+                                    if (keyCode == 37) { // left arrow
+                                        self.onLhsPagerClick();
+                                        return false;
+                                    }
+                                    if (keyCode == 39) { // right arrow
+                                        self.onRhsPagerClick();
+                                        return false;
+                                    }
                                 }
                             });
                             self.showPage(function () {
                                 return 0;
                             });
                         }
-
-                        /*jQuery('#md-toc-splitter').click(function () {
-                            if (self.tocFlag !== true) {
-                                self.showToc();
-                            } else {
-                                self.hideToc();
-                            }
-                        });*/
 
                         self.initToc();
                     }
@@ -186,33 +182,33 @@ Class("MarkdownReader.Main", {
         },
 
         initToc: function () {
-            var toc = jQuery('#md-toc > *');
+            var tocs = jQuery('#md-tocs');
             var array = jQuery('#content > *').not('#pager');
             for (var i = 0; i < array.length; i++) {
                 var el = array[i];
                 switch (el.tagName) {
                     case 'H1':
-                        toc.append(
+                        tocs.append(
                             '<div class="md-toc-item md-toc-h1"><p ref="#{0}">{1}</p></div>'
                                 .replace('{0}', el.id).replace('{1}', el.textContent));
                         break;
                     case 'H2':
-                        toc.append(
+                        tocs.append(
                             '<div class="md-toc-item md-toc-h2"><p ref="#{0}">{1}</p></div>'
                                 .replace('{0}', el.id).replace('{1}', el.textContent));
                         break;
                     case 'H3':
-                        toc.append(
+                        tocs.append(
                             '<div class="md-toc-item md-toc-h3"><p ref="#{0}">{1}</p></div>'
                                 .replace('{0}', el.id).replace('{1}', el.textContent));
                         break;
                     case 'H4':
-                        toc.append(
+                        tocs.append(
                             '<div class="md-toc-item md-toc-h4"><p ref="#{0}">{1}</p></div>'
                                 .replace('{0}', el.id).replace('{1}', el.textContent));
                         break;
                     case 'H5':
-                        toc.append(
+                        tocs.append(
                             '<div class="md-toc-item md-toc-h5"><p ref="#{0}">{1}</p></div>'
                                 .replace('{0}', el.id).replace('{1}', el.textContent));
                         break;

@@ -13,14 +13,29 @@
     color: #92a611;
     height: 464px;
     left: 492px;
-    overflow-y: scroll;
     position: absolute;
     width: 250px;
     top: 8px;
 
-    #md-toc-splitter {
+    input[type=text] {
+      background-color: #d9d9d9;
+      border: 1px solid #a1a1a1;
+      border-radius: 4px;
+      height: 34px;
+      margin: 0 0 0 8px;
+      padding: 0 8px;
+      width: 224px;
+    }
+
+    #md-tocs {
+      overflow-y: scroll;
+      height: 420px;
+      margin-top: 8px;
       padding-left: 8px;
-      width: 0;
+      width: 242px;
+    }
+    .md-toc-item:first-of-type {
+      border-top: lightgray solid 1px;
     }
     .md-toc-item {
       border-bottom: lightgray solid 1px;
@@ -57,7 +72,7 @@
 
     #pager {
       position: absolute;
-      top: 472px;
+      top: 470px;
 
       left: 0;
       height: 28px;
