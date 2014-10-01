@@ -18,13 +18,13 @@
     top: 8px;
 
     input[type=text] {
-      background-color: #d9d9d9;
+      background: #d9d9d9 url(images/search-icon.svg) right no-repeat;
       border: 1px solid #a1a1a1;
       border-radius: 4px;
       height: 34px;
       margin: 0 0 0 8px;
-      padding: 0 8px;
-      width: 224px;
+      padding: 0 32px 0 8px;
+      width: 200px;
     }
 
     #md-tocs {
