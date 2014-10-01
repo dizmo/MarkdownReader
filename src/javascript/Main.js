@@ -182,6 +182,7 @@ Class("MarkdownReader.Main", {
         },
 
         initToc: function () {
+            var self = this;
             var tocs = jQuery('#md-toc-items');
             var array = jQuery('#content > *').not('#pager');
             for (var i = 0; i < array.length; i++) {
@@ -217,11 +218,19 @@ Class("MarkdownReader.Main", {
                 }
             }
 
-            if (this.tocFlag === true) {
-                this.showToc();
+            if (self.tocFlag === true) {
+                self.showToc();
             } else {
-                this.hideToc();
+                self.hideToc();
             }
+
+            dizmo.addMenuItem('/style/images/toc.svg', 'Toggle Table of Contents', function () {
+                if (self.tocFlag !== true) {
+                    self.showToc();
+                } else {
+                    self.hideToc();
+                }
+            });
 
             jQuery('#md-toc-search').keyup(function (ev) {
                 var keyCode = ev.keyCode || ev.which;
@@ -249,7 +258,7 @@ Class("MarkdownReader.Main", {
                 }
             });
 
-            jQuery('.md-toc-item').click(this.onTocItemClick.bind(this));
+            jQuery('.md-toc-item').click(self.onTocItemClick.bind(self));
         },
 
         showToc: function () {
