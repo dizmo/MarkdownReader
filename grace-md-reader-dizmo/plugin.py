@@ -8,7 +8,7 @@ class MdReaderDizmoPlugin (DizmoPlugin):
     def after_build(self):
         DizmoPlugin.after_build (self)
 
-        properties = self._config.get ('dizmo_private', {})
+        properties = self._config.get ('dizmo_private_store', {})
         script = self._config['js_name'] + '.js'
         target = os.path.join(self._config['build_path'], script)
 
