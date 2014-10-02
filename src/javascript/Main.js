@@ -224,7 +224,7 @@ Class("MarkdownReader.Main", {
                 self.hideToc();
             }
 
-            dizmo.addMenuItem('/style/images/toc.svg', 'Toggle Table of Contents', function () {
+            dizmo.addMenuItem('/style/images/toc.svg', 'Table of Contents', function () {
                 if (self.tocFlag !== true) {
                     self.showToc();
                 } else {

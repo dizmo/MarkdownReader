@@ -10,5 +10,13 @@ function showFront() {
 
 var events = {};
 jQuery(document).ready(function () {
+    if (MarkdownReader.Dizmo.load('showBack') !== 'True') {
+        showBack = undefined;
+    }
+
+    if (MarkdownReader.Dizmo.load('showFront') !== 'True') {
+        showFront = undefined;
+    }
+
     MAIN = new MarkdownReader.Main();
 });
