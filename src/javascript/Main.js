@@ -179,9 +179,9 @@ Class("MarkdownReader.Main", {
                                     console.error(ex);
                                     return false;
                                 }
-                            }
 
-                            return false;
+                                return false;
+                            }
                         });
 
                         self.initToc();
