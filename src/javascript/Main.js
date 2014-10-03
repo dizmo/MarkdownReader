@@ -168,6 +168,22 @@ Class("MarkdownReader.Main", {
                             });
                         }
 
+                        jQuery('#content').find('a').click(function (ev) {
+                            var $target = jQuery(ev.target);
+                            var href = $target.attr('href');
+                            if (href.match(new RegExp('^bundle://'))) {
+                                var bid = href.replace('bundle://', '');
+                                try {
+                                    viewer.instantiateDizmo(bid);
+                                } catch (ex) {
+                                    console.error(ex);
+                                    return false;
+                                }
+                            }
+
+                            return false;
+                        });
+
                         self.initToc();
                     }
                 });
