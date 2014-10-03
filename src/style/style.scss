@@ -40,13 +40,14 @@
       .md-toc-item {
         border-bottom: lightgray solid 1px;
         font-size: 34px;
-        line-height:34px;
       }
       .md-toc-item:last-of-type {
         border-bottom: lightgray solid 2px !important;
       }
       .md-toc-item p {
+        padding-bottom: 5px;
         padding-left: 0;
+        padding-top: 7px;
       }
       .md-toc-h1 {
         padding-left: 0;
