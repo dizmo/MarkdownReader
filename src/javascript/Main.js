@@ -140,7 +140,8 @@ Class("MarkdownReader.Main", {
                             .append('<div id="content">{0}</div>'
                                 .replace('{0}', self.md2html.convert(value)))
                             .append('<div id="md-toc">{0}{1}</div>'
-                                .replace('{0}', '<label><input id="md-toc-search" type="text"></label>')
+                                .replace('{0}', '<div class="searchfield">{0}</div>'
+                                    .replace ('{0}', '<input id="md-toc-search" data-type="dizmo-input" type="text" class="searchinput" />'))
                                 .replace('{1}', '<div id="md-toc-items"/>'));
 
                         if (jQuery('#pager').length > 0) {
