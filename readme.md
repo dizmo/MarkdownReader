@@ -96,3 +96,10 @@ been defined), we would like to *freeze* the configuration; for this purpose a
 Handling submodules can sometimes be tricky: For further information about GIT
 submodules, consult http://www.git-scm.com/book/en/Git-Tools-Submodules. It is
 recommended to understand at least the basics of, to avoid mishaps!
+
+Once you clone a GIT repository with submodules, don't forget to update (and
+initialize) them via:
+
+ ```$ git submodule update --init```
+
+Since otherwise the folders of the submodules will remain emtpy!
