@@ -22,6 +22,12 @@ Class("MarkdownReader.Main", {
                 };
             }
         },
+        urlBundleId: {
+            is: 'ro', init: function () {
+                return MarkdownReader.Dizmo.load(
+                    'urlBundleId', 'http://store.dizmo.com/?bid=');
+            }
+        },
         urlMd: {
             is: 'rw', init: function () {
                 return MarkdownReader.Dizmo.load('urlMd');
@@ -141,7 +147,11 @@ Class("MarkdownReader.Main", {
                                 .replace('{0}', self.md2html.convert(value)))
                             .append('<div id="md-toc">{0}{1}</div>'
                                 .replace('{0}', '<div class="searchfield">{0}</div>'
-                                    .replace ('{0}', '<input id="md-toc-search" data-type="dizmo-input" type="text" class="searchinput" />'))
+                                    .replace ('{0}', '<input ' +
+                                        'id="md-toc-search" ' +
+                                        'data-type="dizmo-input" type="text" ' +
+                                        'class="searchinput" ' +
+                                    '/>'))
                                 .replace('{1}', '<div id="md-toc-items"/>'));
 
                         if (jQuery('#pager').length > 0) {
@@ -171,13 +181,18 @@ Class("MarkdownReader.Main", {
                         jQuery('#content').find('a').click(function (ev) {
                             var $target = jQuery(ev.target);
                             var href = $target.attr('href');
-                            if (href.match(new RegExp('^bundle://'))) {
-                                var bid = href.replace('bundle://', '');
-                                try {
+
+                            if (href.indexOf(self.urlBundleId) === 0) {
+                                var bid = href.replace(self.urlBundleId, '');
+                                var bundles = viewer.getInstalledBundles();
+
+                                if (bundles.indexOf (bid) > 0) {
                                     viewer.instantiateDizmo(bid);
-                                } catch (ex) {
-                                    console.error(ex);
-                                    return false;
+                                } else {
+                                    var bid_store = 'com.dizmo.dizmostore';
+                                    if (bundles.indexOf (bid_store) > 0) {
+                                        viewer.instantiateDizmo(bid_store);
+                                    }
                                 }
 
                                 return false;
