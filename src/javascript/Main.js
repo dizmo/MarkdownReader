@@ -92,13 +92,13 @@ Class("MarkdownReader.Main", {
         onTurn: function (dizmo, side) {
             if (side === 'front') {
                 if (this.tocFlag === true) {
-                    this.dizmo.my.setSize(750, 500);
+                    this.dizmo.my.setSize(830, 580);
                 } else {
-                    this.dizmo.my.setSize(500, 500);
+                    this.dizmo.my.setSize(580, 580);
                 }
                 this.onShowFront();
             } else {
-                this.dizmo.my.setSize(500, 500);
+                this.dizmo.my.setSize(580, 580);
                 this.onShowBack();
             }
         },
@@ -295,13 +295,13 @@ Class("MarkdownReader.Main", {
 
         showToc: function () {
             jQuery('.md-toc-item').css('border-bottom', 'lightgray solid 1px');
-            this.dizmo.my.setSize(750, 500);
+            this.dizmo.my.setSize(830, 580);
             this.setTocFlag(true);
         },
 
         hideToc: function () {
             jQuery('.md-toc-item').css('border-bottom', 'none');
-            this.dizmo.my.setSize(500, 500);
+            this.dizmo.my.setSize(580, 580);
             this.setTocFlag(false);
         },
 
