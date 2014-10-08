@@ -5,6 +5,8 @@
         <meta charset="UTF-8" />
         <script src="lib/joose/joose.min.js"></script>
         <script src="lib/jquery/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="lib/jquery-ui/css/custom-theme/jquery-ui-1.10.3.custom.min.css" />
+        <script type="text/javascript" src="lib/jquery-ui/jquery-ui-1.10.3.custom.min.js"></script>
         <script src="lib/marked/marked.min.js"></script>
         <link rel="stylesheet" href="lib/codemirror/codemirror.min.css">
         <script src="lib/codemirror/codemirror.min.js"></script>
@@ -18,10 +20,10 @@
             <form>
                 <label for="url-md">Content URL</label>
                 <input id="url-md" type="url" name="url" data-type="dizmo-input" data-required="true"
-                       placeholder="Markdown to fetch from (e.g. http://help.dizmo.com/tourguide/en/index.md)"/>
+                       placeholder="Markdown URL (e.g. http://help.dizmo.com/TourGuide/en/index.md)"/>
                 <label for="url-css">Styling URL</label>
                 <input id="url-css" type="url" name="url" data-type="dizmo-input" data-required="true"
-                       placeholder="CSS to fetch from (e.g. http://help.dizmo.com/tourguide/en/index.md.css)"/>
+                       placeholder="CSS URL (e.g. http://help.dizmo.com/TourGuide/reader.css)"/>
             </form>
             <label for="editor">Content</label>
             <textarea id="editor" name="editor" placeholder="Custom CSS .."></textarea>
@@ -40,7 +42,7 @@
 
             EDITOR.setValue ([
                 '/**\n',
-                ' * Extra CSS: front, content, headers, paragraphs, tables etc.\n',
+                ' * Extra CSS: front, content, headers etc.\n',
                 ' */\n',
                 '\n',
                 '#front {\n',
