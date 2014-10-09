@@ -12,9 +12,9 @@
   #md-toc {
     color: #92a611;
     height: 524px;
-    left: 572px;
+    left: 568px;
     position: absolute;
-    width: 250px;
+    width: 254px;
     top: 8px;
 
     #md-toc-search {
@@ -24,7 +24,7 @@
       height: 34px;
       margin: 0 0 0 8px;
       padding: 0 32px 0 8px;
-      width: 200px;
+      width: 204px;
     }
 
     #md-toc-items {
@@ -32,7 +32,7 @@
       margin-top: 8px;
       overflow-y: scroll;
       padding-left: 8px;
-      width: 242px;
+      width: 246px;
 
       .md-toc-item:first-of-type {
         border-top: lightgray solid 2px !important;
@@ -51,23 +51,23 @@
       }
       .md-toc-h1 {
         padding-left: 0;
-        width: 224px;
+        width: 228px;
       }
       .md-toc-h2 {
         padding-left: 16px;
-        width: 208px;
+        width: 212px;
       }
       .md-toc-h3 {
         padding-left: 32px;
-        width: 192px;
+        width: 196px;
       }
       .md-toc-h4 {
         padding-left: 48px;
-        width: 176px;
+        width: 180px;
       }
       .md-toc-h5 {
         padding-left: 56px;
-        width: 160px;
+        width: 164px;
       }
     }
 
@@ -75,7 +75,7 @@
   }
 
   #content {
-    width: 564px;
+    width: 560px;
 
     a {
       color: #92a611;
@@ -119,19 +119,19 @@
 
 #back {
   height: 544px;
-  width: 564px;
+  width: 560px;
 
   label {
     display: none;
   }
   input {
-    width: 554px;
+    width: 550px;
     margin-bottom: 10px;
   }
   textarea, .CodeMirror {
     font-size:11px;
     height: 428px;
-    width: 564px;
+    width: 560px;
   }
 
   .done-btn-wrapper {
