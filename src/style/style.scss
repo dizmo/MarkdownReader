@@ -28,9 +28,9 @@
     }
 
     #md-toc-items {
-      overflow-y: scroll;
       height: 480px;
       margin-top: 8px;
+      overflow-y: scroll;
       padding-left: 8px;
       width: 242px;
 
@@ -70,6 +70,8 @@
         width: 160px;
       }
     }
+
+    -webkit-dashboard-region: dashboard-region(control rectangle 0 0 0 0);
   }
 
   #content {
@@ -106,6 +108,8 @@
         width: 50%;
       }
     }
+
+    -webkit-dashboard-region: dashboard-region(control rectangle 0 0 0 0);
   }
 
   header {
