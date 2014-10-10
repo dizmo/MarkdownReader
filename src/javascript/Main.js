@@ -94,11 +94,11 @@ Class("MarkdownReader.Main", {
                 if (this.tocFlag === true) {
                     this.dizmo.my.setSize(830, 560);
                 } else {
-                    this.dizmo.my.setSize(580, 560);
+                    this.dizmo.my.setSize(576, 560);
                 }
                 this.onShowFront();
             } else {
-                this.dizmo.my.setSize(580, 560);
+                this.dizmo.my.setSize(576, 560);
                 this.onShowBack();
             }
         },
@@ -301,7 +301,7 @@ Class("MarkdownReader.Main", {
 
         hideToc: function () {
             jQuery('.md-toc-item').css('border-bottom', 'none');
-            this.dizmo.my.setSize(580, 560);
+            this.dizmo.my.setSize(576, 560);
             this.setTocFlag(false);
         },
 
