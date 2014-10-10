@@ -1,5 +1,4 @@
 #front {
-  height: 524px;
   width: 100%;
 
   #md-logo {
@@ -11,7 +10,6 @@
 
   #md-toc {
     color: #92a611;
-    height: 524px;
     left: 568px;
     position: absolute;
     width: 254px;
@@ -28,7 +26,6 @@
     }
 
     #md-toc-items {
-      height: 480px;
       margin-top: 8px;
       overflow-y: scroll;
       padding-left: 8px;
@@ -83,8 +80,9 @@
     }
 
     #pager {
+      display: initial !important;
       position: absolute;
-      top: 530px;
+      top: 450px;
 
       left: 0;
       height: 28px;
@@ -118,7 +116,6 @@
 }
 
 #back {
-  height: 544px;
   width: 560px;
 
   label {
@@ -130,7 +127,7 @@
   }
   textarea, .CodeMirror {
     font-size:11px;
-    height: 428px;
+    height: 348px;
     width: 560px;
   }
 

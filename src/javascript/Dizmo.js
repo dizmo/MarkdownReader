@@ -30,15 +30,23 @@ Class("MarkdownReader.Dizmo", {
                 }
             },
 
-            setTitle: function(value) {
+            setTitle: function (value) {
                 dizmo.setAttribute('title', value);
             },
 
-            setSize: function(width, height) {
+            setSize: function (width, height) {
                 assert (jQuery.type(width) === 'number');
                 assert (jQuery.type(height) === 'number');
 
                 dizmo.setSize(width, height);
+            },
+
+            getHeight: function() {
+                return dizmo.getHeight();
+            },
+
+            getWidth: function() {
+                return dizmo.getWidth();
             }
         }
     },
