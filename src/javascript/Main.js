@@ -276,7 +276,7 @@ Class("MarkdownReader.Main", {
                     var rx = new RegExp(jQuery('#md-toc-search').val(), 'i');
                     jQuery('.md-toc-item').each(function (index, item) {
                         var $item = jQuery(item);
-                        if (rx.source.length > 0) {
+                        if (rx.source.length > 0 && index > 0) {
                             var text = $item.find('p').text();
                             if (text.match(rx)) {
                                 $item.show();

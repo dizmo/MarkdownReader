@@ -32,14 +32,11 @@
       width: 246px;
 
       .md-toc-item:first-of-type {
-        border-top: lightgray solid 2px !important;
+        border-top: lightgray solid 1px;
       }
       .md-toc-item {
         border-bottom: lightgray solid 1px;
         font-size: 34px;
-      }
-      .md-toc-item:last-of-type {
-        border-bottom: lightgray solid 2px !important;
       }
       .md-toc-item p {
         padding-bottom: 5px;
@@ -72,6 +69,7 @@
   }
 
   #content {
+    height: 440px;
     width: 560px;
 
     a {
