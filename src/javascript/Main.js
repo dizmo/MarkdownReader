@@ -351,6 +351,11 @@ Class("MarkdownReader.Main", {
                         return $content.find('> h3').index($header);
                     }, false);
 
+                    jQuery('.md-toc-item')
+                        .css ('background-color', '');
+                    jQuery(event.target).parent()
+                        .css ('background-color', '#e5e5e5');
+
                     $content.animate({
                         scrollTop: $el.offset().top
                     }, 375);
