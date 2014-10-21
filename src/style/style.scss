@@ -65,7 +65,8 @@
       }
     }
 
-    -webkit-dashboard-region: dashboard-region(control rectangle 0 0 0 0);
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    -webkit-user-select: none;
   }
 
   #content {
