@@ -316,6 +316,7 @@ Class("MarkdownReader.Main", {
                 scrollTop: 0
             }, 0);
 
+            this.highlight(jQuery(jQuery('.md-toc-h3')[this.page]));
             return false;
         },
 
@@ -328,6 +329,7 @@ Class("MarkdownReader.Main", {
                 scrollTop: 0
             }, 0);
 
+            this.highlight(jQuery(jQuery('.md-toc-h3')[this.page]));
             return false;
         },
 
@@ -353,24 +355,20 @@ Class("MarkdownReader.Main", {
                         return $content.find('> h3').index($header);
                     }, false);
 
-                    this.dehighlight(jQuery('.md-toc-item'));
-                    this.highlight(jQuery(event.target).parent());
-
                     $content.animate({
                         scrollTop: $el.offset().top
                     }, 375);
+
+                    this.highlight(jQuery(event.target).parent());
                 }
             }
 
             return false;
         },
 
-        highlight: function ($tocItems) {
-            $tocItems.css ('background-color', '#e5e5e5');
-        },
-
-        dehighlight: function ($tocItems) {
-            $tocItems.css ('background-color', '');
+        highlight: function ($tocItem) {
+            jQuery('.md-toc-item').css ('background-color', '');
+            $tocItem.css ('background-color', '#e5e5e5');
         },
 
         showPage: function (counter) {
