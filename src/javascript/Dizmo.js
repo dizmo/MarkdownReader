@@ -48,6 +48,25 @@ Class("MarkdownReader.Dizmo", {
             getWidth: function() {
                 return dizmo.getWidth();
             }
+        },
+
+        has: {
+            language: {
+                is: 'ro', init: function () {
+                    var language = navigator.language
+                        ? navigator.language.split ('-')[0] : 'en';
+                    var storage = dizmo.privateStorage(),
+                        languages = storage.getProperty('languages');
+                    try {
+                        languages = JSON.parse (languages);
+                    } catch (ex) {
+                        languages = {en: "en"};
+                        console.error (ex);
+                    }
+
+                    return languages[language]||'en';
+                }
+            }
         }
     },
 

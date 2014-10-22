@@ -10,11 +10,11 @@ function showFront() {
 
 var events = {};
 jQuery(document).ready(function () {
-    if (MarkdownReader.Dizmo.load('showBack') !== 'True') {
+    if (MarkdownReader.Dizmo.load('showBack') !== true) {
         showBack = undefined;
     }
 
-    if (MarkdownReader.Dizmo.load('showFront') !== 'True') {
+    if (MarkdownReader.Dizmo.load('showFront') !== true) {
         showFront = undefined;
     }
 

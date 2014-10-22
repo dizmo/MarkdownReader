@@ -1,21 +1,28 @@
-import os
+import os, json
 
 dizmo = __import__('grace-dizmo.plugin')
-DizmoPlugin = getattr(dizmo.plugin, 'Dizmo')
+DizmoPlugin = getattr (dizmo.plugin, 'Dizmo')
 
 class MdReaderDizmoPlugin (DizmoPlugin):
+
+    def remove_uni (self, s):
+        if s.startswith ("u'"):
+            s2 = s.replace ("u'", "'")
+        elif s.startswith ('u"'):
+            s2 = s.replace ('u"', '"')
+        return s2
 
     def after_build(self):
         DizmoPlugin.after_build (self)
 
         properties = self._config.get ('dizmo_private_store', {})
         script = self._config['js_name'] + '.js'
-        target = os.path.join(self._config['build_path'], script)
+        target = os.path.join (self._config['build_path'], script)
 
-        if os.path.exists(target):
+        if os.path.exists (target):
             with open (target, 'a') as file: file.writelines([
-                "\nMarkdownReader.Dizmo.save ('%s', '%s');" % (k, v)
+                "\nMarkdownReader.Dizmo.save('%s', %s);" % (k, json.dumps (v))
                     for k, v in properties.items ()
             ])
 
-locals()['Md-Reader-Dizmo'] = MdReaderDizmoPlugin
+locals ()['Md-Reader-Dizmo'] = MdReaderDizmoPlugin

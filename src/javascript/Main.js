@@ -120,10 +120,18 @@ Class("MarkdownReader.Main", {
                 self.setExtraCss(null);
             }
 
+            var resolve = function (url) {
+                return (url !== undefined)
+                    ? url.replace ('${LANGUAGE}', self.dizmo.my.language)
+                         .replace ('${LINGUA}', self.dizmo.my.language)
+                         .replace ('${LANG}', self.dizmo.my.language)
+                    : url;
+            };
+
             var urlCss = jQuery('#url-css').val();
             if (urlCss && urlCss.length > 0) {
                 jQuery.ajax({
-                    type: 'GET', url: urlCss, success: function (value) {
+                    type: 'GET', url: resolve (urlCss), success: function (value) {
                         jQuery('head').append(
                                 '<style id="css">' + value + '</style>');
                     }
@@ -141,7 +149,7 @@ Class("MarkdownReader.Main", {
             var urlMd = jQuery('#url-md').val();
             if (urlMd && urlMd.length > 0) {
                 jQuery.ajax({
-                    type: 'GET', url: urlMd, success: function (value) {
+                    type: 'GET', url: resolve (urlMd), success: function (value) {
                         jQuery('#front').empty()
                             .append('<div id="content">{0}</div>'
                                 .replace('{0}', self.md2html.convert(value)))
