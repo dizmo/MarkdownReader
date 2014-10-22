@@ -61,7 +61,6 @@ Class("MarkdownReader.Dizmo", {
                         languages = JSON.parse (languages);
                     } catch (ex) {
                         languages = {en: "en"};
-                        console.error (ex);
                     }
 
                     return languages[language]||'en';
