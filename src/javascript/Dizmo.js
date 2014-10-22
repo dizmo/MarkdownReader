@@ -71,6 +71,16 @@ Class("MarkdownReader.Dizmo", {
                 jQuery("#front").show();
                 jQuery(events).trigger('dizmo.turned', ['front']);
             });
+
+            viewer.subscribeToAttribute('displayMode', function(path, val) {
+                if (val === 'presentation') {
+                    dizmo.setAttribute('hideframe', true);
+                } else {
+                    dizmo.setAttribute('hideframe', false);
+                }
+
+                jQuery(events).trigger('dizmo.onmodechanged', [val]);
+            });
         },
 
         setAttributes: function () {
