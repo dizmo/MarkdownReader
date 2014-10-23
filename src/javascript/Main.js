@@ -1,4 +1,5 @@
 //= require Dizmo
+//= require VideoConverter
 
 Class("MarkdownReader.Main", {
     has: {
@@ -13,6 +14,15 @@ Class("MarkdownReader.Main", {
                     return marked.defaults.renderer.heading.call({
                         options: marked.defaults
                     }, text, level, raw);
+                };
+                renderer.html = function (html) {
+                    if (jQuery(html).prop ('tagName') === 'VIDEO') {
+                        if (navigator.appVersion.indexOf('Win') != -1) {
+                            return MarkdownReader.VideoConverter.toFlash(html);
+                        }
+                    }
+
+                    return html;
                 };
 
                 return {
