@@ -123,8 +123,6 @@ Class("MarkdownReader.Main", {
             var resolve = function (url) {
                 return (url !== undefined)
                     ? url.replace ('${LANGUAGE}', self.dizmo.my.language)
-                         .replace ('${LINGUA}', self.dizmo.my.language)
-                         .replace ('${LANG}', self.dizmo.my.language)
                     : url;
             };
 

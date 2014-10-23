@@ -53,10 +53,8 @@ Class("MarkdownReader.Dizmo", {
         has: {
             language: {
                 is: 'ro', init: function () {
-                    var language = navigator.language
-                        ? navigator.language.split ('-')[0] : 'en';
-                    var storage = dizmo.privateStorage(),
-                        languages = storage.getProperty('languages');
+                    var language = viewer.getAttribute ('language') || 'en',
+                        languages = dizmo.privateStorage().getProperty('languages');
                     try {
                         languages = JSON.parse (languages);
                     } catch (ex) {
