@@ -47,22 +47,18 @@ Class("MarkdownReader.Dizmo", {
 
             getWidth: function() {
                 return dizmo.getWidth();
-            }
-        },
+            },
 
-        has: {
-            language: {
-                is: 'ro', init: function () {
-                    var language = viewer.getAttribute ('language') || 'en',
-                        languages = dizmo.privateStorage().getProperty('languages');
-                    try {
-                        languages = JSON.parse (languages);
-                    } catch (ex) {
-                        languages = {en: "en"};
-                    }
-
-                    return languages[language]||'en';
+            getLanguage: function () {
+                var language = viewer.getAttribute ('language') || 'en',
+                    languages = dizmo.privateStorage().getProperty('languages');
+                try {
+                    languages = JSON.parse (languages);
+                } catch (ex) {
+                    languages = {en: "en"};
                 }
+
+                return languages[language]||'en';
             }
         }
     },
@@ -96,6 +92,10 @@ Class("MarkdownReader.Dizmo", {
                 }
 
                 jQuery(events).trigger('dizmo.onmodechanged', [val]);
+            });
+
+            viewer.subscribeToAttribute('language', function(path, val) {
+                jQuery(events).trigger('dizmo.onlanguagechanged', [val]);
             });
         },
 

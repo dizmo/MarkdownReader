@@ -91,12 +91,20 @@ Class("MarkdownReader.Main", {
 
     methods: {
         initEvents: function () {
-            jQuery('.done-btn').on('click', this.onClick.bind(this));
-            jQuery(events).on('dizmo.turned', this.onTurn.bind(this));
+            jQuery('.done-btn').on('click',
+                this.onClick.bind(this));
+            jQuery(events).on('dizmo.turned',
+                this.onTurn.bind(this));
+            jQuery(events).on('dizmo.onlanguagechanged',
+                this.onLanguageChanged.bind(this));
         },
 
         onClick: function () {
             this.dizmo.my.showFront();
+        },
+
+        onLanguageChanged: function (dizmo, language) {
+            this.onTurn(dizmo, 'front');
         },
 
         onTurn: function (dizmo, side) {
@@ -132,7 +140,7 @@ Class("MarkdownReader.Main", {
 
             var resolve = function (url) {
                 return (url !== undefined)
-                    ? url.replace ('${LANGUAGE}', self.dizmo.my.language)
+                    ? url.replace ('${LANGUAGE}', self.dizmo.my.getLanguage())
                     : url;
             };
 
