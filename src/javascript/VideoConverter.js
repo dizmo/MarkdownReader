@@ -36,7 +36,7 @@ Class("MarkdownReader.VideoConverter", {
                     bufferingOverlay: $video.attr('_bufferingOverlay'),
                     controlBarAutoHide: $video.attr('_controlBarAutoHide'),
                     controlBarAutoHideTimeout: $video.attr('_controlBarAutoHideTimeout'),
-                    controlBarMode: $video.attr('_controlBarMode')||'none',
+                    controlBarMode: $video.attr('_controlBarMode'),
                     endOfVideoOverlay: $video.attr('_endOfVideoOverlay'),
                     muted: $video.attr('_muted'),
                     loop: $video.attr('_loop'),
@@ -52,7 +52,7 @@ Class("MarkdownReader.VideoConverter", {
                     configuration: $video.attr('_configuration'),
                     haltOnError: $video.attr('_haltOnError'),
                     highQualityThreshold: $video.attr('_highQualityThreshold'),
-                    scaleMode: $video.attr('_scaleMode')||'zoom',
+                    scaleMode: $video.attr('_scaleMode'),
                     skin: $video.attr('_skin'),
                     streamType: $video.attr('_streamType'),
                     verbose: $video.attr('_verbose')
