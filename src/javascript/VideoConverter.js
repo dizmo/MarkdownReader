@@ -36,7 +36,7 @@ Class("MarkdownReader.VideoConverter", {
                     bufferingOverlay: $video.attr('_bufferingOverlay'),
                     controlBarAutoHide: $video.attr('_controlBarAutoHide'),
                     controlBarAutoHideTimeout: $video.attr('_controlBarAutoHideTimeout'),
-                    controlBarMode: $video.attr('_controlBarMode'),
+                    controlBarMode: $video.attr('_controlBarMode')||'none',
                     endOfVideoOverlay: $video.attr('_endOfVideoOverlay'),
                     muted: $video.attr('_muted'),
                     loop: $video.attr('_loop'),
