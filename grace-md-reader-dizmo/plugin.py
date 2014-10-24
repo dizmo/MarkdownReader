@@ -5,13 +5,6 @@ DizmoPlugin = getattr (dizmo.plugin, 'Dizmo')
 
 class MdReaderDizmoPlugin (DizmoPlugin):
 
-    def remove_uni (self, s):
-        if s.startswith ("u'"):
-            s2 = s.replace ("u'", "'")
-        elif s.startswith ('u"'):
-            s2 = s.replace ('u"', '"')
-        return s2
-
     def after_build(self):
         DizmoPlugin.after_build (self)
 
