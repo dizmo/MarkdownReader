@@ -52,7 +52,7 @@ Class("MarkdownReader.VideoConverter", {
                     configuration: $video.attr('_configuration'),
                     haltOnError: $video.attr('_haltOnError'),
                     highQualityThreshold: $video.attr('_highQualityThreshold'),
-                    scaleMode: $video.attr('_scaleMode'),
+                    scaleMode: $video.attr('_scaleMode')||'zoom',
                     skin: $video.attr('_skin'),
                     streamType: $video.attr('_streamType'),
                     verbose: $video.attr('_verbose')
