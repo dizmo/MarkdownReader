@@ -10,13 +10,23 @@ function showFront() {
 
 var events = {};
 jQuery(document).ready(function () {
-    if (MarkdownReader.Dizmo.load('showBack') !== true) {
-        showBack = undefined;
-    }
+    jQuery.getJSON('settings.json', function (json) {
+        if (jQuery.isPlainObject(json)) {
+            for (var key in json) {
+                if (json.hasOwnProperty(key)) {
+                    MarkdownReader.Dizmo.save(key, json[key]);
+                }
+            }
+        }
 
-    if (MarkdownReader.Dizmo.load('showFront') !== true) {
-        showFront = undefined;
-    }
+        if (MarkdownReader.Dizmo.load('showBack') !== true) {
+            showBack = undefined;
+        }
 
-    MAIN = new MarkdownReader.Main();
+        if (MarkdownReader.Dizmo.load('showFront') !== true) {
+            showFront = undefined;
+        }
+
+        MAIN = new MarkdownReader.Main();
+    });
 });

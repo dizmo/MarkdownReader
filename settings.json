@@ -1,0 +1,11 @@
+{
+    "languages": {
+        "en": "en", "de": "de"
+    },
+    "showBack": true,
+    "showFront": true,
+    "urlCss": null,
+    "urlFlashPlayer": "http://test.dizmo.com/wp-content/uploads/2014/09/StrobeMediaPlayback.swf",
+    "urlMd": null,
+    "urlNoFlashImage": "http://www.dizmo.com/wp-content/uploads/2014/10/no-flash-message.jpg"
+}
