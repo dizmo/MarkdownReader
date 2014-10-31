@@ -1,6 +1,33 @@
 Class("MarkdownReader.VideoConverter", {
     my: {
         methods: {
+            toBase64: function (html) {
+                var $span = jQuery('<span>', {
+                    'class': 'b64-wrap', 'style': 'display:none'
+                });
+
+                return $span.prop('innerHTML', btoa (html)).prop('outerHTML');
+            },
+            b64Unwrap: function ($items) {
+                $items.each(function(index, item) {
+                    var $item = jQuery(item), text = $item.text();
+                    if ($item.hasClass('b64-wrap') && text !== undefined) {
+                        $item.prop('outerHTML', atob(text));
+                    }
+                });
+
+                return $items;
+            },
+            b64Rewrap: function ($items, tagNames) {
+                $items.each(function(index, item) {
+                    var $item = jQuery(item);
+                    if (tagNames.indexOf($item.prop('tagName'))>=0) $item.prop(
+                        'outerHTML', MarkdownReader.VideoConverter.toBase64(
+                            $item.prop('outerHTML')));
+                });
+
+                return $items;
+            },
             toFlash: function (html) {
                 var $video = jQuery (html);
                 var urlFlashPlayer = JSON.parse (

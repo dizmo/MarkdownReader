@@ -18,7 +18,9 @@ Class("MarkdownReader.Main", {
                 renderer.html = function (html) {
                     if (jQuery(html).prop ('tagName') === 'VIDEO') {
                         if (navigator.appVersion.indexOf('Win') != -1) {
-                            return MarkdownReader.VideoConverter.toFlash(html);
+                            html = MarkdownReader.VideoConverter.toFlash(html);
+                        } else {
+                            html = MarkdownReader.VideoConverter.toBase64(html);
                         }
                     }
 
@@ -432,19 +434,21 @@ Class("MarkdownReader.Main", {
 
                     if (h2_text.length > 0 && h2_text != ' ') {
                         MarkdownReader.Dizmo.setTitle('{0}: {1}'
-                            .replace('{0}', h1_text)
-                            .replace('{1}', h2_text));
+                            .replace('{0}', h1_text).replace('{1}', h2_text));
                     } else {
                         MarkdownReader.Dizmo.setTitle('{0}'
                             .replace('{0}', h1_text));
                     }
 
-                    head($h2s[i]).show();
-                    flag[i] = true;
-                    jQuery($h2s[i].$h3s[j]).show();
+                    flag[i] = true; MarkdownReader.VideoConverter
+                        .b64Unwrap(head($h2s[i])).show();
+                    MarkdownReader.VideoConverter
+                        .b64Unwrap(jQuery($h2s[i].$h3s[j])).show();
                 } else {
-                    if (!flag[i]) head($h2s[i]).hide();
-                    jQuery($h2s[i].$h3s[j]).hide();
+                    if (!flag[i]) MarkdownReader.VideoConverter
+                        .b64Rewrap(head($h2s[i]), ['VIDEO']).hide();
+                    MarkdownReader.VideoConverter
+                        .b64Rewrap(jQuery($h2s[i].$h3s[j]), ['VIDEO']).hide();
                 }
 
                 j += 1;
