@@ -17,10 +17,11 @@ Class("MarkdownReader.Main", {
                 };
                 renderer.html = function (html) {
                     if (jQuery(html).prop ('tagName') === 'VIDEO') {
-                        if (navigator.appVersion.indexOf('Win') != -1) {
-                            html = MarkdownReader.VideoConverter.toFlash(html);
-                        } else {
+                        if (navigator.appVersion.indexOf('Linux x86_64') >= 0 ||
+                            navigator.appVersion.indexOf('Mac') >= 0) {
                             html = MarkdownReader.VideoConverter.toBase64(html);
+                        } else {
+                            html = MarkdownReader.VideoConverter.toFlash(html);
                         }
                     }
 
