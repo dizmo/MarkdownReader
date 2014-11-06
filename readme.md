@@ -11,36 +11,42 @@ been defined), we would like to *freeze* the configuration; for this purpose a
 
  1. Setup and clone your dedicated GIT repository for a particular content, e.g.
     for *frozen-book*:
-    ```$ git clone ${FROZEN-BOOK-GIT-URL} frozen-book.git```
+    
+        $ git clone ${FROZEN-BOOK-GIT-URL} frozen-book.git
 
  2. Change to the newly cloned GIT repository: 
-    ```$ cd frozen-book.git```
+ 
+        $ cd frozen-book.git
 
  3. Add the *MarkdownReader* GIT repository as a **submodule**:
-    ```$ git submodule add ${MD-READER-GIT-URL} md-reader.git```
+ 
+        $ git submodule add ${MD-READER-GIT-URL} md-reader.git
 
  4. Check the content of the *MarkdownReader* submodule repository:
-    ```$ ls md-reader.git
-    Icon-dark.svg  Preview.png     grace-md-reader-dizmo  project.cfg  test
-    Icon.svg       dizmoInfo.json  manage.py              settings.json src
-    ```
+
+        $ ls md-reader.git
+        Icon-dark.svg  Preview.png     grace-md-reader-dizmo  project.cfg  test
+        Icon.svg       dizmoInfo.json  manage.py    assets/settings.json    src
 
  5. Setup symbolic links from the *frozen-book* repository to the submodule:
-    ```
-    $ ln -s md-reader.git/manage.py    ## required
-    $ ln -s md-reader.git/src          ## required
-    $ ln -s md-reader.git/test         ## optional, recommended
-    $ ln -s md-reader.git/Icon.svg     ## optional, not recommended
-    $ ln -s md-reader.git/Preview.svg  ## optional, not recommended
-    ```
+
+        $ ln -s md-reader.git/manage.py    ## required
+        $ ln -s md-reader.git/src          ## required
+        $ ln -s md-reader.git/test         ## optional, recommended
+        $ ln -s md-reader.git/Icon.svg     ## optional, not recommended
+        $ ln -s md-reader.git/Preview.svg  ## optional, not recommended
+
     The first two symbolic links are mandatory; the 3rd link is recommended if
     you wish to run test cases (or if your build environment requires it). And
     if you need an icon but do not want to customize create the 4th link; same
     is true for the 5th link, the preview image.
   
- 6. Copy the `md-reader.git/settings.json` to your *frozen-book* repository and
-    edit it to fix the `urlMd` and `urlCSS` path values:
-    ```$ cp md-reader.git/settings.json settings.json```
+ 6. Copy the `md-reader.git/assets/settings.json` to your *frozen-book*
+    repository and edit it to fix the `urlMd` and `urlCSS` path values:
+    
+        $ cp md-reader.git/assets/settings.json assets/settings.json
+
+    You may have to create the `assets` directory first though for this to work. 
  
  7. After editing the `settings.json` configuration, it should look like:
 
@@ -76,6 +82,6 @@ recommended to understand at least the basics of, to avoid mishaps!
 Once you clone a GIT repository with submodules, don't forget to update (and
 initialize) them via:
 
- ```$ git submodule update --init```
+    $ git submodule update --init
 
 Since otherwise the folders of the submodules will remain emtpy!

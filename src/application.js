@@ -10,7 +10,7 @@ function showFront() {
 
 var events = {};
 jQuery(document).ready(function () {
-    jQuery.getJSON('settings.json', function (json) {
+    jQuery.getJSON('assets/settings.json', function (json) {
         if (jQuery.isPlainObject(json)) {
             for (var key in json) {
                 if (json.hasOwnProperty(key)) {
