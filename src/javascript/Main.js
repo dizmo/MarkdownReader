@@ -418,6 +418,11 @@ Class("MarkdownReader.Main", {
                 this.page = 0;
             }
 
+            jQuery('#pager-lhs').attr(
+                'disabled', this.page == 0);
+            jQuery('#pager-rhs').attr(
+                'disabled', this.page == $pages.length - 1);
+
             var i = 0, j = 0, flag = {};
             for (var page = 0; page < $pages.length; page++) {
                 if ($h2s[i].$h3s[j] === undefined) {
