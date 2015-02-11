@@ -31,9 +31,9 @@ Class("MarkdownReader.VideoConverter", {
             toFlash: function (html) {
                 var $video = jQuery (html);
                 var urlFlashPlayer = JSON.parse (
-                    dizmo.privateStorage().getProperty('urlFlashPlayer'));
+                    dizmo.privateStorage.getProperty('urlFlashPlayer'));
                 var urlNoFlashImage = JSON.parse (
-                    dizmo.privateStorage().getProperty('urlNoFlashImage'));
+                    dizmo.privateStorage.getProperty('urlNoFlashImage'));
 
                 var attribute = {
                     // HTML5 <video> tag special attributes; see:

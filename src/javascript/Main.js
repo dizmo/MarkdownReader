@@ -71,9 +71,9 @@ Class("MarkdownReader.Main", {
 
     after: {
         initialize: function () {
-            if (this.urlMd !== undefined) jQuery('#url-md').val(this.urlMd);
-            if (this.urlCss !== undefined) jQuery('#url-css').val(this.urlCss);
-            if (this.extraCss !== undefined) EDITOR.setValue(this.extraCss);
+            if (this.urlMd !== null) jQuery('#url-md').val(this.urlMd);
+            if (this.urlCss !== null) jQuery('#url-css').val(this.urlCss);
+            if (this.extraCss !== null) EDITOR.setValue(this.extraCss);
 
             this.onShowFront();
             this.initEvents();
