@@ -1,4 +1,5 @@
 //= require Dizmo
+//= require MarkdownReader
 //= require VideoConverter
 
 Class("MarkdownReader.Main", {
@@ -200,8 +201,9 @@ Class("MarkdownReader.Main", {
                                     }
                                 }
                             });
-                            self.showPage(function () {
-                                return 0;
+
+                            self.showPage(function (page, pages, result) {
+                                result.call(this, 0);
                             });
                         }
 
@@ -335,9 +337,13 @@ Class("MarkdownReader.Main", {
         },
 
         onLhsPagerClick: function () {
-            this.showPage(function (page) {
-                return (page - 1 >= 0) ? page - 1 : 0;
-            });
+            if (typeof MarkdownReader.my.lhsPageTo === 'function') {
+                this.showPage(MarkdownReader.my.lhsPageTo);
+            } else {
+                this.showPage(function (page, pages, go) {
+                    go.call(this, (page - 1 >= 0) ? page - 1 : 0, page);
+                });
+            }
 
             jQuery('#content').animate({
                 scrollTop: 0
@@ -348,9 +354,13 @@ Class("MarkdownReader.Main", {
         },
 
         onRhsPagerClick: function () {
-            this.showPage(function (page, pages) {
-                return (page + 1 < pages) ? page + 1 : page;
-            });
+            if (typeof MarkdownReader.my.rhsPageTo === 'function') {
+                this.showPage(MarkdownReader.my.rhsPageTo);
+            } else {
+                this.showPage(function (page, pages, go) {
+                    go.call (this, (page + 1 < pages) ? page + 1 : page, page);
+                });
+            }
 
             jQuery('#content').animate({
                 scrollTop: 0
@@ -362,7 +372,9 @@ Class("MarkdownReader.Main", {
 
         onTocItemClick: function (event) {
             var $content = jQuery('#content'),
-                ref = jQuery(event.target).attr('ref');
+                $pager = jQuery('#pager');
+
+            var ref = jQuery(event.target).attr('ref');
             if (ref) {
                 var $el = jQuery(ref), $header;
                 if ($el.length > 0) {
@@ -378,9 +390,12 @@ Class("MarkdownReader.Main", {
                             $header = $el.prevAll('h3:first');
                     }
 
-                    if (jQuery('#pager').length > 0) this.showPage(function () {
-                        return $content.find('> h3').index($header);
-                    }, false);
+                    if ($pager.length > 0) {
+                        this.showPage(function (page, pages, next) {
+                            page = $content.find('> h3').index($header);
+                            next.call(this, page);
+                        }, false);
+                    }
 
                     $content.animate({
                         scrollTop: $el.offset().top
@@ -400,7 +415,8 @@ Class("MarkdownReader.Main", {
 
         showPage: function (counter) {
             var $items = jQuery('#content > *'),
-                $pages = jQuery('#content').find('> h3');
+                $pages = jQuery('#content').find('> h3'),
+                $pager = jQuery('#pager');
 
             var $h2s = this.group($items.not('#pager'), function (item) {
                 return item.tagName == 'H2';
@@ -412,52 +428,65 @@ Class("MarkdownReader.Main", {
                 });
             }
 
-            if (counter !== undefined) {
-                this.page = counter.call(this, this.page || 0, $pages.length);
-            } else {
-                this.page = 0;
-            }
-
-            jQuery('#pager-lhs').attr(
-                'disabled', this.page == 0);
-            jQuery('#pager-rhs').attr(
-                'disabled', this.page == $pages.length - 1);
-
-            var i = 0, j = 0, flag = {};
-            for (var page = 0; page < $pages.length; page++) {
-                if ($h2s[i].$h3s[j] === undefined) {
-                    i += 1;
-                    j = 0;
+            var self = this, go = function (new_page, old_page) {
+                if ($pager.length > 0 && new_page !== old_page) {
+                    $pager.trigger('turn:before', [new_page, old_page]);
                 }
 
-                var head = function (h2s) {
-                    return jQuery(h2s).first('h2').nextUntil('h3').andSelf();
-                };
+                var min_page = 0;
+                jQuery('#pager-lhs').attr('disabled', new_page == min_page);
+                var max_page = $pages.length - 1;
+                jQuery('#pager-rhs').attr('disabled', new_page == max_page);
 
-                if (page == this.page) {
-                    var h1_text = $items.first('h1').text(),
-                        h2_text = jQuery($h2s[i]).first('h2').text();
-
-                    if (h2_text.length > 0 && h2_text != ' ') {
-                        MarkdownReader.Dizmo.setTitle('{0}: {1}'
-                            .replace('{0}', h1_text).replace('{1}', h2_text));
-                    } else {
-                        MarkdownReader.Dizmo.setTitle('{0}'
-                            .replace('{0}', h1_text));
+                var i = 0, j = 0, flag = {};
+                for (var page = 0; page < $pages.length; page++) {
+                    if ($h2s[i].$h3s[j] === undefined) {
+                        i += 1; j = 0;
                     }
 
-                    flag[i] = true; MarkdownReader.VideoConverter
-                        .b64Unwrap(head($h2s[i])).show();
-                    MarkdownReader.VideoConverter
-                        .b64Unwrap(jQuery($h2s[i].$h3s[j])).show();
-                } else {
-                    if (!flag[i]) MarkdownReader.VideoConverter
-                        .b64Rewrap(head($h2s[i]), ['VIDEO']).hide();
-                    MarkdownReader.VideoConverter
-                        .b64Rewrap(jQuery($h2s[i].$h3s[j]), ['VIDEO']).hide();
+                    var head = function (h2s) {
+                        return jQuery(h2s).first('h2').nextUntil('h3').andSelf();
+                    };
+
+                    if (page == new_page) {
+                        var h1_text = $items.first('h1').text(),
+                            h2_text = jQuery($h2s[i]).first('h2').text();
+
+                        if (h2_text.length > 0 && h2_text != ' ') {
+                            MarkdownReader.Dizmo.setTitle('{0}: {1}'.replace(
+                                '{0}', h1_text).replace('{1}', h2_text));
+                        } else {
+                            MarkdownReader.Dizmo.setTitle('{0}'.replace(
+                                '{0}', h1_text));
+                        }
+
+                        flag[i] = true; MarkdownReader.VideoConverter
+                            .b64Unwrap(head($h2s[i])).show();
+                        MarkdownReader.VideoConverter
+                            .b64Unwrap(jQuery($h2s[i].$h3s[j])).show();
+                    } else {
+                        if (!flag[i]) MarkdownReader.VideoConverter
+                            .b64Rewrap(head($h2s[i]), ['VIDEO'])
+                            .hide();
+                        MarkdownReader.VideoConverter
+                            .b64Rewrap(jQuery($h2s[i].$h3s[j]), ['VIDEO'])
+                            .hide();
+                    }
+
+                    j += 1;
                 }
 
-                j += 1;
+                if ($pager.length > 0 && new_page !== old_page) {
+                    $pager.trigger('turn:after', [new_page, old_page]);
+                }
+
+                return self.page = new_page;
+            };
+
+            if (typeof counter === 'function') {
+                counter.call(this, this.page||0, $pages.length, go);
+            } else {
+                go(this.page||0, this.page);
             }
         },
 
