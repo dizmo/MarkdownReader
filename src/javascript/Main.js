@@ -341,7 +341,9 @@ Class("MarkdownReader.Main", {
                 this.showPage(MarkdownReader.my.lhsPageTo);
             } else {
                 this.showPage(function (page, pages, go) {
-                    go.call(this, (page - 1 >= 0) ? page - 1 : 0, page);
+                    if (jQuery('#pager-lhs').attr('disabled') !== 'disabled') {
+                        go.call(this, (page-1 >= 0) ? page-1 : 0, page);
+                    }
                 });
             }
 
@@ -358,7 +360,9 @@ Class("MarkdownReader.Main", {
                 this.showPage(MarkdownReader.my.rhsPageTo);
             } else {
                 this.showPage(function (page, pages, go) {
-                    go.call (this, (page + 1 < pages) ? page + 1 : page, page);
+                    if (jQuery('#pager-rhs').attr('disabled') !== 'disabled') {
+                        go.call (this, (page+1 < pages) ? page+1 : page, page);
+                    }
                 });
             }
 
