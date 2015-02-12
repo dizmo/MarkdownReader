@@ -34,7 +34,7 @@ Class("MarkdownReader.Dizmo", {
             },
 
             setTitle: function (value) {
-                /*dizmo.setAttribute('title', value);*/ // TODO: API?
+                dizmo.setAttribute('settings/title', value);
             },
 
             setSize: function (width, height) {
@@ -53,7 +53,7 @@ Class("MarkdownReader.Dizmo", {
             },
 
             getLanguage: function () {
-                var language = /*viewer.getAttribute ('language') || */'en', // TODO: API?
+                var language = viewer.getAttribute('settings/language')||'en',
                     languages = dizmo.privateStorage.getProperty('languages');
                 try {
                     languages = JSON.parse (languages);
@@ -86,25 +86,30 @@ Class("MarkdownReader.Dizmo", {
                 jQuery("#front").show();
                 jQuery(events).trigger('dizmo.turned', ['front']);
             });
-            /*viewer.subscribeToAttribute('displayMode', function(path, val) { // TODO: API?
-                if (val === 'presentation') {
-                    dizmo.setAttribute('hideframe', true);
-                } else {
-                    dizmo.setAttribute('hideframe', false);
-                }
+            viewer.subscribeToAttribute(
+                'settings/displayMode', function(path, value) {
+                    if (value === 'presentation') {
+                        dizmo.setAttribute('hideframe', true);
+                    } else {
+                        dizmo.setAttribute('hideframe', false);
+                    }
 
-                jQuery(events).trigger('dizmo.onmodechanged', [val]);
-            });*/
-            /*viewer.subscribeToAttribute('language', function(path, val) { // TODO: API?
-                jQuery(events).trigger('dizmo.onlanguagechanged', [val]);
-            });*/
+                    jQuery(events).trigger('dizmo.onmodechanged', [value]);
+                }
+            );
+            viewer.subscribeToAttribute(
+                'settings/language', function(path, value) {
+                    jQuery(events).trigger('dizmo.onlanguagechanged', [value]);
+                }
+            );
         },
 
         setAttributes: function () {
             var resize = this.my.load('resize');
-            /*if (typeof resize !== undefined) {
-                dizmo.setAttribute('allowResize', Boolean(resize)); // TODO: API?
-            }*/
+            if (typeof resize !== undefined) {
+                dizmo.setAttribute(
+                    'settings/usercontrols/allowresize', Boolean(resize));
+            }
             var width = parseInt(this.my.load('width'));
             if (!isNaN(width)) {
                 dizmo.setAttribute('geometry/width', width);
