@@ -434,7 +434,9 @@ Class("MarkdownReader.Main", {
 
             var self = this, go = function (new_page, old_page) {
                 if ($pager.length > 0 && new_page !== old_page) {
-                    $pager.trigger('turn:before', [new_page, old_page]);
+                    $pager.trigger('turn:before', [
+                        new_page, old_page, $pages.length
+                    ]);
                 }
 
                 var min_page = 0;
@@ -481,7 +483,9 @@ Class("MarkdownReader.Main", {
                 }
 
                 if ($pager.length > 0 && new_page !== old_page) {
-                    $pager.trigger('turn:after', [new_page, old_page]);
+                    $pager.trigger('turn:after', [
+                        new_page, old_page, $pages.length
+                    ]);
                 }
 
                 return self.page = new_page;
