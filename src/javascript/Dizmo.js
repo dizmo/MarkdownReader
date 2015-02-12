@@ -13,8 +13,12 @@ Class("MarkdownReader.Dizmo", {
 
             load: function (path, default_value) {
                 var value = dizmo.privateStorage.getProperty(path);
-                if (value !== undefined) {
-                    return JSON.parse(value);
+                if (value !== undefined && value !== null) {
+                    try {
+                        return JSON.parse(value);
+                    } catch (ex) {
+                        return value;
+                    }
                 }
 
                 return default_value;
@@ -22,8 +26,8 @@ Class("MarkdownReader.Dizmo", {
 
             save: function (path, value) {
                 if (value !== undefined && value !== null) {
-                    dizmo.privateStorage.setProperty(
-                        path, JSON.stringify(value));
+                    dizmo.privateStorage
+                        .setProperty(path, JSON.stringify(value));
                 } else {
                     dizmo.privateStorage.deleteProperty(path);
                 }
