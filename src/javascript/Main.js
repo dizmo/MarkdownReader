@@ -114,13 +114,13 @@ Class("MarkdownReader.Main", {
         onTurn: function (dizmo, side) {
             if (side === 'front') {
                 if (this.tocFlag === true) {
-                    this.dizmo.my.setSize(830, this.dizmo.my.getHeight());
+                    this.dizmo.my.setSize(814, this.dizmo.my.getHeight());
                 } else {
-                    this.dizmo.my.setSize(576, this.dizmo.my.getHeight());
+                    this.dizmo.my.setSize(560, this.dizmo.my.getHeight());
                 }
                 this.onShowFront();
             } else {
-                this.dizmo.my.setSize(576, this.dizmo.my.getHeight());
+                this.dizmo.my.setSize(560, this.dizmo.my.getHeight());
                 this.onShowBack();
             }
         },
@@ -326,13 +326,13 @@ Class("MarkdownReader.Main", {
 
         showToc: function () {
             jQuery('.md-toc-item').css('border-bottom', 'lightgray solid 1px');
-            this.dizmo.my.setSize(830, this.dizmo.my.getHeight());
+            this.dizmo.my.setSize(814, this.dizmo.my.getHeight());
             this.setTocFlag(true);
         },
 
         hideToc: function () {
             jQuery('.md-toc-item').css('border-bottom', 'none');
-            this.dizmo.my.setSize(576, this.dizmo.my.getHeight());
+            this.dizmo.my.setSize(560, this.dizmo.my.getHeight());
             this.setTocFlag(false);
         },
 
@@ -434,7 +434,9 @@ Class("MarkdownReader.Main", {
 
             var self = this, go = function (new_page, old_page) {
                 if ($pager.length > 0 && new_page !== old_page) {
-                    $pager.trigger('turn:before', [new_page, old_page]);
+                    $pager.trigger('turn:before', [
+                        new_page, old_page, $pages.length
+                    ]);
                 }
 
                 var min_page = 0;
@@ -481,7 +483,9 @@ Class("MarkdownReader.Main", {
                 }
 
                 if ($pager.length > 0 && new_page !== old_page) {
-                    $pager.trigger('turn:after', [new_page, old_page]);
+                    $pager.trigger('turn:after', [
+                        new_page, old_page, $pages.length
+                    ]);
                 }
 
                 return self.page = new_page;
