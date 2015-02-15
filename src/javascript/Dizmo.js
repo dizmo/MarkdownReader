@@ -100,19 +100,23 @@ Class("MarkdownReader.Dizmo", {
         },
 
         setAttributes: function () {
-            var resize = this.my.load('resize');
-            if (typeof resize !== undefined) {
-                dizmo.setAttribute(
-                    'settings/usercontrols/allowresize', Boolean(resize));
-            }
-            var width = parseInt(this.my.load('width'));
-            if (!isNaN(width)) {
-                dizmo.setAttribute('geometry/width', width);
-            }
-            var height = parseInt(this.my.load('height'));
-            if (!isNaN(height)) {
-                dizmo.setAttribute('geometry/height', height);
-            }
+            dizmo.setAttribute('settings/usercontrols/allowresize', false);
+
+            var w = dizmo.getWidth();
+            assert(w > 0);
+            var h = dizmo.getHeight();
+            assert(h > 0);
+
+            dizmo.setAttribute('geometry/width', w);
+            dizmo.setAttribute('geometry/height', h);
+
+            var $html = jQuery('html');
+            $html.css('height', h - 16);
+            $html.css('width', w - 16);
+
+            var $body = jQuery('body');
+            $body.css('height', h - 16);
+            $body.css('width', w - 16);
         }
     }
 });

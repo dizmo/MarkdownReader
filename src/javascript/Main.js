@@ -59,7 +59,7 @@ Class("MarkdownReader.Main", {
         },
         tocFlag: {
             is: 'rw', init: function () {
-                return MarkdownReader.Dizmo.load('tocFlag', true);
+                return MarkdownReader.Dizmo.load('tocFlag', null);
             }
         },
         dizmo: {
@@ -112,15 +112,23 @@ Class("MarkdownReader.Main", {
         },
 
         onTurn: function (dizmo, side) {
+            var d = jQuery('#md-toc').width(),
+                w = this.dizmo.my.getWidth(),
+                h = this.dizmo.my.getHeight();
+
             if (side === 'front') {
                 if (this.tocFlag === true) {
-                    this.dizmo.my.setSize(814, this.dizmo.my.getHeight());
+                    this.dizmo.my.setSize(w + d, h);
                 } else {
-                    this.dizmo.my.setSize(560, this.dizmo.my.getHeight());
+                    this.dizmo.my.setSize(w, h);
                 }
                 this.onShowFront();
             } else {
-                this.dizmo.my.setSize(560, this.dizmo.my.getHeight());
+                if (this.tocFlag === true) {
+                    this.dizmo.my.setSize(w - d, h);
+                } else {
+                    this.dizmo.my.setSize(w, h);
+                }
                 this.onShowBack();
             }
         },
@@ -280,18 +288,25 @@ Class("MarkdownReader.Main", {
             }
 
             if (self.tocFlag === true) {
-                self.showToc();
+                self.showToc(true);
             } else {
-                self.hideToc();
+                self.hideToc(true);
             }
 
-            dizmo.addMenuItem('/style/images/toc.svg', 'Table of Contents', function () {
-                if (self.tocFlag !== true) {
-                    self.showToc();
-                } else {
-                    self.hideToc();
-                }
-            });
+            if (self.tocFlag !== null) {
+                var toggle_toc = function () {
+                    if (jQuery('#front').css('display') !== 'none') {
+                        if (self.tocFlag !== true) {
+                            self.showToc();
+                        } else {
+                            self.hideToc();
+                        }
+                    }
+                };
+
+                dizmo.addMenuItem(
+                    '/style/images/toc.svg', 'Table of Contents', toggle_toc);
+            }
 
             jQuery('#md-toc-search').keyup(function (ev) {
                 var keyCode = ev.keyCode || ev.which;
@@ -324,16 +339,36 @@ Class("MarkdownReader.Main", {
             this.highlight($tocItems.first());
         },
 
-        showToc: function () {
-            jQuery('.md-toc-item').css('border-bottom', 'lightgray solid 1px');
-            this.dizmo.my.setSize(814, this.dizmo.my.getHeight());
-            this.setTocFlag(true);
+        showToc: function (init) {
+            var $toc_list = jQuery('#md-toc'),
+                $toc_item = $toc_list.find('.md-toc-item');
+
+            var self = this; setTimeout(function () {
+                var w = self.dizmo.my.getWidth(),
+                    h = self.dizmo.my.getHeight();
+
+                self.dizmo.my.setSize(w + (init ? 0 : $toc_list.width()), h);
+                self.setTocFlag(true);
+
+                $toc_item.css('border-bottom', 'lightgray solid 1px');
+                $toc_list.show();
+            }, 1);
         },
 
-        hideToc: function () {
-            jQuery('.md-toc-item').css('border-bottom', 'none');
-            this.dizmo.my.setSize(560, this.dizmo.my.getHeight());
-            this.setTocFlag(false);
+        hideToc: function (init) {
+            var $toc_list = jQuery('#md-toc'),
+                $toc_item = $toc_list.find('.md-toc-item');
+
+            var self = this; setTimeout(function () {
+                var w = self.dizmo.my.getWidth(),
+                    h = self.dizmo.my.getHeight();
+
+                self.dizmo.my.setSize(w - (init ? 0 : $toc_list.width()), h);
+                self.setTocFlag(false);
+
+                $toc_item.css('border-bottom', 'none');
+                $toc_list.hide();
+            }, 1);
         },
 
         onLhsPagerClick: function () {
