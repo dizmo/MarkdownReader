@@ -1,16 +1,18 @@
 #front {
+  height: 100%;
   width: 100%;
 
   #md-logo {
     background: no-repeat center;
-    background-size: 80%;
+    background-size: 67%;
     height: 100%;
-    width: 684px;
+    width: auto;
   }
 
   #md-toc {
+    display: none;
     color: #92a611;
-    left: 552px;
+    right: 8px;
     position: absolute;
     width: 254px;
     top: 8px;
@@ -22,14 +24,14 @@
       height: 34px;
       margin: 0 0 0 8px;
       padding: 0 32px 0 8px;
-      width: 204px;
+      width: calc(100% - 50px);
     }
 
     #md-toc-items {
       margin-top: 8px;
       overflow-y: scroll;
       padding-left: 8px;
-      width: 246px;
+      width: calc(100% - 8px);
 
       .md-toc-item:first-of-type {
         border-top: lightgray solid 1px;
@@ -44,24 +46,24 @@
         padding-top: 7px;
       }
       .md-toc-h1 {
-        padding-left: 0;
-        width: 228px;
+        padding-left: 8px;
+        width: calc(100% - 18px);
       }
       .md-toc-h2 {
-        padding-left: 16px;
-        width: 212px;
+        padding-left: 24px;
+        width: calc(100% - 34px);
       }
       .md-toc-h3 {
-        padding-left: 32px;
-        width: 196px;
+        padding-left: 40px;
+        width: calc(100% - 50px);
       }
       .md-toc-h4 {
-        padding-left: 48px;
-        width: 180px;
+        padding-left: 56px;
+        width: calc(100% - 66px);
       }
       .md-toc-h5 {
-        padding-left: 56px;
-        width: 164px;
+        padding-left: 64px;
+        width: calc(100% - 82px);
       }
     }
 
@@ -70,8 +72,8 @@
   }
 
   #content {
-    height: 370px;
-    width: 544px;
+    height: 100%;
+    width: 100%;
 
     a {
       color: #92a611;
@@ -148,6 +150,7 @@
     }
 
     -webkit-dashboard-region: dashboard-region(control rectangle);
+    -webkit-user-select: none;
   }
 
   header {
@@ -156,19 +159,20 @@
 }
 
 #back {
-  width: 544px;
+ height: 100%;
+ width: 100%;
 
   label {
     display: none;
   }
   input {
-    width: 534px;
+    width: calc(100% - 10px);
     margin-bottom: 10px;
   }
   textarea, .CodeMirror {
     font-size:11px;
-    height: 278px;
-    width: 544px;
+    height: calc(100% - 116px);
+    width: 100%;
   }
 
   .done-btn-wrapper {
