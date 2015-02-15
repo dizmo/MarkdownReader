@@ -114,13 +114,13 @@ Class("MarkdownReader.Main", {
         onTurn: function (dizmo, side) {
             if (side === 'front') {
                 if (this.tocFlag === true) {
-                    this.dizmo.my.setSize(950, this.dizmo.my.getHeight());
+                    this.dizmo.my.setSize(814, this.dizmo.my.getHeight());
                 } else {
-                    this.dizmo.my.setSize(696, this.dizmo.my.getHeight());
+                    this.dizmo.my.setSize(560, this.dizmo.my.getHeight());
                 }
                 this.onShowFront();
             } else {
-                this.dizmo.my.setSize(696, this.dizmo.my.getHeight());
+                this.dizmo.my.setSize(560, this.dizmo.my.getHeight());
                 this.onShowBack();
             }
         },
@@ -326,13 +326,13 @@ Class("MarkdownReader.Main", {
 
         showToc: function () {
             jQuery('.md-toc-item').css('border-bottom', 'lightgray solid 1px');
-            this.dizmo.my.setSize(950, this.dizmo.my.getHeight());
+            this.dizmo.my.setSize(814, this.dizmo.my.getHeight());
             this.setTocFlag(true);
         },
 
         hideToc: function () {
             jQuery('.md-toc-item').css('border-bottom', 'none');
-            this.dizmo.my.setSize(696, this.dizmo.my.getHeight());
+            this.dizmo.my.setSize(560, this.dizmo.my.getHeight());
             this.setTocFlag(false);
         },
 
