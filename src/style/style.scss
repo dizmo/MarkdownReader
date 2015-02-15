@@ -106,7 +106,7 @@
 
       #pager-lhs:active:not([disabled]),
       #pager-rhs:active:not([disabled]) {
-        -webkit-filter: invert(1.0);
+        -webkit-filter: 'invert(1.0)';
       }
 
       #pager-lhs[disabled],
@@ -147,7 +147,7 @@
       -webkit-user-select: none;
     }
 
-    -webkit-dashboard-region: dashboard-region(control rectangle 0 0 0 0);
+    -webkit-dashboard-region: dashboard-region(control rectangle);
   }
 
   header {
