@@ -97,6 +97,16 @@ Class("MarkdownReader.Dizmo", {
                     jQuery(events).trigger('dizmo.onlanguagechanged', [value]);
                 }
             );
+
+            dizmo.onDock(function (dizmo) {
+                console.debug('[ON:DOCK]', arguments);
+            });
+
+            dizmo.onUndock(function (dizmo) {
+                console.debug('[ON:UNDOCK]', arguments);
+            });
+
+            dizmo.canDock(false);
         },
 
         setAttributes: function () {
