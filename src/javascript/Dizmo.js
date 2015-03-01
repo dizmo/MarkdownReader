@@ -99,11 +99,11 @@ Class("MarkdownReader.Dizmo", {
             );
 
             dizmo.onDock(function (dizmo) {
-                console.debug('[ON:DOCK]', arguments);
+             // console.debug('[ON:DOCK]', arguments);
             });
 
             dizmo.onUndock(function (dizmo) {
-                console.debug('[ON:UNDOCK]', arguments);
+             // console.debug('[ON:UNDOCK]', arguments);
             });
 
             dizmo.canDock(false);
