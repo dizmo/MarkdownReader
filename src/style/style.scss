@@ -113,7 +113,7 @@
 
       #pager-lhs[disabled],
       #pager-rhs[disabled] {
-          opacity: 0.33;
+        opacity: 0.33;
       }
 
       #pager-lhs {
@@ -159,8 +159,9 @@
 }
 
 #back {
- height: 100%;
- width: 100%;
+  display: none;
+  height: 100%;
+  width: 100%;
 
   label {
     display: none;
@@ -170,7 +171,7 @@
     margin-bottom: 10px;
   }
   textarea, .CodeMirror {
-    font-size:11px;
+    font-size: 11px;
     height: calc(100% - 116px);
     width: 100%;
   }
