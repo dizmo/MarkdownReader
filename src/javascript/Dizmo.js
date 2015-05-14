@@ -81,17 +81,19 @@ Class("MarkdownReader.Dizmo", {
                 jQuery("#front").show();
                 jQuery(events).trigger('dizmo.turned', ['front']);
             });
+
             viewer.subscribeToAttribute(
-                'settings/displayMode', function(path, value) {
+                'settings/displaymode', function (path, value) {
                     if (value === 'presentation') {
-                        dizmo.setAttribute('hideframe', true);
+                        dizmo.setAttribute('state/framehidden', true);
                     } else {
-                        dizmo.setAttribute('hideframe', false);
+                        dizmo.setAttribute('state/framehidden', false);
                     }
 
                     jQuery(events).trigger('dizmo.onmodechanged', [value]);
                 }
             );
+
             viewer.subscribeToAttribute(
                 'settings/language', function(path, value) {
                     jQuery(events).trigger('dizmo.onlanguagechanged', [value]);
