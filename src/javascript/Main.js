@@ -449,7 +449,7 @@ Class("MarkdownReader.Main", {
 
         highlight: function ($tocItem) {
             jQuery('.md-toc-item').css ('background-color', '');
-            $tocItem.css ('background-color', '#e5e5e5');
+            $tocItem.css ('background-color', '#e6e6e6');
         },
 
         showPage: function (counter) {
