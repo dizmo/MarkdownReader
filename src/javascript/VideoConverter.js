@@ -160,7 +160,7 @@ Class("MarkdownReader.VideoConverter", {
                         name: 'flashvars', value: flashvars.replace(/^&/, '')}));
 
                 var $img = $video.find('> img');
-                if ($img.length == 0) {
+                if ($img.length === 0) {
                     $img = jQuery(
                         '<img alt="{0}" height="{1}" width="{2}" src="{3}">'
                             .replace('{0}', $video.find('> p').html()||'no flash player')

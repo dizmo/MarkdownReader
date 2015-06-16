@@ -20,13 +20,13 @@ jQuery(document).ready(function () {
         }
 
         if (MarkdownReader.Dizmo.load('showBack') !== true) {
-            showBack = undefined;
+            window.showBack = undefined;
         }
 
         if (MarkdownReader.Dizmo.load('showFront') !== true) {
-            showFront = undefined;
+            window.showFront = undefined;
         }
 
-        MAIN = new MarkdownReader.Main();
+        window.MAIN = new MarkdownReader.Main();
     });
 });

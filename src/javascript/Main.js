@@ -64,7 +64,7 @@ Class("MarkdownReader.Main", {
         },
         dizmo: {
             is: 'ro', init: function () {
-                return DIZMO = new MarkdownReader.Dizmo();
+                window.DIZMO = new MarkdownReader.Dizmo(); return window.DIZMO;
             }
         }
     },
@@ -73,7 +73,7 @@ Class("MarkdownReader.Main", {
         initialize: function () {
             if (!!this.urlMd) jQuery('#url-md').val(this.urlMd);
             if (!!this.urlCss) jQuery('#url-css').val(this.urlCss);
-            if (!!this.extraCss) EDITOR.setValue(this.extraCss);
+            if (!!this.extraCss) window.EDITOR.setValue(this.extraCss);
 
             this.onShowFront();
             this.initEvents();
@@ -143,7 +143,7 @@ Class("MarkdownReader.Main", {
                     .replace('{0}', 'url(style/images/tourguide-light.svg);'))
                 .append('<div id="md-toc"><div id="md-toc-items"/></div>');
 
-            var extraCss = EDITOR.getValue();
+            var extraCss = window.EDITOR.getValue();
             if (extraCss && extraCss.length > 0) {
                 self.setExtraCss(extraCss);
             } else {
@@ -151,9 +151,9 @@ Class("MarkdownReader.Main", {
             }
 
             var resolve = function (url) {
-                return (url !== undefined)
-                    ? url.replace ('${LANGUAGE}', self.dizmo.my.getLanguage())
-                    : url;
+                return (url !== undefined) ?
+                    url.replace ('${LANGUAGE}', self.dizmo.my.getLanguage()) :
+                    url;
             };
 
             var urlCss = jQuery('#url-css').val();
@@ -461,10 +461,12 @@ Class("MarkdownReader.Main", {
                 return item.tagName == 'H2';
             });
 
+            var is_h3 = function (item) {
+                return item.tagName == 'H3';
+            };
+
             for (var z = 0; z < $h2s.length; z++) {
-                $h2s[z].$h3s = this.group($h2s[z], function (item) {
-                    return item.tagName == 'H3';
-                });
+                $h2s[z].$h3s = this.group($h2s[z], is_h3);
             }
 
             var self = this, go = function (new_page, old_page) {
@@ -479,15 +481,15 @@ Class("MarkdownReader.Main", {
                 var max_page = $pages.length - 1;
                 jQuery('#pager-rhs').attr('disabled', new_page == max_page);
 
+                var head = function (h2s) {
+                    return jQuery(h2s).first('h2').nextUntil('h3').andSelf();
+                };
+
                 var i = 0, j = 0, flag = {};
                 for (var page = 0; page < $pages.length; page++) {
                     if ($h2s[i].$h3s[j] === undefined) {
                         i += 1; j = 0;
                     }
-
-                    var head = function (h2s) {
-                        return jQuery(h2s).first('h2').nextUntil('h3').andSelf();
-                    };
 
                     if (page == new_page) {
                         var h1_text = $items.first('h1').text(),
@@ -523,7 +525,8 @@ Class("MarkdownReader.Main", {
                     ]);
                 }
 
-                return self.page = new_page;
+                self.page = new_page;
+                return self.page;
             };
 
             if (typeof counter === 'function') {
