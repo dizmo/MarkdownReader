@@ -185,7 +185,7 @@ Class("MarkdownReader.Main", {
                                 .replace('{0}', '<div class="searchfield">{0}</div>'
                                     .replace ('{0}', '<input ' +
                                         'id="md-toc-search" ' +
-                                        'data-type="dizmo-input" type="text" ' +
+                                        'data-type="dizmo-searchfield" type="search" ' +
                                         'class="searchinput" ' +
                                     '/>'))
                                 .replace('{1}', '<div id="md-toc-items"/>'));
@@ -308,7 +308,16 @@ Class("MarkdownReader.Main", {
                     '/style/images/toc.svg', 'Table of Contents', toggle_toc);
             }
 
-            jQuery('#md-toc-search').keyup(function (ev) {
+            var $toc_search = jQuery('#md-toc-search');
+            $toc_search.on('input', function (ev) {
+                if (jQuery('#md-toc-search').val() === '') {
+                    jQuery('.md-toc-item').each(function (index, item) {
+                        jQuery(item).show();
+                    });
+                }
+            });
+
+            $toc_search.keyup(function (ev) {
                 var keyCode = ev.keyCode || ev.which;
                 if (keyCode == 27) { // escape
                     jQuery('.md-toc-item').each(function (index, item) {
