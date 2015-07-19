@@ -28,5 +28,16 @@ jQuery(document).ready(function () {
         }
 
         window.MAIN = new MarkdownReader.Main();
+
+        ///////////////////////////////////////////////////////////////////////
+
+        window.FRAMECOLOR = function () {
+            jQuery(events).trigger(
+                'dizmo.framecolor', dizmo.getAttribute('settings/framecolor'));
+        };
+
+        setTimeout(window.FRAMECOLOR, 125);
+        setTimeout(window.FRAMECOLOR, 375);
+        setTimeout(window.FRAMECOLOR, 875);
     });
 });

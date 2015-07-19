@@ -82,6 +82,10 @@ Class("MarkdownReader.Dizmo", {
                 jQuery(events).trigger('dizmo.turned', ['front']);
             });
 
+            dizmo.subscribeToAttribute('settings/framecolor', function (path, value) {
+                jQuery(events).trigger('dizmo.framecolor', [value]);
+            });
+
             viewer.subscribeToAttribute(
                 'settings/displaymode', function (path, value) {
                     if (value === 'presentation') {

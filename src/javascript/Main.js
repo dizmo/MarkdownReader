@@ -101,6 +101,8 @@ Class("MarkdownReader.Main", {
                 this.onTurn.bind(this));
             jQuery(events).on('dizmo.onlanguagechanged',
                 this.onLanguageChanged.bind(this));
+            jQuery(events).on('dizmo.framecolor',
+                this.onFrameColorChanged.bind(this));
         },
 
         onClick: function () {
@@ -109,6 +111,18 @@ Class("MarkdownReader.Main", {
 
         onLanguageChanged: function (dizmo, language) {
             this.onTurn(dizmo, 'front');
+        },
+
+        onFrameColorChanged: function (dizmo, framecolor) {
+            jQuery('#md-toc').css(
+                'color', this.getColor(framecolor));
+            jQuery('#content').find('p').css(
+                'color', this.getColor(framecolor));
+        },
+
+        getColor: function (framecolor) {
+            return (Colors.hex2bright(framecolor.slice(0,7))) ?
+                '#000000' : '#ffffff';
         },
 
         onTurn: function (dizmo, side) {
@@ -346,6 +360,7 @@ Class("MarkdownReader.Main", {
             var $tocItems =jQuery('.md-toc-item');
             $tocItems.click(self.onTocItemClick.bind(self));
             this.highlight($tocItems.first());
+
         },
 
         showToc: function (init) {
@@ -457,8 +472,8 @@ Class("MarkdownReader.Main", {
         },
 
         highlight: function ($tocItem) {
-            jQuery('.md-toc-item').css ('background-color', '');
-            $tocItem.css ('background-color', '#e6e6e6');
+            jQuery('.md-toc-item').removeClass('highlight');
+            $tocItem.addClass('highlight');
         },
 
         showPage: function (counter) {
