@@ -55,10 +55,10 @@ been defined), we would like to *freeze* the configuration; for this purpose a
             "languages": {
                 "en": "en", "de": "de"
             },
-            "urlCss": "http://help.dizmo.com/FrozenBook/reader.css",
+            "urlCss": "http://www.example.com/FrozenBook/reader.css",
             "urlFlashPlayer": "http://test.dizmo.com/wp-content/uploads/2014/09/StrobeMediaPlayback.swf",
-            "urlMd": "http://help.dizmo.com/FrozenBook/${LANGUAGE}/index.md",
-            "urlNoFlashImage": "http://www.dizmo.com/wp-content/uploads/2014/10/no-flash-message.jpg"
+            "urlMd": "http://www.example.com/FrozenBook/${LANGUAGE}/index.md",
+            "urlNoFlashImage": "http://www.example.com/uploads/images/logo.jpg"
         }
 
     As you may have noticed the `showBack` and `showFront` configurations have
@@ -67,7 +67,7 @@ been defined), we would like to *freeze* the configuration; for this purpose a
     URLs exists and deliver the correct content.
     
     For `urlCss` you could also use the default base styles should you not have
-    any custom style definitions, i.e. `http://help.dizmo.com/reader-base.css`.
+    any custom style definitions, i.e. `http://www.example.com/reader-base.css`.
 
  8. Now, you can treat the *FrozenBook* GIT repository like a regular dizmo
     GIT repository: Just execute things like `./manage.py zip` to create the
