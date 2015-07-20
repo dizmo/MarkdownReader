@@ -119,6 +119,8 @@ Class("MarkdownReader.Main", {
                 'color', this.getAdaptiveColor(framecolor));
             jQuery('#content').find('p').css(
                 'color', this.getAdaptiveColor(framecolor));
+            jQuery('#pager-idx').css(
+                'color', this.getAdaptiveColor(framecolor));
             jQuery('#pager-lhs').css(
                 '-webkit-filter', this.getAdaptiveInversion(framecolor));
             jQuery('#pager-rhs').css(
