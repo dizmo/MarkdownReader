@@ -14,11 +14,7 @@ Class("MarkdownReader.Dizmo", {
             load: function (path, default_value) {
                 var value = dizmo.privateStorage.getProperty(path);
                 if (value !== undefined && value !== null) {
-                    try {
-                        return JSON.parse(value);
-                    } catch (ex) {
-                        return value;
-                    }
+                    return value;
                 }
 
                 return default_value;
@@ -26,8 +22,7 @@ Class("MarkdownReader.Dizmo", {
 
             save: function (path, value) {
                 if (value !== undefined && value !== null) {
-                    dizmo.privateStorage
-                        .setProperty(path, JSON.stringify(value));
+                    dizmo.privateStorage.setProperty(path, value);
                 } else {
                     dizmo.privateStorage.deleteProperty(path);
                 }
@@ -38,22 +33,27 @@ Class("MarkdownReader.Dizmo", {
             },
 
             setSize: function (width, height) {
-                assert (jQuery.type(width) === 'number');
-                assert (jQuery.type(height) === 'number');
-
                 dizmo.setSize(width, height);
             },
 
-            getHeight: function() {
+            getHeight: function () {
                 return dizmo.getHeight();
             },
 
-            getWidth: function() {
+            setHeight: function (value) {
+                return dizmo.setHeight(value);
+            },
+
+            getWidth: function () {
                 return dizmo.getWidth();
             },
 
+            setWidth: function (value) {
+                return dizmo.setWidth(value);
+            },
+
             getLanguage: function () {
-                var language = viewer.getAttribute('settings/language')||'en',
+                var language = viewer.getAttribute('settings/language') || 'en',
                     languages = this.load('languages', {en: "en"});
 
                 return languages[language]||'en';

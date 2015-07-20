@@ -14,7 +14,10 @@ jQuery(document).ready(function () {
         if (jQuery.isPlainObject(json)) {
             for (var key in json) {
                 if (json.hasOwnProperty(key)) {
-                    MarkdownReader.Dizmo.save(key, json[key]);
+                    var value = MarkdownReader.Dizmo.load(key);
+                    if (value === undefined || value === null) {
+                        MarkdownReader.Dizmo.save(key, json[key]);
+                    }
                 }
             }
         }
@@ -27,17 +30,13 @@ jQuery(document).ready(function () {
             window.showFront = undefined;
         }
 
+        if (MarkdownReader.Dizmo.load('tocFlag') === true) {
+            var w = MarkdownReader.Dizmo.getWidth(),
+                h = MarkdownReader.Dizmo.getHeight();
+
+            MarkdownReader.Dizmo.setSize(w - 254, h);
+        }
+
         window.MAIN = new MarkdownReader.Main();
-
-        ///////////////////////////////////////////////////////////////////////
-
-        window.FRAMECOLOR = function () {
-            jQuery(events).trigger(
-                'dizmo.framecolor', dizmo.getAttribute('settings/framecolor'));
-        };
-
-        setTimeout(window.FRAMECOLOR, 125);
-        setTimeout(window.FRAMECOLOR, 375);
-        setTimeout(window.FRAMECOLOR, 875);
     });
 });

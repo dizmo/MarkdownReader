@@ -64,7 +64,8 @@ Class("MarkdownReader.Main", {
         },
         dizmo: {
             is: 'ro', init: function () {
-                window.DIZMO = new MarkdownReader.Dizmo(); return window.DIZMO;
+                window.DIZMO = new MarkdownReader.Dizmo();
+                return window.DIZMO;
             }
         }
     },
@@ -80,16 +81,16 @@ Class("MarkdownReader.Main", {
         },
 
         setUrlMd: function (value) {
-            this.dizmo.my.save('urlMd', value);
+            MarkdownReader.Dizmo.save('urlMd', value);
         },
         setUrlCss: function (value) {
-            this.dizmo.my.save('urlCss', value);
+            MarkdownReader.Dizmo.save('urlCss', value);
         },
         setExtraCss: function (value) {
-            this.dizmo.my.save('extraCss', value);
+            MarkdownReader.Dizmo.save('extraCss', value);
         },
         setTocFlag: function (value) {
-            this.dizmo.my.save('tocFlag', value);
+            MarkdownReader.Dizmo.save('tocFlag', value);
         }
     },
 
@@ -115,14 +116,23 @@ Class("MarkdownReader.Main", {
 
         onFrameColorChanged: function (dizmo, framecolor) {
             jQuery('#md-toc').css(
-                'color', this.getColor(framecolor));
+                'color', this.getAdaptiveColor(framecolor));
             jQuery('#content').find('p').css(
-                'color', this.getColor(framecolor));
+                'color', this.getAdaptiveColor(framecolor));
+            jQuery('#pager-lhs').css(
+                '-webkit-filter', this.getAdaptiveInversion(framecolor));
+            jQuery('#pager-rhs').css(
+                '-webkit-filter', this.getAdaptiveInversion(framecolor));
         },
 
-        getColor: function (framecolor) {
+        getAdaptiveColor: function (framecolor) {
             return (Colors.hex2bright(framecolor.slice(0,7))) ?
                 '#000000' : '#ffffff';
+        },
+
+        getAdaptiveInversion: function (framecolor) {
+            return (Colors.hex2bright(framecolor.slice(0,7))) ?
+                'invert(0.0)' : 'invert(1.0)';
         },
 
         onTurn: function (dizmo, side) {
@@ -189,7 +199,7 @@ Class("MarkdownReader.Main", {
             }
 
             var urlMd = jQuery('#url-md').val();
-            if (urlMd && urlMd.length > 0) {
+            if (urlMd && urlMd.length > 0) setTimeout(function () {
                 jQuery.ajax({
                     type: 'GET', url: resolve (urlMd), success: function (value) {
                         jQuery('#front').empty()
@@ -250,12 +260,15 @@ Class("MarkdownReader.Main", {
                             }
                         });
 
+                        jQuery(events).trigger('dizmo.framecolor',
+                            dizmo.getAttribute('settings/framecolor'));
+
                         self.initToc();
                     }
                 });
 
                 self.setUrlMd(urlMd);
-            } else {
+            }, 1); else {
                 self.setUrlMd(null);
             }
         },
@@ -265,9 +278,8 @@ Class("MarkdownReader.Main", {
         },
 
         initToc: function () {
-            var self = this;
-            var tocs = jQuery('#md-toc-items');
-            var array = jQuery('#content > *').not('#pager');
+            var self = this, tocs = jQuery('#md-toc-items'),
+                array = jQuery('#content > *').not('#pager');
             for (var i = 0; i < array.length; i++) {
                 var el = array[i];
                 switch (el.tagName) {
@@ -302,7 +314,7 @@ Class("MarkdownReader.Main", {
             }
 
             if (self.tocFlag === true) {
-                self.showToc(true);
+                self.showToc(false);
             } else {
                 self.hideToc(true);
             }
@@ -365,7 +377,8 @@ Class("MarkdownReader.Main", {
 
         showToc: function (init) {
             var $toc_list = jQuery('#md-toc'),
-                $toc_item = $toc_list.find('.md-toc-item');
+                $toc_item = $toc_list.find('.md-toc-item'),
+                $toc_search = $toc_list.find('#md-toc-search');
 
             var self = this; setTimeout(function () {
                 var w = self.dizmo.my.getWidth(),
@@ -376,6 +389,7 @@ Class("MarkdownReader.Main", {
 
                 $toc_item.css('border-bottom', 'lightgray solid 1px');
                 $toc_list.show();
+                $toc_search.focus();
             }, 1);
         },
 
