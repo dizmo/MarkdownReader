@@ -9,7 +9,7 @@ function showFront() {
 }
 
 var events = {};
-jQuery(document).ready(function () {
+window.document.addEventListener('dizmoready', function () {
     jQuery.getJSON('assets/settings.json', function (json) {
         if (jQuery.isPlainObject(json)) {
             for (var key in json) {

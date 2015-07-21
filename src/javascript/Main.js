@@ -1,9 +1,16 @@
 //= require Dizmo
+//= require Editor
 //= require MarkdownReader
 //= require VideoConverter
 
 Class("MarkdownReader.Main", {
     has: {
+        editor: {
+            is: 'ro', init: function () {
+                window.EDITOR = new MarkdownReader.Editor();
+                return window.EDITOR;
+            }
+        },
         md2html: {
             is: 'ro', init: function () {
                 var renderer = new marked.Renderer();
@@ -74,7 +81,7 @@ Class("MarkdownReader.Main", {
         initialize: function () {
             if (!!this.urlMd) jQuery('#url-md').val(this.urlMd);
             if (!!this.urlCss) jQuery('#url-css').val(this.urlCss);
-            if (!!this.extraCss) window.EDITOR.setValue(this.extraCss);
+            if (!!this.extraCss) this.editor.setValue(this.extraCss);
 
             this.onShowFront();
             this.initEvents();
@@ -169,7 +176,7 @@ Class("MarkdownReader.Main", {
                     .replace('{0}', 'url(style/images/tourguide-light.svg);'))
                 .append('<div id="md-toc"><div id="md-toc-items"/></div>');
 
-            var extraCss = window.EDITOR.getValue();
+            var extraCss = this.editor.getValue();
             if (extraCss && extraCss.length > 0) {
                 self.setExtraCss(extraCss);
             } else {
@@ -277,6 +284,7 @@ Class("MarkdownReader.Main", {
 
         onShowBack: function () {
             this.dizmo.my.setTitle('Markdown Reader');
+            this.editor.refresh();
         },
 
         initToc: function () {
@@ -378,7 +386,7 @@ Class("MarkdownReader.Main", {
         },
 
         showToc: function (init) {
-            var $toc_list = jQuery('#md-toc'),
+            var $toc_list = DizmoElements('#md-toc'),
                 $toc_item = $toc_list.find('.md-toc-item'),
                 $toc_search = $toc_list.find('#md-toc-search');
 
@@ -391,12 +399,13 @@ Class("MarkdownReader.Main", {
 
                 $toc_item.css('border-bottom', 'lightgray solid 1px');
                 $toc_list.show();
+                $toc_search.dsearchfield();
                 $toc_search.focus();
             }, 1);
         },
 
         hideToc: function (init) {
-            var $toc_list = jQuery('#md-toc'),
+            var $toc_list = DizmoElements('#md-toc'),
                 $toc_item = $toc_list.find('.md-toc-item');
 
             var self = this; setTimeout(function () {
