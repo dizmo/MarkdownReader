@@ -136,7 +136,7 @@ Class("MarkdownReader.Main", {
 
         getAdaptiveColor: function (framecolor) {
             return (Colors.hex2bright(framecolor.slice(0,7))) ?
-                '#000000' : '#ffffff';
+                '#3d3d3d' : '#e6e6e6';
         },
 
         getAdaptiveInversion: function (framecolor) {
