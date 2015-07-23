@@ -31,14 +31,16 @@ window.document.addEventListener('dizmoready', function () {
                 window.showFront = undefined;
             }
 
-            var width = MarkdownReader.Dizmo.load('width'); // bundle width
+            // TODO: width = bundle.getAttribute('width')
+            var width = MarkdownReader.Dizmo.load('width');
             if (typeof width === 'number') {
-                dizmo.setWidth(width);
+                dizmo.setWidth(576);
             }
 
-            var height = MarkdownReader.Dizmo.load('height'); // bundle height
+            // TODO: height = bundle.getAttribute('height')
+            var height = MarkdownReader.Dizmo.load('height');
             if (typeof height === 'number') {
-                dizmo.setWidth(height);
+                dizmo.setHeight(height);
             }
 
             window.MAIN = new MarkdownReader.Main();
