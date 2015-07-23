@@ -31,6 +31,16 @@ window.document.addEventListener('dizmoready', function () {
                 window.showFront = undefined;
             }
 
+            var width = MarkdownReader.Dizmo.load('width'); // bundle width
+            if (typeof width === 'number') {
+                dizmo.setWidth(width);
+            }
+
+            var height = MarkdownReader.Dizmo.load('height'); // bundle height
+            if (typeof height === 'number') {
+                dizmo.setWidth(height);
+            }
+
             window.MAIN = new MarkdownReader.Main();
         }
     });

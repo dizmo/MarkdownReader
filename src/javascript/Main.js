@@ -74,6 +74,16 @@ Class("MarkdownReader.Main", {
                 window.DIZMO = new MarkdownReader.Dizmo();
                 return window.DIZMO;
             }
+        },
+        width: {
+            is: 'ro', init: function () {
+                return MarkdownReader.Dizmo.load('width', undefined);
+            }
+        },
+        height: {
+            is: 'ro', init: function () {
+                return MarkdownReader.Dizmo.load('height', undefined);
+            }
         }
     },
 
@@ -379,7 +389,6 @@ Class("MarkdownReader.Main", {
                     h = self.dizmo.my.getHeight();
 
                 self.dizmo.my.setSize(w + $toc_list.width(), h);
-
                 $toc_item.css('border-bottom', 'lightgray solid 1px');
                 $toc_list.show();
             }, 0);
