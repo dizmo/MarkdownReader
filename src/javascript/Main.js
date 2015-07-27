@@ -5,6 +5,16 @@
 
 Class("MarkdownReader.Main", {
     has: {
+        iscroll1: {
+            is: 'rw', init: function () {
+                return undefined;
+            }
+        },
+        iscroll2: {
+            is: 'rw', init: function () {
+                return undefined;
+            }
+        },
         editor: {
             is: 'ro', init: function () {
                 window.EDITOR = new MarkdownReader.Editor();
@@ -134,7 +144,7 @@ Class("MarkdownReader.Main", {
         onFrameColorChanged: function (dizmo, framecolor) {
             jQuery('#md-toc').css(
                 'color', this.getAdaptiveColor(framecolor));
-            jQuery('#content').find('p').css(
+            jQuery('#content').find(':header,p').css(
                 'color', this.getAdaptiveColor(framecolor));
             jQuery('#pager-idx').css(
                 'color', this.getAdaptiveColor(framecolor));
@@ -208,7 +218,7 @@ Class("MarkdownReader.Main", {
                 jQuery.ajax({
                     type: 'GET', url: resolve (urlMd), success: function (value) {
                         jQuery('#front').empty()
-                            .append('<div id="content">{0}</div>'
+                            .append('<div id="content-wrap"><div id="content">{0}</div></div>'
                                 .replace('{0}', self.md2html.convert(value)))
                             .append('<div id="md-toc">{0}{1}</div>'
                                 .replace('{0}', '<div class="searchfield">{0}</div>'
@@ -217,9 +227,12 @@ Class("MarkdownReader.Main", {
                                         'data-type="dizmo-searchfield" type="search" ' +
                                         'class="searchinput" ' +
                                     '/>'))
-                                .replace('{1}', '<div id="md-toc-items"/>'));
+                                .replace('{1}', '<div id="md-toc-items-wrap">' +
+                                    '<div id="md-toc-items"></div></div>'));
 
-                        if (jQuery('#pager').length > 0) {
+                        var $pager = jQuery('#pager');
+                        if ($pager.length > 0) {
+                            $pager.appendTo('#front');
                             jQuery('#pager-lhs').click(
                                 self.onLhsPagerClick.bind(self));
                             jQuery('#pager-rhs').click(
@@ -268,6 +281,24 @@ Class("MarkdownReader.Main", {
                         jQuery(events).trigger('dizmo.framecolor',
                             dizmo.getAttribute('settings/framecolor'));
 
+                        if (self.iscroll1 !== undefined) {
+                            self.iscroll1.destroy();
+                            self.iscroll1 = undefined;
+                        }
+
+                        if (self.iscroll2 !== undefined) {
+                            self.iscroll2.destroy();
+                            self.iscroll2 = undefined;
+                        }
+
+                        setTimeout(function () {
+                            self.iscroll1 = new IScroll('#content-wrap');
+                        }, 64);
+
+                        setTimeout(function () {
+                            self.iscroll2 = new IScroll('#md-toc-items-wrap');
+                        }, 128);
+
                         self.initToc();
                     }
                 });
@@ -293,28 +324,33 @@ Class("MarkdownReader.Main", {
                 switch (el.tagName) {
                     case 'H1':
                         tocs.append(
-                            '<div class="md-toc-item md-toc-h1"><p ref="#{0}">{1}</p></div>'
-                                .replace('{0}', el.id).replace('{1}', el.textContent));
+                            '<div id="{id}" class="md-toc-item md-toc-h1"><p ref="#{0}">{1}</p></div>'
+                                .replace('{0}', el.id).replace('{1}', el.textContent)
+                                .replace('{id}', 'toc-' + i));
                         break;
                     case 'H2':
                         tocs.append(
-                            '<div class="md-toc-item md-toc-h2"><p ref="#{0}">{1}</p></div>'
-                                .replace('{0}', el.id).replace('{1}', el.textContent));
+                            '<div id="{id}" class="md-toc-item md-toc-h2"><p ref="#{0}">{1}</p></div>'
+                                .replace('{0}', el.id).replace('{1}', el.textContent)
+                                .replace('{id}', 'toc-' + i));
                         break;
                     case 'H3':
                         tocs.append(
-                            '<div class="md-toc-item md-toc-h3"><p ref="#{0}">{1}</p></div>'
-                                .replace('{0}', el.id).replace('{1}', el.textContent));
+                            '<div id="{id}" class="md-toc-item md-toc-h3"><p ref="#{0}">{1}</p></div>'
+                                .replace('{0}', el.id).replace('{1}', el.textContent)
+                                .replace('{id}', 'toc-' + i));
                         break;
                     case 'H4':
                         tocs.append(
-                            '<div class="md-toc-item md-toc-h4"><p ref="#{0}">{1}</p></div>'
-                                .replace('{0}', el.id).replace('{1}', el.textContent));
+                            '<div id="{id}" class="md-toc-item md-toc-h4"><p ref="#{0}">{1}</p></div>'
+                                .replace('{0}', el.id).replace('{1}', el.textContent)
+                                .replace('{id}', 'toc-' + i));
                         break;
                     case 'H5':
                         tocs.append(
-                            '<div class="md-toc-item md-toc-h5"><p ref="#{0}">{1}</p></div>'
-                                .replace('{0}', el.id).replace('{1}', el.textContent));
+                            '<div id="{id}" class="md-toc-item md-toc-h5"><p ref="#{0}">{1}</p></div>'
+                                .replace('{0}', el.id).replace('{1}', el.textContent)
+                                .replace('{id}', 'toc-' + i));
                         break;
                     default:
                         break;
@@ -344,6 +380,10 @@ Class("MarkdownReader.Main", {
                     jQuery('.md-toc-item').each(function (index, item) {
                         jQuery(item).show();
                     });
+
+                    if (self.iscroll2 !== undefined) {
+                        self.iscroll2.refresh();
+                    }
                 }
             });
 
@@ -370,6 +410,10 @@ Class("MarkdownReader.Main", {
                             $item.show();
                         }
                     });
+
+                    if (self.iscroll2 !== undefined) {
+                        self.iscroll2.refresh();
+                    }
                 }
             });
 
@@ -389,6 +433,9 @@ Class("MarkdownReader.Main", {
                     h = self.dizmo.my.getHeight();
 
                 self.dizmo.my.setSize(w + $toc_list.width(), h);
+                jQuery('html, body').css('width', '100%');
+                jQuery('#content-wrap').css('width', 'calc(100% - 270px)');
+
                 $toc_item.css('border-bottom', 'lightgray solid 1px');
                 $toc_list.show();
             }, 0);
@@ -407,6 +454,9 @@ Class("MarkdownReader.Main", {
                     h = self.dizmo.my.getHeight();
 
                 self.dizmo.my.setSize(w - $toc_list.width(), h);
+                jQuery('html, body').css('width', '100%');
+                jQuery('#content-wrap').css('width', 'calc(100% - 16px)');
+
                 $toc_item.css('border-bottom', 'none');
                 $toc_list.hide();
             }, 0);
@@ -427,7 +477,10 @@ Class("MarkdownReader.Main", {
                 scrollTop: 0
             }, 0);
 
-            this.highlight(jQuery(jQuery('.md-toc-h3')[this.page]));
+            var $toc_item = jQuery(jQuery('.md-toc-h3')[this.page]);
+            this.scrollTo($toc_item);
+            this.highlight($toc_item);
+
             return false;
         },
 
@@ -446,7 +499,10 @@ Class("MarkdownReader.Main", {
                 scrollTop: 0
             }, 0);
 
-            this.highlight(jQuery(jQuery('.md-toc-h3')[this.page]));
+            var $toc_item = jQuery(jQuery('.md-toc-h3')[this.page]);
+            this.scrollTo($toc_item);
+            this.highlight($toc_item);
+
             return false;
         },
 
@@ -486,11 +542,6 @@ Class("MarkdownReader.Main", {
             }
 
             return false;
-        },
-
-        highlight: function ($tocItem) {
-            jQuery('.md-toc-item').removeClass('highlight');
-            $tocItem.addClass('highlight');
         },
 
         showPage: function (counter) {
@@ -566,6 +617,10 @@ Class("MarkdownReader.Main", {
                     ]);
                 }
 
+                if (self.iscroll1 !== undefined) {
+                    self.iscroll1.refresh();
+                }
+
                 self.page = new_page;
                 return self.page;
             };
@@ -574,6 +629,23 @@ Class("MarkdownReader.Main", {
                 counter.call(this, this.page||0, $pages.length, go);
             } else {
                 go(this.page||0, this.page);
+            }
+        },
+
+        highlight: function ($tocItem) {
+            jQuery('.md-toc-item').removeClass('highlight');
+            $tocItem.addClass('highlight');
+        },
+
+        scrollTo: function ($tocItem) {
+            if (this.iscroll2 !== undefined) {
+                var id = $tocItem.prop('id');
+                if (id) {
+                    var dt = 600, dx = 0, dy = -3 * $tocItem.height() - 6,
+                        fn = IScroll.utils.ease.quadratic;
+
+                    this.iscroll2.scrollToElement('#' + id, dt, dx, dy, fn);
+                }
             }
         },
 
