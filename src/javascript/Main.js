@@ -243,13 +243,12 @@ Class("MarkdownReader.Main", {
                                     var keyCode = ev.keyCode || ev.which;
                                     if (keyCode == 37) { // left arrow
                                         self.onLhsPagerClick();
-                                        return false;
                                     }
                                     if (keyCode == 39) { // right arrow
                                         self.onRhsPagerClick();
-                                        return false;
                                     }
                                 }
+                                return false;
                             });
 
                             self.showPage(function (page, pages, result) {
