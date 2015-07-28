@@ -155,13 +155,25 @@ Class("MarkdownReader.Main", {
         },
 
         getAdaptiveColor: function (framecolor) {
-            return (Colors.hex2bright(framecolor.slice(0,7))) ?
-                '#3d3d3d' : '#e6e6e6';
+            try {
+                return (Colors.hex2bright(framecolor.slice(0,7))) ?
+                    '#3d3d3d' : '#e6e6e6';
+            } catch (ex) {
+                console.error(ex);
+            }
+
+            return '#3d3d3d';
         },
 
         getAdaptiveInversion: function (framecolor) {
-            return (Colors.hex2bright(framecolor.slice(0,7))) ?
-                'invert(0.0)' : 'invert(1.0)';
+            try {
+                return (Colors.hex2bright(framecolor.slice(0,7))) ?
+                    'invert(0.0)' : 'invert(1.0)';
+            } catch (ex) {
+                console.error(ex);
+            }
+
+            return 'invert(0.0)';
         },
 
         onTurn: function (dizmo, side) {
