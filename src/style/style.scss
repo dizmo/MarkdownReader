@@ -14,7 +14,7 @@ html, body {
 
   #pager {
     bottom: 0;
-    height: 52px;
+    height: 54px;
     right: 0;
     position: absolute;
     width: 100%;
@@ -57,14 +57,14 @@ html, body {
     #pager-lhs {
       background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH3wIKCTYEu2HZvQAAAMVJREFUSMfllsENwjAMRV86T6xy7AiwWdWFYAV6ojj7hEsr9dAUNwlCAl8SRcr7duwvBf4uxIub11689OuzrXAZcAEmIK4YnQa9b91pMuELeEnwkrrXZMLN0VSC37J6YIBH4KlBT4cFjHDVoO1eku6T8HcVxFJ4ssmzgVICoxV+yAe58bUnckC7k5SIl6m0giqTlOyBBo2AGip5ZDfZKNKKly57igwiAOeiMTWKlPlgQySuzHitYrRFRIM6YACGeT/+7ifhBcPEYY2pR6SaAAAAAElFTkSuQmCC);
       float: right;
-      right: 24px;
+      right: 31px;
       top: 0;
     }
 
     #pager-rhs {
       background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAB3RJTUUH3wIKCTUt0v4SEgAAAMZJREFUSMfdlUEOgjAQRd8Qj8PIUo+gNyNcSI9gXEmG++CmJN0wtKW6YDYQ2vxHO/9n4LClrUp49tpqH3/LKXEAF+AFzNHeDjCbbE4FNM7aPRJefmQENOckTcHtZUE8wLMGRDYa/QHOzr7NnkiCm0ZASyGSaNliiGTkwoXYZLLLRTZZB7xXlucljDVsWifJf72ilCavZeLnNm0SgqZ7gnZyxK9BgFLxrRPc9oqX2jRrJniAxxKiaOhUHTjv4O0BGMJ7lvgx6gvMx16OFYaayQAAAABJRU5ErkJggg==);
       float: right;
-      right: 16px;
+      right: 23px;
       top: 0;
     }
 
@@ -110,7 +110,7 @@ html, body {
     }
 
     #md-toc-items-wrap {
-      height: calc(100% - 58px);
+      height: calc(100% - 42px);
       position: relative;
       overflow: hidden;
       width: 100%;
@@ -118,7 +118,7 @@ html, body {
       #md-toc-items {
         margin-top: 8px;
         padding-left: 8px;
-        width: calc(100% - 8px);
+        width: calc(100% - 14px);
         z-index: 99999;
 
         .md-toc-item:first-of-type {
@@ -181,6 +181,41 @@ html, body {
 
   header {
     text-decoration: underline;
+  }
+
+  #md-toc-items-wrap, #content-wrap {
+    .iScrollVerticalScrollbar {
+      opacity: 0.67;
+      overflow: hidden;
+      padding: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 10px;
+      z-index: 9999;
+      .iScrollIndicator {
+        border: 1px solid dimgrey;
+        border-radius: 2px;
+        margin: 0;
+        position: absolute;
+        width: calc(100% - 4px);
+      }
+    }
+  }
+
+  #md-toc-items-wrap {
+    .iScrollVerticalScrollbar {
+      height: calc(100% - 8px);
+      margin-top: 8px;
+      margin-left: 2px;
+    }
+  }
+
+  #content-wrap {
+    .iScrollVerticalScrollbar {
+      height: 100%;
+      margin-right: 1px;
+    }
   }
 }
 

@@ -303,11 +303,23 @@ Class("MarkdownReader.Main", {
                         }
 
                         setTimeout(function () {
-                            self.iscroll1 = new IScroll('#content-wrap');
+                            self.iscroll1 = new IScroll('#content-wrap', {
+                                fadeScrollbars: false,
+                                interactiveScrollbars: true,
+                                mouseWheel: true,
+                                scrollbars: 'custom',
+                                shrinkScrollbars: 'scale'
+                            });
                         }, 64);
 
                         setTimeout(function () {
-                            self.iscroll2 = new IScroll('#md-toc-items-wrap');
+                            self.iscroll2 = new IScroll('#md-toc-items-wrap', {
+                                fadeScrollbars: false,
+                                interactiveScrollbars: true,
+                                mouseWheel: true,
+                                scrollbars: 'custom',
+                                shrinkScrollbars: 'scale'
+                            });
                         }, 128);
 
                         self.initToc();
