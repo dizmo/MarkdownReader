@@ -5,14 +5,24 @@
 
 Class("MarkdownReader.Main", {
     has: {
-        iscroll1: {
+        scroll1: {
             is: 'rw', init: function () {
                 return undefined;
             }
         },
-        iscroll2: {
+        scroll1UiFlag: {
+            is: 'ro', init: function () {
+                return MarkdownReader.Dizmo.load('scroll1UiFlag');
+            }
+        },
+        scroll2: {
             is: 'rw', init: function () {
                 return undefined;
+            }
+        },
+        scroll2UiFlag: {
+            is: 'ro', init: function () {
+                return MarkdownReader.Dizmo.load('scroll2UiFlag');
             }
         },
         editor: {
@@ -292,35 +302,35 @@ Class("MarkdownReader.Main", {
                         jQuery(events).trigger('dizmo.framecolor',
                             dizmo.getAttribute('settings/framecolor'));
 
-                        if (self.iscroll1 !== undefined) {
-                            self.iscroll1.destroy();
-                            self.iscroll1 = undefined;
+                        if (self.scroll1 !== undefined) {
+                            self.scroll1.destroy();
+                            self.scroll1 = undefined;
                         }
 
-                        if (self.iscroll2 !== undefined) {
-                            self.iscroll2.destroy();
-                            self.iscroll2 = undefined;
+                        if (self.scroll2 !== undefined) {
+                            self.scroll2.destroy();
+                            self.scroll2 = undefined;
                         }
 
                         setTimeout(function () {
-                            self.iscroll1 = new IScroll('#content-wrap', {
+                            self.scroll1 = new IScroll('#content-wrap', {
                                 fadeScrollbars: false,
                                 interactiveScrollbars: true,
                                 mouseWheel: true,
                                 scrollbars: 'custom',
                                 shrinkScrollbars: 'scale'
                             });
-                        }, 64);
+                        }, 96);
 
                         setTimeout(function () {
-                            self.iscroll2 = new IScroll('#md-toc-items-wrap', {
+                            self.scroll2 = new IScroll('#md-toc-items-wrap', {
                                 fadeScrollbars: false,
                                 interactiveScrollbars: true,
                                 mouseWheel: true,
-                                scrollbars: 'custom',
+                                scrollbars: self.scroll2UiFlag && 'custom',
                                 shrinkScrollbars: 'scale'
                             });
-                        }, 128);
+                        }, 96);
 
                         self.initToc();
                     }
@@ -404,8 +414,8 @@ Class("MarkdownReader.Main", {
                         jQuery(item).show();
                     });
 
-                    if (self.iscroll2 !== undefined) {
-                        self.iscroll2.refresh();
+                    if (self.scroll2 !== undefined) {
+                        self.scroll2.refresh();
                     }
                 }
             });
@@ -434,8 +444,8 @@ Class("MarkdownReader.Main", {
                         }
                     });
 
-                    if (self.iscroll2 !== undefined) {
-                        self.iscroll2.refresh();
+                    if (self.scroll2 !== undefined) {
+                        self.scroll2.refresh();
                     }
                 }
             });
@@ -640,8 +650,8 @@ Class("MarkdownReader.Main", {
                     ]);
                 }
 
-                if (self.iscroll1 !== undefined) {
-                    self.iscroll1.refresh();
+                if (self.scroll1 !== undefined) {
+                    self.scroll1.refresh();
                 }
 
                 self.page = new_page;
@@ -661,13 +671,13 @@ Class("MarkdownReader.Main", {
         },
 
         scrollTo: function ($tocItem) {
-            if (this.iscroll2 !== undefined) {
+            if (this.scroll2 !== undefined) {
                 var id = $tocItem.prop('id');
                 if (id) {
                     var dt = 600, dx = 0, dy = -3 * $tocItem.height() - 6,
                         fn = IScroll.utils.ease.quadratic;
 
-                    this.iscroll2.scrollToElement('#' + id, dt, dx, dy, fn);
+                    this.scroll2.scrollToElement('#' + id, dt, dx, dy, fn);
                 }
             }
         },

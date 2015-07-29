@@ -1,7 +1,7 @@
 {
-    "languages": {
-        "en": "en", "de": "de"
-    },
+    "scroll1UiFlag": false,
+    "scroll2UiFlag": true,
+    "languages": {"en": "en", "de": "de"},
     "showBack": true,
     "showFront": true,
     "urlCss": null,
