@@ -12,7 +12,7 @@ Class("MarkdownReader.Main", {
         },
         scroll1UiFlag: {
             is: 'ro', init: function () {
-                return MarkdownReader.Dizmo.load('scroll1UiFlag');
+                return MarkdownReader.Dizmo.load('scroll1UiFlag', false);
             }
         },
         scroll2: {
@@ -22,7 +22,7 @@ Class("MarkdownReader.Main", {
         },
         scroll2UiFlag: {
             is: 'ro', init: function () {
-                return MarkdownReader.Dizmo.load('scroll2UiFlag');
+                return MarkdownReader.Dizmo.load('scroll2UiFlag', true);
             }
         },
         editor: {
