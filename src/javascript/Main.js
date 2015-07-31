@@ -10,9 +10,9 @@ Class("MarkdownReader.Main", {
                 return undefined;
             }
         },
-        scroll1UiFlag: {
+        scroll1Opts: {
             is: 'ro', init: function () {
-                return MarkdownReader.Dizmo.load('scroll1UiFlag', false);
+                return MarkdownReader.Dizmo.load('scroll1', false);
             }
         },
         scroll2: {
@@ -20,9 +20,15 @@ Class("MarkdownReader.Main", {
                 return undefined;
             }
         },
-        scroll2UiFlag: {
+        scroll2Opts: {
             is: 'ro', init: function () {
-                return MarkdownReader.Dizmo.load('scroll2UiFlag', true);
+                return MarkdownReader.Dizmo.load('scroll2', {
+                    "fadeScrollbars": false,
+                    "interactiveScrollbars": true,
+                    "mouseWheel": true,
+                    "scrollbars": "custom",
+                    "shrinkScrollbars": "scale"
+                });
             }
         },
         editor: {
@@ -312,25 +318,19 @@ Class("MarkdownReader.Main", {
                             self.scroll2 = undefined;
                         }
 
-                        setTimeout(function () {
-                            self.scroll1 = new IScroll('#content-wrap', {
-                                fadeScrollbars: false,
-                                interactiveScrollbars: true,
-                                mouseWheel: true,
-                                scrollbars: 'custom',
-                                shrinkScrollbars: 'scale'
-                            });
-                        }, 96);
+                        if (self.scroll1Opts) setTimeout(function () {
+                            jQuery(
+                                '#content-wrap').addClass('no-dizmo-drag');
+                            self.scroll1 = new IScroll(
+                                '#content-wrap', self.scroll1Opts);
+                        }, 95);
 
-                        setTimeout(function () {
-                            self.scroll2 = new IScroll('#md-toc-items-wrap', {
-                                fadeScrollbars: false,
-                                interactiveScrollbars: true,
-                                mouseWheel: true,
-                                scrollbars: self.scroll2UiFlag && 'custom',
-                                shrinkScrollbars: 'scale'
-                            });
-                        }, 96);
+                        if (self.scroll2Opts) setTimeout(function () {
+                            jQuery(
+                                '#md-toc-items-wrap').addClass('no-dizmo-drag');
+                            self.scroll2 = new IScroll(
+                                '#md-toc-items-wrap', self.scroll2Opts);
+                        }, 97);
 
                         self.initToc();
                     }

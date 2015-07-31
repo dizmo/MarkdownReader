@@ -1,11 +1,11 @@
+.no-dizmo-drag {
+    -webkit-dashboard-region: dashboard-region(control rectangle);
+    -webkit-user-select: none;
+}
+
 html, body {
   height: 100%;
   width: 100%;
-}
-
-#content-wrap, #md-toc-items {
-    -webkit-dashboard-region: dashboard-region(control rectangle);
-    -webkit-user-select: none;
 }
 
 #front {

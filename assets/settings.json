@@ -1,6 +1,12 @@
 {
-    "scroll1UiFlag": false,
-    "scroll2UiFlag": true,
+    "scroll1": false, "scroll2": {
+        "fadeScrollbars": false,
+        "interactiveScrollbars": true,
+        "mouseWheel": true,
+        "scrollbars": "custom",
+        "shrinkScrollbars": "scale"
+    },
+
     "languages": {"en": "en", "de": "de"},
     "showBack": true,
     "showFront": true,
