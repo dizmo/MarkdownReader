@@ -34,7 +34,7 @@ window.document.addEventListener('dizmoready', function () {
             // TODO: width = bundle.getAttribute('width')
             var width = MarkdownReader.Dizmo.load('width');
             if (typeof width === 'number') {
-                dizmo.setWidth(576);
+                dizmo.setWidth(width);
             }
 
             // TODO: height = bundle.getAttribute('height')
