@@ -561,8 +561,8 @@ Class("MarkdownReader.Main", {
 
                     if ($pager.length > 0) {
                         this.showPage(function (page, pages, next) {
-                            page = $content.find('> h3').index($header);
-                            next.call(this, page);
+                            var new_page = $content.find('> h3').index($header);
+                            next.call(this, new_page, page);
                         }, false);
                     }
 
