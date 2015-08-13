@@ -46,4 +46,6 @@ window.document.addEventListener('dizmoready', function () {
             window.MAIN = new MarkdownReader.Main();
         }
     });
+
+    window.EVAL = eval;
 });
