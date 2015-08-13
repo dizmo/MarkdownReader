@@ -16,9 +16,11 @@ window.document.addEventListener('dizmoready', function () {
                 for (var key in json) {
                     if (json.hasOwnProperty(key)) {
                         var value = MarkdownReader.Dizmo.load(key);
-                        if (value === undefined || value === null) {
-                            MarkdownReader.Dizmo.save(key, json[key]);
-                        }
+                        if (value) json[key] = jQuery.extend(
+                            true, json[key], value
+                        );
+
+                        MarkdownReader.Dizmo.save(key, json[key]);
                     }
                 }
             }
