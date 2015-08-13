@@ -13,18 +13,22 @@ Class("MarkdownReader.Dizmo", {
 
             load: function (path, default_value) {
                 var value = dizmo.privateStorage.getProperty(path);
-                if (value !== undefined && value !== null) {
+                if (value === null) {
+                    return undefined || default_value;
+                } else if (value === '"null"') {
+                    return null;
+                } else {
                     return value;
                 }
-
-                return default_value;
             },
 
             save: function (path, value) {
-                if (value !== undefined && value !== null) {
-                    dizmo.privateStorage.setProperty(path, value);
-                } else {
+                if (value === undefined) {
                     dizmo.privateStorage.deleteProperty(path);
+                } else if (value === null) {
+                    dizmo.privateStorage.setProperty(path, '"null"');
+                } else {
+                    dizmo.privateStorage.setProperty(path, value);
                 }
             },
 
