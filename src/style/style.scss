@@ -100,13 +100,20 @@ html, body {
     width: 254px;
     z-index: 4999;
 
+    #md-toc-home {
+      background: url(images/home.svg) center no-repeat;
+      background-size: 67%;
+      height: 34px;
+      width: 34px;
+      margin: 0 0 0 8px;
+    }
     #md-toc-search {
       border: 1px solid #a1a1a1;
       border-radius: 4px;
       height: 34px;
       margin: 0 0 0 8px;
       padding: 0 32px 0 8px;
-      width: calc(100% - 8px);
+      width: calc(100% - 50px);
     }
 
     #md-toc-items-wrap {

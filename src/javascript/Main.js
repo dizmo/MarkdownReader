@@ -249,8 +249,10 @@ Class("MarkdownReader.Main", {
                             .append('<div id="content-wrap"><div id="content">{0}</div></div>'
                                 .replace('{0}', self.md2html.convert(value)))
                             .append('<div id="md-toc">{0}{1}</div>'
-                                .replace('{0}', '<div class="searchfield">{0}</div>'
-                                    .replace ('{0}', '<input ' +
+                                .replace('{0}', '<div class="searchfield">{0}{1}</div>'
+                                    .replace('{0}', '<button id="md-toc-home" ' +
+                                        'data-type="dizmo-button" rel="help">&nbsp;</button>')
+                                    .replace ('{1}', '<input ' +
                                         'id="md-toc-search" ' +
                                         'data-type="dizmo-searchfield" type="search" ' +
                                         'class="searchinput" ' +
@@ -279,8 +281,8 @@ Class("MarkdownReader.Main", {
                                 return false;
                             });
 
-                            self.showPage(function (page, pages, result) {
-                                result.call(this, 0);
+                            self.showPage(function (page, pages, go) {
+                                go.call(this, 0);
                             });
                         }
 
@@ -407,6 +409,13 @@ Class("MarkdownReader.Main", {
                     '/style/images/toc.svg', 'Table of Contents', toggle_toc);
             }
 
+            var $toc_home = jQuery('#md-toc-home');
+            $toc_home.on('click', function (ev) {
+                self.showPage(function (page, pages, go) {
+                    go.call(this, 0);
+                });
+            });
+
             var $toc_search = jQuery('#md-toc-search');
             $toc_search.on('input', function (ev) {
                 if (jQuery('#md-toc-search').val() === '') {
@@ -472,6 +481,9 @@ Class("MarkdownReader.Main", {
                 $toc_item.css('border-bottom', 'lightgray solid 1px');
                 $toc_list.show();
             }, 0);
+
+            var $toc_home = $toc_list.find('#md-toc-home');
+            $toc_home.dbutton();
 
             var $toc_search = $toc_list.find('#md-toc-search');
             $toc_search.dsearchfield();
@@ -560,9 +572,9 @@ Class("MarkdownReader.Main", {
                     }
 
                     if ($pager.length > 0) {
-                        this.showPage(function (page, pages, next) {
+                        this.showPage(function (page, pages, go) {
                             var new_page = $content.find('> h3').index($header);
-                            next.call(this, new_page, page);
+                            go.call(this, new_page, page);
                         }, false);
                     }
 
