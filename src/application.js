@@ -1,13 +1,5 @@
 //= require Main
 
-function showBack() {
-    dizmo.showBack();
-}
-
-function showFront() {
-    dizmo.showFront();
-}
-
 var events = {};
 window.document.addEventListener('dizmoready', function () {
     jQuery.getJSON('assets/settings.json', function (json) {
@@ -26,12 +18,16 @@ window.document.addEventListener('dizmoready', function () {
                 }
             }
 
-            if (MarkdownReader.Dizmo.load('showBack') !== true) {
-                window.showBack = undefined;
+            if (MarkdownReader.Dizmo.load('showBack') === true) {
+                window.showBack = function () {
+                    dizmo.showBack();
+                };
             }
 
-            if (MarkdownReader.Dizmo.load('showFront') !== true) {
-                window.showFront = undefined;
+            if (MarkdownReader.Dizmo.load('showFront') === true) {
+                window.showFront = function () {
+                    dizmo.showFront();
+                };
             }
 
             // TODO: width = bundle.getAttribute('width')
