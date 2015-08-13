@@ -8,9 +8,16 @@ window.document.addEventListener('dizmoready', function () {
                 for (var key in json) {
                     if (json.hasOwnProperty(key)) {
                         var value = MarkdownReader.Dizmo.load(key);
-                        if (value) {
-                            json[key] = (typeof json[key] === 'object') ?
-                                jQuery.extend(true, json[key], value) : value;
+                        if (value !== undefined) {
+                            if (value !== null) {
+                                if (typeof value === 'object') {
+                                    json[key] = jQuery.extend(true, json[key], value);
+                                } else {
+                                    json[key] = value;
+                                }
+                            } else {
+                                json[key] = null;
+                            }
                         }
 
                         MarkdownReader.Dizmo.save(key, json[key]);
