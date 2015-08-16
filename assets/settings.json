@@ -1,5 +1,7 @@
 {
-    "scroll1": false, "scroll2": {
+    "languages": {"en": "en", "de": "de"},
+
+    "scroll1": true, "scroll2": {
         "fadeScrollbars": false,
         "interactiveScrollbars": true,
         "mouseWheel": true,
@@ -7,11 +9,14 @@
         "shrinkScrollbars": "scale"
     },
 
-    "languages": {"en": "en", "de": "de"},
+    "tocFlag": true,
     "showBack": true,
     "showFront": true,
-    "urlCss": null,
+    "urlCss": "assets/css/reader.css",
+    "urlMd": "assets/md/${LANGUAGE}/index.md",
+
+    "height": 480, "width": 576,
+
     "urlFlashPlayer": "http://test.dizmo.com/wp-content/uploads/2014/09/StrobeMediaPlayback.swf",
-    "urlMd": null,
     "urlNoFlashImage": "http://www.dizmo.com/wp-content/uploads/2014/10/no-flash-message.jpg"
 }
