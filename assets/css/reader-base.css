@@ -1,54 +1,106 @@
 /* main style sheet for markdown reader V1.0 */
 
 #front {
-  border-radius: 4px;
-}
-#content {
-  height: 100%;
-  overflow-y: auto;
-}
-#pager {
-  display: none !important;
-}
-h1, h2, h3, h4, h5 {
-  font-weight: bold;
-  margin: 0;
-}
-h1 {
-  display: none !important;
-  font-size: 2.00em;
-}
-h2 {
-  font-size: 1.75em;
-}
-h3 {
-  font-size: 1.50em;
-}
-h4 {
-  font-size: 1.25em;
-}
-h5 {
-  font-size: 1.00em;
-}
-p {
-  font-size: 16px;
-  margin: 0;
-}
-pre {
-  border-left: lightgray solid 0.5em;
-  font-size: smaller;
-  margin: 1em;
-  padding: 0 8px;
-}
-img, video, object {
-  width: 100%;
+    border-radius: 4px;
 }
 
-video::-webkit-media-controls-current-time-display {display: none;}
-video::-webkit-media-controls-fullscreen-button {display: none;}
-video::-webkit-media-controls-mute-button {display: none;}
-video::-webkit-media-controls-play-button {}
-video::-webkit-media-controls-timeline {display: none;}
-video::-webkit-media-controls-time-remaining-display {}
-video::-webkit-media-controls-toggle-closed-captions-button {}
-video::-webkit-media-controls-volume-slider {display: none;}
+#content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+#content table thead tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+#content table thead th {
+    padding: 0.66em 1em 0.33em 1em;
+    text-align: left;
+}
+
+#content table tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+#content table tbody tr:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+#content table tbody td {
+    padding: 0.33em 1em 0.11em 1em;
+}
+
+#pager {
+    display: none !important;
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: bold;
+    margin: 0;
+}
+
+h1 {
+    display: none !important;
+    font-size: 2.00em;
+}
+
+h2 {
+    font-size: 1.75em;
+}
+
+h3 {
+    font-size: 1.50em;
+}
+
+h4 {
+    font-size: 1.25em;
+}
+
+h5 {
+    font-size: 1.00em;
+}
+
+p {
+    font-size: 16px;
+    margin: 0;
+}
+
+pre {
+    border-left: lightgray solid 0.5em;
+    font-size: smaller;
+    margin: 1em;
+    padding: 0 8px;
+}
+
+img, video, object {
+    width: 100%;
+}
+
+video::-webkit-media-controls-current-time-display {
+    display: none;
+}
+
+video::-webkit-media-controls-fullscreen-button {
+    display: none;
+}
+
+video::-webkit-media-controls-mute-button {
+    display: none;
+}
+
+video::-webkit-media-controls-play-button {
+}
+
+video::-webkit-media-controls-timeline {
+    display: none;
+}
+
+video::-webkit-media-controls-time-remaining-display {
+}
+
+video::-webkit-media-controls-toggle-closed-captions-button {
+}
+
+video::-webkit-media-controls-volume-slider {
+    display: none;
+}

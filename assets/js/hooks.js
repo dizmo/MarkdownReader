@@ -30,6 +30,10 @@ jQuery('#pager').on('turn:after', function (event, new_page, page) {
     console.debug('[on:turn:after]', arguments);
 });
 
+jQuery('#pager').on('turn:after', function (event, new_page, page) {
+    setTimeout(function () { jQuery('.md-toc-h2:has(p:empty)').hide(); }, 600);
+});
+
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
