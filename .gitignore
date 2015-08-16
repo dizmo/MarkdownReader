@@ -1,4 +1,4 @@
 .idea
 build
-*.css
-*.css.map
+style.css
+style.css.map

@@ -1,0 +1,38 @@
+@import url("assets/css/reader-base.css");
+
+/**
+ * Table of Content: make the H1 header bold, so it's clearly visible.
+ */
+
+#md-toc .md-toc-h1 {
+    font-weight: bold;
+}
+
+/**
+ * Ensure that the description paragraph is properly placed (namely centered,
+ * on top):
+ */
+
+#content p {
+    padding: 1em 1.5em 1em 1.25em;
+    text-align: justify;
+}
+
+/**
+ * Place the image properly in the center (if need be chagne each individually
+ * using e.g. the `nth-of-type` selector):
+ */
+
+#content img {
+    margin-left: 20%;
+    margin-right: 20%;
+    width: 60%;
+}
+
+/**
+ * Enable pager (which is by default disabled):
+ */
+
+#pager {
+    display: initial !important;
+}
