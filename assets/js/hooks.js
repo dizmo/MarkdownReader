@@ -5,9 +5,7 @@ jQuery('#pager').on('turn:before', function (event, new_page, page) {
 
     if (new_page === 0 && page === undefined) {
         var path = 'settings/framecolor', on_framecolor = function (_, value) {
-            console.debug('[on:framecolor]', value);
             jQuery('#overlay').css('background-color', value.slice(0, 7));
-            console.debug('[on:framecolor]', jQuery('#overlay').css('background-color'));
         };
 
         jQuery.get('assets/html/overlay.html', function (data) {
