@@ -48,31 +48,34 @@ By editing the `assets/settings.json` configuration file the `MarkdownReader` di
 
 **Paging:**
 
-next and previous page buttons
+The `MarkdownReader` dizmo supports paging: By embedding a `div#pager` HTML at the end of the MD source, content beneath headers of level H1, H2 and H3 are split and displayed as separate pages. Further, the next and previous buttons are then also shown (which can be hidden via CSS).
 
 **JavaScript hooks:**
 
-assets/js/hooks.js
+Once paging has been activated it is possible to wire JavaScript hooks upon turning to a page: for this to work an `assets/js/hooks.js` script needs to be
+included. This feature allows to implement interactive content.
 
 **Markdown headers:**
 
-H1 and H2 peculiarities
+If paging is on, then the content *immediately* beneath H1 (or H2) headers is static, i.e. that it is always displayed on every H2 (or H3) sub-pages under that heading. This allows to show e.g. the *same* video (or image) on different sub-pages but each with an otherwise *different* content.
 
 **TOC panel:**
 
-hiding of empty headers
+The table of contents (TOC) panel on the right hand side can be toggled off or
+on using the dizmo menu. Further, it is possible to disable the TOC panel completely via a corresponding flag in the `assets/settings.json` file.
 
 **Scrolling:**
  
-content and TOC scroll bars
+The content and TOC panels support by default a scrolling mechanism, where the
+scroll bar for the content panel is by default hidden, but the bar for the TOC panel is by default shown.
 
 **Back side:**
 
-URLs and CSS editor
+The back side of the `MarkdownReader` dizmo provides two fields to enter MD and CSS URLs and an embedded CSS editor. By default flipping to the back side is enabled, but is possible to disable that. 
 
 <!-- ---------------------------------------------------------------------- -->
 
-## Contents
+## Details
 
 <!-- ---------------------------------------------------------------------- -->
 
