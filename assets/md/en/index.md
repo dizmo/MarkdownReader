@@ -120,7 +120,7 @@ Allows to style HTML which is produced based on the MD content: It needs to be p
 
 By setting the `urlCss` key to `assets/css/reader.css` a custom style can be applied to the MD content. Like for the `urlMd` key it is possible to set it to any URL to fetch the CSS from. The `reader.css` itself imports `assets/css/reader-base.css` which contains some basic style definitions. In general the latter CSS should always be imported.
 
-The following HTML identifiers or classes can be used to style various aspects of the `MarkdownReader` dizmo: `#content`, `#md-toc`, `.md-toc-item`, `.md-toc-h1` ... `.md-toc-h5`, `#pager`, `#pager-lhs` and `#pager-rhs`.
+The following HTML identifiers or classes can be used to style various aspects of the `MarkdownReader` dizmo: `#content`, `#md-toc`, `#md-toc-home`, `.md-toc-item`, `.md-toc-h1` ... `.md-toc-h5`, `#pager`, `#pager-lhs` and `#pager-rhs`.
 
 <!-- ====================================================================== -->
 
@@ -167,6 +167,60 @@ For example to display the *same* video (or image) across multiple pages i.e. H3
 Similarly content between H1 and its first H2 sub-header (if any) is displayed across *all* pages. This mechanism is only active when paging is on.
 
 Given the combined effects of paging w.r.t. H3 headers and static content between H2 and H3 headers (or H1 and H2), it is in general recommended to leave the H2 header titles empty.
+
+<!-- ====================================================================== -->
+
+## <!-- Empty H2 -->
+
+By including the `assets/js/hooks.js` script at the end of and MD content, the latter can be made interactive.
+
+<!-- ---------------------------------------------------------------------- -->
+
+### JavaScript hooks
+
+When paging is on, the `MarkdownReader` dizmo triggers `turn:before` and `turn.after` events when a pages is turned to. The following snippets show how they can be subscribed to:
+
+```
+jQuery('#pager').on('
+    turn:before', function (event, new_page, page) {
+        // ..
+    }
+);
+```
+
+and:
+
+```
+jQuery('#pager').on('
+    turn:after', function (event, new_page, page) {
+        // ..
+    }
+);
+```
+
+For example, the overlay displayed when the `MarkdownReader` dizmo starts has been implemented using a subscription to the `turn:before` event.
+
+At the start (or when the `#md-toc-home` button is clicked) the `page` parameter is not defined, otherwise it contains the index of the current page.
+
+It is also possible to define more advanced hooks by overwriting the following functions with:
+
+```
+MarkdownReader.my.lhsPageTo = function (page, pages, go) {
+    // ..
+}
+```
+
+and:
+
+```
+MarkdownReader.my.rhsPageTo = function (page, pages, go) {
+    // ..
+}
+```
+
+These two function essentially allow to block paging till a custom condition is met. They are independent from the previous two and both sets of functions can be used in parallel.
+
+See also `assets/js/hooks.js` for further details. 
 
 <!-- ====================================================================== -->
 
