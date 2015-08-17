@@ -70,7 +70,7 @@ p {
 pre {
     border-left: lightgray solid 0.5em;
     font-size: smaller;
-    margin: 1em;
+    margin: 0 1em 1.75em 1em;
     padding: 0 8px;
 }
 

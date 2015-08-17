@@ -56,7 +56,7 @@ The `MarkdownReader` dizmo supports paging: By embedding a `#pager` HTML at the 
 
 **Markdown headers:**
 
-If paging is on, then the content *immediately* beneath H1 (or H2) headers is static, i.e. that it is always displayed on every H2 (or H3) sub-pages under that heading.
+If paging is on, then the content *immediately* beneath H1 (or H2) headers is static, i.e. it is always displayed on every H2 (or H3) sub-pages under that heading.
 
 **JavaScript hooks:**
 
@@ -121,6 +121,52 @@ Allows to style HTML which is produced based on the MD content: It needs to be p
 By setting the `urlCss` key to `assets/css/reader.css` a custom style can be applied to the MD content. Like for the `urlMd` key it is possible to set it to any URL to fetch the CSS from. The `reader.css` itself imports `assets/css/reader-base.css` which contains some basic style definitions. In general the latter CSS should always be imported.
 
 The following HTML identifiers or classes can be used to style various aspects of the `MarkdownReader` dizmo: `#content`, `#md-toc`, `.md-toc-item`, `.md-toc-h1` ... `.md-toc-h5`, `#pager`, `#pager-lhs` and `#pager-rhs`.
+
+<!-- ====================================================================== -->
+
+## <!-- Empty H2 -->
+
+By embedding a `#pager` HTML, content beneath headers of level *H3* are split and displayed as separate pages.
+
+<!-- ---------------------------------------------------------------------- -->
+
+### Paging
+
+The `MarkdownReader` dizmo supports paging: it can be enabled by embedding the following HTML snippet at the end of an MD content:
+
+```
+<div id="pager">
+  <span id="pager-rhs" rel="next"></span>
+  <span id="pager-lhs" rel="prev"></span>
+</div>
+```
+
+If paging is required, but the pagers themselves not, then they can be hidden via an embedded CSS:
+
+```
+<div id="pager" style="display: none !important">
+  <span id="pager-rhs" rel="next"></span>
+  <span id="pager-lhs" rel="prev"></span>
+</div>
+```
+
+Once paging is activated the pages are split w.r.t. the *H3* headers! This can be confusing at the start, and one needs to organize the MD content accordingly.  
+
+<!-- ====================================================================== -->
+
+## <!-- Empty H2 -->
+
+Immediate content beneath H1 (or H2) headers is static, i.e. it is always displayed on every H2 (or H3) sub-pages under that heading.
+
+<!-- ---------------------------------------------------------------------- -->
+
+### Markdown headers
+
+For example to display the *same* video (or image) across multiple pages i.e. H3 headers, it needs to be placed in the MD content between the H2 and its first H3 sub-header (if any).
+ 
+Similarly content between H1 and its first H2 sub-header (if any) is displayed across *all* pages. This mechanism is only active when paging is on.
+
+Given the combined effects of paging w.r.t. H3 headers and static content between H2 and H3 headers (or H1 and H2), it is in general recommended to leave the H2 header titles empty.
 
 <!-- ====================================================================== -->
 
