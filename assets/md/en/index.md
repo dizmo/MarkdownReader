@@ -6,6 +6,8 @@
 
 A versatile documentation and presentation dizmo based on the [Markdown][1] notation.
 
+<!-- ---------------------------------------------------------------------- -->
+
 ### Introduction
 
 `MarkdownReader` is a dizmo which allows you to display content which has been written using the [Markdown][1] (MD) notation. On the left hand side you see the content and on the right hand side the table of contents (TOC) panel, where the latter can be toggled on and off.
@@ -17,6 +19,8 @@ Once content in MD is written, and rendered as HTML it needs to be styled using 
 There are two main possibilities to provide your *own* MD content and CSS styles: Either (a) provide the URLs where the dizmo can fetch the necessary information from or (b) create a new dizmo and embed the `MarkdownReader` source code using so called [GIT submodules][2].
 
 Option (a) is the easier approach, but option (b) offers a broader range of possibilities to customize your own `MarkdownReader` based dizmo: For example you can provide the dizmo with icons and its own title for re-branding purposes, or you can directly embed *assets* (like configuration, content, styles and images) to eliminate network dependency.
+
+<!-- ---------------------------------------------------------------------- -->
 
 ### Overview
 
@@ -32,7 +36,7 @@ Option (a) is the easier approach, but option (b) offers a broader range of poss
 | 8 | Scrolling | content and TOC scroll bars |
 | 9 | Back side | URLs and integrated CSS editor |
 
-----
+---
 
 **Markdown content:**
 
@@ -75,12 +79,21 @@ The back side of the `MarkdownReader` dizmo provides two fields to enter MD and 
 
 <!-- ---------------------------------------------------------------------- -->
 
-## Details
+## Contents
 
 <!-- ---------------------------------------------------------------------- -->
 
 ### Markdown content
-...
+
+Allows to express content using the MD notation: it needs to be provided either via an absolute URL or a relative path which can contain the `${LANGUAGE}` variable for translation purposes.
+
+---
+
+The [Markdown][1] content source is defined in the `settings.json` file (which can be found in the `assets` folder) via the `urlMd` key: Setting it to `assets/md/${LANGUAGE}/index.md` means that the content should be fetched from a path relative to the dizmo's root.
+
+Further, the value for `urlMd` is not necessarily required to represent a (local) relative path, but it can be any general URL as long as it is understood by the `jQuery.get` invocation to fetch the corresponding content.
+
+**BTW:** Any HTML snippet (or CSS style) can be mixed freely with the MD content! This should be as far as possible avoided and only the native MD notation should be applied &ndash; however, the `MarkdownReader` dizmo itself uses a limited number of such snippets, like the included `#pager` buttons or the `hooks.js` script. 
 
 <!-- ---------------------------------------------------------------------- -->
 
