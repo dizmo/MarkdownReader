@@ -64,7 +64,7 @@ If paging is on, it is possible to wire JavaScript hooks on a page turn: For thi
 
 **TOC panel:**
 
-The table of contents (TOC) panel on the right hand side can be toggled off or
+The table of contents (TOC) panel on the right hand side can be toggled off and
 on using the dizmo menu. Further, it is possible to disable the TOC panel completely via a corresponding flag in the `assets/settings.json` file.
 
 **Scrolling:**
@@ -221,6 +221,21 @@ MarkdownReader.my.rhsPageTo = function (page, pages, go) {
 These two function essentially allow to block paging till a custom condition is met. They are independent from the previous two and both sets of functions can be used in parallel.
 
 See also `assets/js/hooks.js` for further details. 
+
+<!-- ====================================================================== -->
+
+## <!-- Empty H2 -->
+
+The table of contents (TOC) panel on the right hand side can be toggled off and
+on using the dizmo menu.
+
+<!-- ---------------------------------------------------------------------- -->
+
+### TOC panel
+
+The `tocFlag` in the  `assets/settings.json` configuration file can be set to `true`, `false` or `null`. With `true` the TOC is enabled and also initially displayed; with `false` it is also *enabled*, but it is hidden initially; and with `null` it is completely disabled.
+
+The TOC contains the following HTML tags: `#md-toc`, `#md-toc-home`, `#md-toc-search`, `.md-toc-item`, and `.md-toc-h1` .. `.md-toc-h5`. The header tags are present only when they have been used in the MD content.
 
 <!-- ====================================================================== -->
 
