@@ -13,19 +13,16 @@ A general purpose documentation dizmo based on the [Markdown][1] notation.
 
 ### Overview
 
-| Subject | File(s) |
-|-------------|------|
-| MD content | assets/md/${LANGUAGE}/index.md |
-| CSS styling | assets/css/{reader-base.css, reader.css} |
-| JS actions | assets/js/hooks.js |
-| Settings | assets/settings.js |
-
-| Subject | Description |
-|---------|-------------|
-| Pagers | Next and previous buttons |
-| MD headers | H1 and H2 peculiarities |
-| TOC panel | Hiding of empty headers |
-| Back side | URLs and CSS editor |
+| # | Subject | Description/File(s) |
+|---|---------|---------------------|
+| 1 | Markdown content | assets/md/${LANGUAGE}/index.md |
+| 2 | CSS styling | assets/css/reader-base.css, and assets/css/reader.css |
+| 3 | Settings | assets/settings.js |
+| 4 | JavaScript actions | assets/js/hooks.js |
+| 5 | Pagers | Next and previous buttons |
+| 6 | Markdown headers | H1 and H2 peculiarities |
+| 7 | TOC panel | Hiding of empty headers |
+| 8 | Back side | URLs and CSS editor |
 
 <!-- ---------------------------------------------------------------------- -->
 
