@@ -1,7 +1,17 @@
+/**
+ * Settings:
+ */
 {
-    "languages": {"en": "en", "de": "de"},
+    "languages": {
+        "en": "en", "de": "de"
+    },
 
-    "scroll1": true, "scroll2": {
+    "scroll1": {
+        "mouseWheel": true,
+        "scrollbars": false
+    },
+
+    "scroll2": {
         "fadeScrollbars": false,
         "interactiveScrollbars": true,
         "mouseWheel": true,

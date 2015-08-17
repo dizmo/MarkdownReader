@@ -2,7 +2,8 @@
 
 var events = {};
 window.document.addEventListener('dizmoready', function () {
-    jQuery.getJSON('assets/settings.json', function (json) {
+    jQuery.get('assets/settings.json', function (text) {
+        var json = JSON.parse(text.replace(/\/\*[\s\S]*?\*\//, ''));
         if (window.MAIN === undefined) {
             if (jQuery.isPlainObject(json)) {
                 for (var key in json) {

@@ -1,16 +1,7 @@
 @import url("assets/css/reader-base.css");
 
 /**
- * Table of Content: make the H1 header bold, so it's clearly visible.
- */
-
-#md-toc .md-toc-h1 {
-    font-weight: bold;
-}
-
-/**
- * All H2 headers shall be hidden, but if they're followed by a non-empty para-
- * graph then it shall have rounded borders.
+ * Content:
  */
 
 #content h2 {
@@ -19,34 +10,25 @@
 
 #content h2 + p:not(:empty) {
     border: 1px double dimgray;
+    border-radius: 3px;
     margin-bottom: 1em;
-    border-radius: 4px;
     padding: 0.75em 0.75em 0.5em 0.75em;
+    opacity: 0.95;
 }
 
-/**
- * Ensure that tables are rendered using the full width available:
- */
+#content h3 {
+    padding-bottom: 0.25em;
+}
+
 
 #content table {
     width: 100%;
 }
 
-
-/**
- * Ensure that the description paragraph is properly placed (namely centered,
- * on top):
- */
-
 #content p {
-    padding: 1em 1.5em 1em 1.25em;
+    padding: 0 1.25em 1em 1.25em;
     text-align: justify;
 }
-
-/**
- * Place the image properly in the center (if need be chagne each individually
- * using e.g. the `nth-of-type` selector):
- */
 
 #content img {
     margin-left: 20%;
@@ -55,9 +37,17 @@
 }
 
 /**
- * Enable pager (which is by default disabled):
+ * Pager:
  */
 
 #pager {
     display: initial !important;
+}
+
+/**
+ * Table of contents:
+ */
+
+#md-toc .md-toc-h1 {
+    font-weight: bold;
 }
