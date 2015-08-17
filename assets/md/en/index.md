@@ -253,6 +253,20 @@ The configuration object allows to tweak the scrolling mechanism in a fine granu
 
 <!-- ====================================================================== -->
 
+## <!-- Empty H2 -->
+
+The back side of the `MarkdownReader` dizmo provides two fields to enter the MD and CSS URLs and an embedded CSS editor.
+
+<!-- ---------------------------------------------------------------------- -->
+
+### Back side
+
+By setting the MD and CSS URLs on the back side, the `MarkdownReader` dizmo can quickly be customized; further, the embedded CSS editor provides a play ground to tweak the default styles.
+
+By setting the `showBack` flag to `false` flipping to the the back side can be disabled; and setting `showFront` to `false` will remove the corresponding *Content* entry in the dizmo menu.
+
+<!-- ====================================================================== -->
+
 [1]: https://daringfireball.net/projects/markdown
 [2]: https://www.git-scm.com/book/en/v2/Git-Tools-Submodules
 [3]: http://iscrolljs.com
