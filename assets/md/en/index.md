@@ -239,8 +239,23 @@ The TOC contains the following HTML tags: `#md-toc`, `#md-toc-home`, `#md-toc-se
 
 <!-- ====================================================================== -->
 
+## <!-- Empty H2 -->
+
+The content and TOC panels support by default a scrolling mechanism.
+
+<!-- ---------------------------------------------------------------------- -->
+
+### Scrolling
+
+By setting the `scroll1` and `scroll2` flags to `false` or to a corresponding configuration object, the content and TOC panel scrolling mechanism can be switched on and off.
+
+The configuration object allows to tweak the scrolling mechanism in a fine granular way: By default the initial settings can be left as provided, but if desired the documentation on [iScrollJS][3] is excellent reading.
+
+<!-- ====================================================================== -->
+
 [1]: https://daringfireball.net/projects/markdown
 [2]: https://www.git-scm.com/book/en/v2/Git-Tools-Submodules
+[3]: http://iscrolljs.com
 
 <!-- ---------------------------------------------------------------------- -->
 
