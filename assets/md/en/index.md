@@ -52,7 +52,7 @@ Allows to style the HTML which is produced based on the MD content: It needs to 
 
 **Paging:**
 
-The `MarkdownReader` dizmo supports paging: By embedding a `#pager` HTML at the end of the MD source, content beneath headers of level *H3* are split and displayed as separate pages. Further, the next and previous buttons are then also shown.
+The `MarkdownReader` dizmo supports paging: By embedding a `#pager` HTML at the end of the MD source, content beneath headers of level *H3* are split and displayed as separate pages. Further, the next and previous buttons are also displayed then.
 
 **Markdown headers:**
 
@@ -70,11 +70,11 @@ on using the dizmo menu. Further, it is possible to disable the TOC panel comple
 **Scrolling:**
  
 The content and TOC panels support by default a scrolling mechanism, where the
-scroll bar for the content panel is by default hidden, but for the TOC panel it is by default shown.
+scroll bar for the content panel is hidden by default, but for the TOC panel it is shown by default .
 
 **Back side:**
 
-The back side of the `MarkdownReader` dizmo provides two fields to enter the MD and CSS URLs and an embedded CSS editor. By default flipping to the back side is enabled, but if desired it can be disabled. 
+The back side of the `MarkdownReader` dizmo provides two fields to enter the MD and CSS URLs and an embedded CSS editor. Flipping to the back side is enabled by default, but if desired it can be disabled.
 
 <!-- ====================================================================== -->
 
@@ -106,7 +106,7 @@ The `${LANGUAGE}` variable &ndash; if present &ndash; is dynamically replaced wi
 
 Further, the value for `urlMd` is not necessarily required to represent a (local) relative path, but it can be any general URL as long as it is understood by the `jQuery.get` invocation to fetch the corresponding content.
 
-**Info:** Any HTML snippet (or CSS style) can be mixed freely with the MD content. But this should be as far as possible avoided and only the native MD notation should be used &ndash; however, the `MarkdownReader` dizmo itself uses a limited number of such snippets like for the `#pager` buttons or the `hooks.js` script. 
+**Info:** Any HTML snippet (or CSS style) can be mixed freely with the MD content. But this should be avoided as far as possible and only the native MD notation should be used &ndash; however, the `MarkdownReader` dizmo itself uses a limited number of such snippets like for the `#pager` buttons or the `hooks.js` script.
 
 <!-- ====================================================================== -->
 
@@ -150,19 +150,19 @@ If paging is required, but the pagers themselves not, then they can be hidden vi
 </div>
 ```
 
-Once paging is activated the pages are split w.r.t. the *H3* headers! This can be confusing at the start, and one needs to organize the MD content accordingly.  
+Once paging is activated, the pages are split above the *H3* headers! This can be confusing at the start, and one needs to organize the MD content accordingly.
 
 <!-- ====================================================================== -->
 
 ## <!-- Empty H2 -->
 
-Immediate content beneath H1 (or H2) headers is static, i.e. it is always displayed on every H2 (or H3) sub-pages under that heading.
+Content placed immediately beneath H1 (or H2) headers is static, i.e. it is always displayed on every H2 (or H3) sub-pages under that heading.
 
 <!-- ---------------------------------------------------------------------- -->
 
 ### Markdown headers
 
-For example to display the *same* video (or image) across multiple pages i.e. H3 headers, it needs to be placed in the MD content between the H2 and its first H3 sub-header (if any).
+For example, to display the *same* video (or image) across multiple pages i.e. H3 headers, it needs to be placed in the MD content between the H2 and its first H3 sub-header (if any).
  
 Similarly content between H1 and its first H2 sub-header (if any) is displayed across *all* pages. This mechanism is only active when paging is on.
 
@@ -172,7 +172,7 @@ Given the combined effects of paging w.r.t. H3 headers and static content betwee
 
 ## <!-- Empty H2 -->
 
-By including the `assets/js/hooks.js` script at the end of and MD content, the latter can be made interactive.
+By including the `assets/js/hooks.js` script at the end of an MD content, the latter can be made interactive.
 
 <!-- ---------------------------------------------------------------------- -->
 
@@ -249,7 +249,7 @@ The content and TOC panels support by default a scrolling mechanism.
 
 By setting the `scroll1` and `scroll2` flags to `false` or to a corresponding configuration object, the content and TOC panel scrolling mechanism can be switched on and off.
 
-The configuration object allows to tweak the scrolling mechanism in a fine granular way: By default the initial settings can be left as provided, but if desired the documentation on [iScrollJS][3] is excellent reading.
+The configuration object allows to adjust the scrolling mechanism infinitely: By default the initial settings can be left as provided, but if desired the documentation on [iScrollJS][3] is excellent reading.
 
 <!-- ====================================================================== -->
 
@@ -263,7 +263,7 @@ The back side of the `MarkdownReader` dizmo provides two fields to enter the MD 
 
 By setting the MD and CSS URLs on the back side, the `MarkdownReader` dizmo can quickly be customized; further, the embedded CSS editor provides a play ground to tweak the default styles.
 
-By setting the `showBack` flag to `false` flipping to the the back side can be disabled; and setting `showFront` to `false` will remove the corresponding *Content* entry in the dizmo menu.
+By setting the `showBack` flag to `false` flipping to the back side can be disabled; and setting `showFront` to `false` will remove the corresponding *Content* entry in the dizmo menu.
 
 <!-- ====================================================================== -->
 
