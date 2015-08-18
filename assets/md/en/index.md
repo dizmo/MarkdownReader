@@ -64,13 +64,11 @@ If paging is on, it is possible to wire JavaScript hooks on a page turn: For thi
 
 **TOC panel:**
 
-The table of contents (TOC) panel on the right hand side can be toggled off and
-on using the dizmo menu. Further, it is possible to disable the TOC panel completely via a corresponding flag in the `assets/settings.json` file.
+The table of contents (TOC) panel on the right hand side can be toggled off and on using the dizmo menu. Further, it is possible to disable the TOC panel completely via a corresponding flag in the `assets/settings.json` file.
 
 **Scrolling:**
  
-The content and TOC panels support by default a scrolling mechanism, where the
-scroll bar for the content panel is hidden by default, but for the TOC panel it is shown by default .
+The content and TOC panels support a scrolling mechanism, where the scroll bar for the content panel is hidden by default, but for the TOC panel it is shown by default .
 
 **Back side:**
 
