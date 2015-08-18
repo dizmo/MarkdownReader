@@ -278,7 +278,6 @@ Class("MarkdownReader.Main", {
                                         self.onRhsPagerClick();
                                     }
                                 }
-                                return false;
                             });
 
                             self.showPage(function (page, pages, go) {
@@ -419,8 +418,8 @@ Class("MarkdownReader.Main", {
             var $toc_search = jQuery('#md-toc-search');
             $toc_search.on('input', function (ev) {
                 if (jQuery('#md-toc-search').val() === '') {
-                    jQuery('.md-toc-item').each(function (index, item) {
-                        jQuery(item).show();
+                    jQuery('.md-toc-item:has(p:not(:empty))').each(function () {
+                        jQuery(this).show();
                     });
 
                     if (self.scroll2 !== undefined) {
@@ -432,16 +431,16 @@ Class("MarkdownReader.Main", {
             $toc_search.keyup(function (ev) {
                 var keyCode = ev.keyCode || ev.which;
                 if (keyCode == 27) { // escape
-                    jQuery('.md-toc-item').each(function (index, item) {
-                        jQuery(item).show();
+                    jQuery('.md-toc-item:has(p:not(:empty))').each(function () {
+                        jQuery(this).show();
                     });
 
                     jQuery('#md-toc-search').val('');
                 } else {
                     var rx = new RegExp(jQuery('#md-toc-search').val(), 'i');
-                    jQuery('.md-toc-item').each(function (index, item) {
-                        var $item = jQuery(item);
-                        if (rx.source.length > 0 && index > 0) {
+                    jQuery('.md-toc-item:has(p:not(:empty))').each(function (i) {
+                        var $item = jQuery(this);
+                        if (rx.source.length > 0 && i > 0) {
                             var text = $item.find('p').text();
                             if (text.match(rx)) {
                                 $item.show();
@@ -460,9 +459,13 @@ Class("MarkdownReader.Main", {
             });
 
             var $tocItems = jQuery('.md-toc-item');
-            $tocItems.click(self.onTocItemClick.bind(self));
-            this.highlight($tocItems.first());
+            $tocItems.click(self.onTocItemClick.bind(self)).each(function () {
+                if (jQuery(this).find('p:empty').length > 0) {
+                    jQuery(this).hide();
+                }
+            });
 
+            this.highlight($tocItems.first());
             if (self.tocFlag) self.showToc();
         },
 
