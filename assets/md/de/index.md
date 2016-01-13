@@ -98,4 +98,8 @@ ullamcorper efficitur. Sed a finibus leo.
   <span id="pager-lhs" rel="prev"></span>
 </div>
 
-<script src="assets/js/hooks.js">
+<script>
+jQuery.get('assets/js/hooks.js').done(function (data) {
+    eval(data); jQuery('#md-toc-home').click();
+});
+</script>

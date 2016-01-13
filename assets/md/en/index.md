@@ -276,4 +276,8 @@ By setting the `showBack` flag to `false` flipping to the back side can be disab
   <span id="pager-lhs" rel="prev"></span>
 </div>
 
-<script src="assets/js/hooks.js">
+<script>
+jQuery.get('assets/js/hooks.js').done(function (data, success) {
+    if (success) eval(data);
+});
+</script>
