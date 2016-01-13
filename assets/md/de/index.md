@@ -100,6 +100,6 @@ ullamcorper efficitur. Sed a finibus leo.
 
 <script>
 jQuery.get('assets/js/hooks.js').done(function (data) {
-    eval(data); jQuery('#md-toc-home').click();
+    eval(data); jQuery('#pager').trigger('turn:before', [0]);
 });
 </script>
