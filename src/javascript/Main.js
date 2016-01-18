@@ -79,9 +79,10 @@ Class("MarkdownReader.Main", {
                 var resolve = function (href) {
                     if (!href.match(/^\//) && !href.match(/^[a-z]+:\/\//i)) {
                         var tpl_md = MarkdownReader.Dizmo.load('urlMd'),
-                            url_md = MarkdownReader.Main.language(tpl_md);
+                            url_md = MarkdownReader.Main.language(tpl_md),
+                            idx_md = url_md.split('/').pop();
 
-                        return url_md.replace(/index.md$/, '') + href;
+                        return url_md.replace(idx_md, '') + href;
                     } else {
                         return href;
                     }
