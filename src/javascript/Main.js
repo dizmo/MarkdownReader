@@ -228,15 +228,19 @@ Class("MarkdownReader.Main", {
             return 'invert(0.0)';
         },
 
-        onTurn: function (dizmo, side) {
+        onTurn: function (dizmo, side, opts) {
             if (side === 'front') {
-                this.onShowFront();
+                this.onShowFront(opts.no_resize);
             } else {
-                this.onShowBack();
+                this.onShowBack(opts.no_resize);
             }
         },
 
-        onShowFront: function () {
+        refresh: function () {
+            this.onShowFront({no_resize: true});
+        },
+
+        onShowFront: function (opts) {
             var self = this;
 
             jQuery('style#css').remove();
@@ -365,7 +369,7 @@ Class("MarkdownReader.Main", {
                                 '#md-toc-items-wrap', self.scroll2Opts);
                         }, 97);
 
-                        self.initToc();
+                        self.initToc(opts);
                     }
                 });
 
@@ -375,14 +379,14 @@ Class("MarkdownReader.Main", {
             }
         },
 
-        onShowBack: function () {
+        onShowBack: function (opts) {
             this.dizmo.my.setTitle('Markdown Reader');
             this.editor.refresh();
 
-            if (this.tocFlag) this.hideToc();
+            if (this.tocFlag) this.hideToc(opts);
         },
 
-        initToc: function () {
+        initToc: function (opts) {
             var self = this, tocs = jQuery('#md-toc-items'),
                 array = jQuery('#content > *').not('#pager');
             for (var i = 0; i < array.length; i++) {
@@ -427,9 +431,9 @@ Class("MarkdownReader.Main", {
                 var toggle_toc = function () {
                     if (jQuery('#front').css('display') !== 'none') {
                         if (self.tocFlag !== true) {
-                            self.showToc();
+                            self.showToc(opts);
                         } else {
-                            self.hideToc();
+                            self.hideToc(opts);
                         }
 
                         self.setTocFlag(!self.tocFlag);
@@ -498,18 +502,21 @@ Class("MarkdownReader.Main", {
             });
 
             this.highlight($tocItems.first());
-            if (self.tocFlag) self.showToc();
+            if (self.tocFlag) self.showToc(opts);
         },
 
-        showToc: function () {
+        showToc: function (opts) {
             var $toc_list = DizmoElements('#md-toc'),
                 $toc_item = $toc_list.find('.md-toc-item');
 
             var self = this; setTimeout(function () {
-                var w = self.dizmo.my.getWidth(),
-                    h = self.dizmo.my.getHeight();
+                if (!opts || !opts.no_resize) {
+                    var w = self.dizmo.my.getWidth(),
+                        h = self.dizmo.my.getHeight();
 
-                self.dizmo.my.setSize(w + $toc_list.width(), h);
+                    self.dizmo.my.setSize(w + $toc_list.width(), h);
+                }
+
                 jQuery('html, body').css('width', '100%');
                 jQuery('#content-wrap').css('width', 'calc(100% - 270px)');
 
@@ -525,15 +532,18 @@ Class("MarkdownReader.Main", {
             $toc_search.focus();
         },
 
-        hideToc: function () {
+        hideToc: function (opts) {
             var $toc_list = DizmoElements('#md-toc'),
                 $toc_item = $toc_list.find('.md-toc-item');
 
             var self = this; setTimeout(function () {
-                var w = self.dizmo.my.getWidth(),
-                    h = self.dizmo.my.getHeight();
+                if (!opts || !opts.no_resize) {
+                    var w = self.dizmo.my.getWidth(),
+                        h = self.dizmo.my.getHeight();
 
-                self.dizmo.my.setSize(w - $toc_list.width(), h);
+                    self.dizmo.my.setSize(w - $toc_list.width(), h);
+                }
+
                 jQuery('html, body').css('width', '100%');
                 jQuery('#content-wrap').css('width', 'calc(100% - 16px)');
 
