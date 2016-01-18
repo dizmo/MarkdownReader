@@ -277,7 +277,7 @@ By setting the `showBack` flag to `false` flipping to the back side can be disab
 </div>
 
 <script>
-jQuery.get('assets/js/hooks.js').done(function (data) {
+jQuery.get('/bundles/com.dizmo.helper/assets/js/hooks.js').done(function (data) {
     eval(data); jQuery('#pager').trigger('turn:before', [0]);
 });
 </script>

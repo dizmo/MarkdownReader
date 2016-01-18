@@ -4,6 +4,20 @@
 //= require VideoConverter
 
 Class("MarkdownReader.Main", {
+
+    my: {
+        methods: {
+            language: function (tpl) {
+                if (typeof tpl === 'string') {
+                    return tpl.replace (
+                        '${LANGUAGE}', MarkdownReader.Dizmo.my.getLanguage());
+                } else {
+                    return tpl;
+                }
+            }
+        }
+    },
+
     has: {
         scroll1: {
             is: 'rw', init: function () {
@@ -60,6 +74,27 @@ Class("MarkdownReader.Main", {
                     }
 
                     return html;
+                };
+
+                var resolve = function (href) {
+                    if (!href.match(/^\//) && !href.match(/^[a-z]+:\/\//i)) {
+                        var tpl_md = MarkdownReader.Dizmo.load('urlMd'),
+                            url_md = MarkdownReader.Main.language(tpl_md);
+
+                        return url_md.replace(/index.md$/, '') + href;
+                    } else {
+                        return href;
+                    }
+                };
+                renderer.image = function (href, title, text) {
+                    return marked.defaults.renderer.image.call({
+                        options: marked.defaults
+                    }, resolve(href), title, text);
+                };
+                renderer.link = function (href, title, text) {
+                    return marked.defaults.renderer.link.call({
+                        options: marked.defaults
+                    }, resolve(href), title, text);
                 };
 
                 return {
@@ -217,16 +252,11 @@ Class("MarkdownReader.Main", {
                 self.setExtraCss(null);
             }
 
-            var resolve = function (url) {
-                return (url !== undefined) ?
-                    url.replace ('${LANGUAGE}', self.dizmo.my.getLanguage()) :
-                    url;
-            };
-
             var urlCss = jQuery('#url-css').val();
             if (urlCss && urlCss.length > 0) {
                 jQuery.ajax({
-                    type: 'GET', url: resolve (urlCss), success: function (value) {
+                    type: 'GET', url: MarkdownReader.Main.language(urlCss),
+                    success: function (value) {
                         jQuery('head').append(
                                 '<style id="css">' + value + '</style>');
                     }
@@ -244,7 +274,8 @@ Class("MarkdownReader.Main", {
             var urlMd = jQuery('#url-md').val();
             if (urlMd && urlMd.length > 0) setTimeout(function () {
                 jQuery.ajax({
-                    type: 'GET', url: resolve (urlMd), success: function (value) {
+                    type: 'GET', url: MarkdownReader.Main.language(urlMd),
+                    success: function (value) {
                         jQuery('#front').empty()
                             .append('<div id="content-wrap"><div id="content">{0}</div></div>'
                                 .replace('{0}', self.md2html.convert(value)))
