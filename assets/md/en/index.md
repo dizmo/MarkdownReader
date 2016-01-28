@@ -104,6 +104,12 @@ The `${LANGUAGE}` variable &ndash; if present &ndash; is dynamically replaced wi
 
 Further, the value for `urlMd` is not necessarily required to represent a (local) relative path, but it can be any general URL as long as it is understood by the `jQuery.get` invocation to fetch the corresponding content.
 
+Any *relative* Markdown image (or link) URL is interpreted relative to the base of `urlMd`; any *absolute* URL starting with `protocol://` (e.g. `http://`, `https://` or `file://`) is used as it is.
+
+Finally, any URL starting with a *slash* `/` is relative to the dizmo base: This allows to fetch assets which have been embedded within the dizmo itself; e.g. to reference the embedded `md-logo.svg` image use:
+
+    /bundles/com.dizmo.markdownreader/assets/img/md-logo.svg
+
 **Info:** Any HTML snippet (or CSS style) can be mixed freely with the MD content. But this should be avoided as far as possible and only the native MD notation should be used &ndash; however, the `MarkdownReader` dizmo itself uses a limited number of such snippets like for the `#pager` buttons or the `hooks.js` script.
 
 <!-- ====================================================================== -->
