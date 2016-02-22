@@ -37,14 +37,12 @@ window.document.addEventListener('dizmoready', function () {
                 };
             }
 
-            // TODO: width = bundle.getAttribute('width')
-            var width = MarkdownReader.Dizmo.load('width');
+            var width = bundle.getAttribute('width');
             if (typeof width === 'number') {
                 dizmo.setWidth(width);
             }
 
-            // TODO: height = bundle.getAttribute('height')
-            var height = MarkdownReader.Dizmo.load('height');
+            var height = bundle.getAttribute('height');
             if (typeof height === 'number') {
                 dizmo.setHeight(height);
             }
