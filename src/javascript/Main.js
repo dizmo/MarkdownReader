@@ -14,6 +14,17 @@ Class("MarkdownReader.Main", {
                 } else {
                     return tpl;
                 }
+            },
+            resolve: function (href) {
+                if (!href.match(/^\//) && !href.match(/^[a-z]+:\/\//i)) {
+                    var tpl_md = MarkdownReader.Dizmo.load('urlMd'),
+                        url_md = MarkdownReader.Main.language(tpl_md),
+                        idx_md = url_md.split('/').pop();
+
+                    return url_md.replace(idx_md, '') + href;
+                } else {
+                    return href;
+                }
             }
         }
     },
@@ -76,26 +87,15 @@ Class("MarkdownReader.Main", {
                     return html;
                 };
 
-                var resolve = function (href) {
-                    if (!href.match(/^\//) && !href.match(/^[a-z]+:\/\//i)) {
-                        var tpl_md = MarkdownReader.Dizmo.load('urlMd'),
-                            url_md = MarkdownReader.Main.language(tpl_md),
-                            idx_md = url_md.split('/').pop();
-
-                        return url_md.replace(idx_md, '') + href;
-                    } else {
-                        return href;
-                    }
-                };
                 renderer.image = function (href, title, text) {
                     return marked.defaults.renderer.image.call({
                         options: marked.defaults
-                    }, resolve(href), title, text);
+                    }, MarkdownReader.Main.resolve(href), title, text);
                 };
                 renderer.link = function (href, title, text) {
                     return marked.defaults.renderer.link.call({
                         options: marked.defaults
-                    }, resolve(href), title, text);
+                    }, MarkdownReader.Main.resolve(href), title, text);
                 };
 
                 return {

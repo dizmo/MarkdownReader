@@ -20,7 +20,5 @@
     "showBack": true,
     "showFront": true,
     "urlCss": "assets/css/reader.css",
-    "urlMd": "assets/md/${LANGUAGE}/index.md",
-
-    "height": 480, "width": 576
+    "urlMd": "assets/md/${LANGUAGE}/index.md"
 }
