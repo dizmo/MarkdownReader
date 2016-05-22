@@ -17,6 +17,8 @@ var events = {};
 window.document.addEventListener('dizmoready', function () {
     jQuery.get('assets/settings.json').done(function (json) {
         if (window.MAIN === undefined) {
+            window.MAIN = true;
+
             if (jQuery.isPlainObject(json) === false) {
                 json = JSON.parse(json);
             }
