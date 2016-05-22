@@ -1,8 +1,3 @@
-//= require Dizmo
-//= require Editor
-//= require MarkdownReader
-//= require VideoConverter
-
 Class("MarkdownReader.Main", {
 
     my: {

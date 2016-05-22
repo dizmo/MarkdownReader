@@ -1,5 +1,3 @@
-//= require Assert
-
 Class("MarkdownReader.Dizmo", {
     my: {
         methods: {

@@ -1,5 +1,3 @@
-//= require Dizmo
-
 Class("MarkdownReader.Editor", {
 
     my: {
