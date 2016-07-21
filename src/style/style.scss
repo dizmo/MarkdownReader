@@ -242,14 +242,14 @@ html, body {
     width: calc(100% - 4px);
   }
 
-  .done-btn-wrapper {
+  .footer {
     position: absolute;
     bottom: 0px;
     left: 0px;
     text-align: center;
     width: 100%;
 
-    .done-btn {
+    .done-button {
       line-height: 26px;
       margin-bottom: 10px;
     }

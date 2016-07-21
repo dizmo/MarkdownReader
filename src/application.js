@@ -7,10 +7,10 @@
 //= require function/partial
 //= require function/random
 //= require function/with
+
 //= require dizmo
 //= require editor
 //= require markdown_reader
-//= require video_converter
 //= require main
 
 var events = {};

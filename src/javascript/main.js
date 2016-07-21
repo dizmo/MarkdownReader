@@ -5,7 +5,7 @@ Class("MarkdownReader.Main", {
             language: function (tpl) {
                 if (typeof tpl === 'string') {
                     return tpl.replace (
-                        '${LANGUAGE}', MarkdownReader.Dizmo.my.getLanguage());
+                        '${LANGUAGE}', MarkdownReader.Dizmo.my.language());
                 } else {
                     return tpl;
                 }
@@ -47,14 +47,13 @@ Class("MarkdownReader.Main", {
                     "interactiveScrollbars": true,
                     "mouseWheel": true,
                     "scrollbars": "custom",
-                    "shrinkScrollbars": "scale"
+                    "shrinkScrollbars": "clip"
                 });
             }
         },
         editor: {
             is: 'ro', init: function () {
-                window.EDITOR = new MarkdownReader.Editor();
-                return window.EDITOR;
+                return new MarkdownReader.Editor();
             }
         },
         md2html: {
@@ -62,26 +61,15 @@ Class("MarkdownReader.Main", {
                 var renderer = new marked.Renderer();
                 renderer.heading = function (text, level, raw) {
                     if (level === 1) {
-                        MarkdownReader.Dizmo.setTitle(text);
+                        dizmo.setAttribute('settings/title', text);
                     }
-
                     return marked.defaults.renderer.heading.call({
                         options: marked.defaults
                     }, text, level, raw);
                 };
                 renderer.html = function (html) {
-                    if (jQuery(html).prop ('tagName') === 'VIDEO') {
-                        if (navigator.platform.indexOf('Linux x86_64') >= 0 ||
-                            navigator.platform.indexOf('Mac') >= 0) {
-                            html = MarkdownReader.VideoConverter.toBase64(html);
-                        } else {
-                            html = MarkdownReader.VideoConverter.toFlash(html);
-                        }
-                    }
-
                     return html;
                 };
-
                 renderer.image = function (href, title, text) {
                     return marked.defaults.renderer.image.call({
                         options: marked.defaults
@@ -128,8 +116,7 @@ Class("MarkdownReader.Main", {
         },
         dizmo: {
             is: 'ro', init: function () {
-                window.DIZMO = new MarkdownReader.Dizmo();
-                return window.DIZMO;
+                return new MarkdownReader.Dizmo();
             }
         },
         width: {
@@ -146,9 +133,12 @@ Class("MarkdownReader.Main", {
 
     after: {
         initialize: function () {
-            if (!!this.urlMd) jQuery('#url-md').val(this.urlMd);
-            if (!!this.urlCss) jQuery('#url-css').val(this.urlCss);
-            if (!!this.extraCss) this.editor.setValue(this.extraCss);
+            if (this.urlMd)
+                jQuery('#url-md').val(this.urlMd);
+            if (this.urlCss)
+                jQuery('#url-css').val(this.urlCss);
+            if (this.extraCss)
+                this.editor.setValue(this.extraCss);
 
             this.onShowFront();
             this.initEvents();
@@ -170,7 +160,7 @@ Class("MarkdownReader.Main", {
 
     methods: {
         initEvents: function () {
-            jQuery('.done-btn').on('click',
+            jQuery('.done-button').on('click',
                 this.onClick.bind(this));
             jQuery(events).on('dizmo.turned',
                 this.onTurn.bind(this));
@@ -181,7 +171,7 @@ Class("MarkdownReader.Main", {
         },
 
         onClick: function () {
-            this.dizmo.my.showFront();
+            dizmo.showFront();
         },
 
         onLanguageChanged: function (dizmo, language) {
@@ -208,7 +198,6 @@ Class("MarkdownReader.Main", {
             } catch (ex) {
                 console.error(ex);
             }
-
             return '#3d3d3d';
         },
 
@@ -219,7 +208,6 @@ Class("MarkdownReader.Main", {
             } catch (ex) {
                 console.error(ex);
             }
-
             return 'invert(0.0)';
         },
 
@@ -235,9 +223,7 @@ Class("MarkdownReader.Main", {
             this.onShowFront({no_resize: true});
         },
 
-        onShowFront: function (opts) {
-            var self = this;
-
+        onShowFront: mine(function (self, opts) {
             jQuery('style#css').remove();
             jQuery('style#extra').remove();
             jQuery('#front').empty()
@@ -344,7 +330,6 @@ Class("MarkdownReader.Main", {
                             self.scroll1.destroy();
                             self.scroll1 = undefined;
                         }
-
                         if (self.scroll2 !== undefined) {
                             self.scroll2.destroy();
                             self.scroll2 = undefined;
@@ -355,14 +340,13 @@ Class("MarkdownReader.Main", {
                                 '#content-wrap').addClass('no-dizmo-drag');
                             self.scroll1 = new IScroll(
                                 '#content-wrap', self.scroll1Opts);
-                        }, 95);
-
+                        }, 200);
                         if (self.scroll2Opts) setTimeout(function () {
                             jQuery(
                                 '#md-toc-items-wrap').addClass('no-dizmo-drag');
                             self.scroll2 = new IScroll(
                                 '#md-toc-items-wrap', self.scroll2Opts);
-                        }, 97);
+                        }, 600);
 
                         self.initToc(opts);
                     }
@@ -372,17 +356,17 @@ Class("MarkdownReader.Main", {
             }, 1); else {
                 self.setUrlMd(null);
             }
-        },
+        }),
 
         onShowBack: function (opts) {
-            this.dizmo.my.setTitle('Markdown Reader');
+            dizmo.setAttribute('settings/title', 'Markdown Reader');
             this.editor.refresh();
 
             if (this.tocFlag) this.hideToc(opts);
         },
 
-        initToc: function (opts) {
-            var self = this, tocs = jQuery('#md-toc-items'),
+        initToc: mine(function (self, opts) {
+            var tocs = jQuery('#md-toc-items'),
                 array = jQuery('#content > *').not('#pager');
             for (var i = 0; i < array.length; i++) {
                 var el = array[i];
@@ -498,18 +482,18 @@ Class("MarkdownReader.Main", {
 
             this.highlight($tocItems.first());
             if (self.tocFlag) self.showToc(opts);
-        },
+        }),
 
         showToc: function (opts) {
             var $toc_list = DizmoElements('#md-toc'),
                 $toc_item = $toc_list.find('.md-toc-item');
 
-            var self = this; setTimeout(function () {
+            setTimeout(function () {
                 if (!opts || !opts.no_resize) {
-                    var w = self.dizmo.my.getWidth(),
-                        h = self.dizmo.my.getHeight();
+                    var w = dizmo.getWidth(),
+                        h = dizmo.getHeight();
 
-                    self.dizmo.my.setSize(w + $toc_list.width(), h);
+                    dizmo.setSize(w + $toc_list.width(), h);
                 }
 
                 jQuery('html, body').css('width', '100%');
@@ -531,12 +515,12 @@ Class("MarkdownReader.Main", {
             var $toc_list = DizmoElements('#md-toc'),
                 $toc_item = $toc_list.find('.md-toc-item');
 
-            var self = this; setTimeout(function () {
+            setTimeout(function () {
                 if (!opts || !opts.no_resize) {
-                    var w = self.dizmo.my.getWidth(),
-                        h = self.dizmo.my.getHeight();
+                    var w = dizmo.getWidth(),
+                        h = dizmo.getHeight();
 
-                    self.dizmo.my.setSize(w - $toc_list.width(), h);
+                    dizmo.setSize(w - $toc_list.width(), h);
                 }
 
                 jQuery('html, body').css('width', '100%');
@@ -629,7 +613,7 @@ Class("MarkdownReader.Main", {
             return false;
         },
 
-        showPage: function (counter) {
+        showPage: mine(function (self, counter) {
             var $items = jQuery('#content > *'),
                 $pages = jQuery('#content').find('> h3'),
                 $pager = jQuery('#pager');
@@ -646,7 +630,7 @@ Class("MarkdownReader.Main", {
                 $h2s[z].$h3s = this.group($h2s[z], is_h3);
             }
 
-            var self = this, go = function (new_page, old_page) {
+            var go = function (new_page, old_page) {
                 if ($pager.length > 0 && new_page !== old_page) {
                     $pager.trigger('turn:before', [
                         new_page, old_page, $pages.length
@@ -673,24 +657,19 @@ Class("MarkdownReader.Main", {
                             h2_text = jQuery($h2s[i]).first('h2').text();
 
                         if (h2_text.length > 0 && h2_text != ' ') {
-                            MarkdownReader.Dizmo.setTitle('{0}: {1}'.replace(
-                                '{0}', h1_text).replace('{1}', h2_text));
+                            dizmo.setAttribute('settings/title', '{0}: {1}'
+                                .replace('{0}', h1_text).replace('{1}', h2_text));
                         } else {
-                            MarkdownReader.Dizmo.setTitle('{0}'.replace(
-                                '{0}', h1_text));
+                            dizmo.setAttribute('settings/title','{0}'
+                                .replace('{0}', h1_text));
                         }
 
-                        flag[i] = true; MarkdownReader.VideoConverter
-                            .b64Unwrap(head($h2s[i])).show();
-                        MarkdownReader.VideoConverter
-                            .b64Unwrap(jQuery($h2s[i].$h3s[j])).show();
+                        flag[i] = true;
+                        head($h2s[i]).show();
+                        jQuery($h2s[i].$h3s[j]).show();
                     } else {
-                        if (!flag[i]) MarkdownReader.VideoConverter
-                            .b64Rewrap(head($h2s[i]), ['VIDEO'])
-                            .hide();
-                        MarkdownReader.VideoConverter
-                            .b64Rewrap(jQuery($h2s[i].$h3s[j]), ['VIDEO'])
-                            .hide();
+                        if (!flag[i]) head($h2s[i]).hide();
+                        jQuery($h2s[i].$h3s[j]).hide();
                     }
 
                     j += 1;
@@ -715,7 +694,7 @@ Class("MarkdownReader.Main", {
             } else {
                 go(this.page||0, this.page);
             }
-        },
+        }),
 
         highlight: function ($tocItem) {
             jQuery('.md-toc-item').removeClass('highlight');
@@ -745,7 +724,6 @@ Class("MarkdownReader.Main", {
                     if (groups[index] === undefined) {
                         groups[index] = [];
                     }
-
                     groups[index].push(item);
                 }
             }
