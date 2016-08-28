@@ -176,7 +176,7 @@ html, body {
 
   #content {
     height: auto;
-    width: 100%;
+    width: calc(100% - 20px);
 
     a {
       color: #92a611;
